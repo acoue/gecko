@@ -1,57 +1,70 @@
 <?php
-/**
- * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
- *
- * Licensed under The MIT License
- * For full copyright and license information, please see the LICENSE.txt
- * Redistributions of files must retain the above copyright notice.
- *
- * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
- * @link          http://cakephp.org CakePHP(tm) Project
- * @since         0.10.0
- * @license       http://www.opensource.org/licenses/mit-license.php MIT License
- */
-
-$cakeDescription = 'CakePHP: the rapid development php framework';
+//debug($this->request);die();
+$cakeDescription = 'GeCKo';
 ?>
 <!DOCTYPE html>
 <html>
 <head>
     <?= $this->Html->charset() ?>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">        
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Gestion Compétition Kendo">
+    <meta name="author" content="Anthony COUE">
     <title>
-        <?= $cakeDescription ?>:
-        <?= $this->fetch('title') ?>
+        <?= $cakeDescription ?>
     </title>
     <?= $this->Html->meta('icon') ?>
 
-    <?= $this->Html->css('base.css') ?>
-    <?= $this->Html->css('cake.css') ?>
+    <?= $this->Html->css('bootstrap.min.css') ?>
+    <?= $this->Html->css('bootstrap-theme.min.css') ?>
+    <?= $this->Html->css('style.css') ?>
 
     <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>
-    <?= $this->fetch('script') ?>
 </head>
 <body>
-    <nav class="top-bar expanded" data-topbar role="navigation">
-        <ul class="title-area large-3 medium-4 columns">
-            <li class="name">
-                <h1><a href=""><?= $this->fetch('title') ?></a></h1>
-            </li>
-        </ul>
-        <div class="top-bar-section">
-            <ul class="right">
-                <li><a target="_blank" href="http://book.cakephp.org/3.0/">Documentation</a></li>
-                <li><a target="_blank" href="http://api.cakephp.org/3.0/">API</a></li>
-            </ul>
-        </div>
-    </nav>
-    <?= $this->Flash->render() ?>
-    <div class="container clearfix">
-        <?= $this->fetch('content') ?>
-    </div>
-    <footer>
-    </footer>
+    <div id="main">
+		<header>
+			<div class="container-fluid entete">
+	        	<span class="header_logo"><?= $this->Html->image('logo.png', ['height' => '60px', 'title' => 'Gestion Compétition Kendo']) ?></span>
+	            <span class="header_titre">GeCKo</span> 
+	            <span class="header_texte">
+	            <?php 
+	            
+	            	echo "Compétition sélectionnée : ".$competition-> name ." ".$competition->category->name."&nbsp;&nbsp;&nbsp;&nbsp;";
+					echo $this->Html->link('Modifier', ['controller'=>'Competitions', 'action' => 'index'],['class' => 'btn btn-info']);
+	           
+	            ?>
+	            
+	            
+			</div>
+		</header><br />
+		<div class="container-fluid">
+			<div class="row text-center">
+	    		<div class="col-lg-4 col-middle divBouton"><div class="item"><div class="content"><?php echo $this->element('bouton') ?></div></div></div>
+	    		<div class="col-lg-20 col-top"><?= $this->fetch('content') ?></div>
+			</div>
+		</div><br /><br /> 
+		<footer class="footer">
+	   		<div class="container-fluid">
+	        	<div class="col-lg-6 text-footer-left">&copy; Anthony COUE</div>
+	        	<div class="col-lg-6 text-footer-left">
+	        	<?php 
+				echo $this->Html->link('Administration', ['controller'=>'admin', 'action' => 'index'],['class' => 'btn btn-default']);
+				
+	        	?> 
+	        	
+	        	</div>
+	            <div class="col-lg-6 text-footer-right">Version 1.0<br />19/12/2015</div>                    
+	            <div class="col-lg-6 text-footer-right">Mentions légales</div>
+	  		</div>
+	   </footer><!-- /.footer -->
+	</div>
+
+
+    <?= $this->Html->script('jquery.js') ?>
+    <?= $this->Html->script('bootstrap.min.js') ?>
+    <?= $this->Html->script('main.js') ?>
 </body>
 </html>

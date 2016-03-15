@@ -43,6 +43,12 @@ class AppController extends Controller
 
         $this->loadComponent('RequestHandler');
         $this->loadComponent('Flash');
+
+        //Message
+        $this->loadModel('Competitions');
+        $competition = $this->Competitions->find('all')->contain('Categories')->where(['selected' => '1'])->first();
+    	//Envoi des objet retuor à la page
+    	$this->set(['competition' => $competition]);
     }
 
     /**
