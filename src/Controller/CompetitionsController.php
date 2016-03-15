@@ -110,4 +110,26 @@ class CompetitionsController extends AppController
         }
         return $this->redirect(['action' => 'index']);
     }
+    
+
+    public function select()
+    {
+    	$competitions = $this->Competitions->find('all', array('contain' => 'Categories'));
+    	$this->set(compact('competitions'));
+    	$this->set('_serialize', ['competitions']);
+    }   
+     
+    public function choisir($id)
+    {
+    	$this->Competitions->updateAll(['selected' => 0],[]);
+    	
+    	$competition = $this->Competitions->get($id);
+    	$competition->selected=1;
+    	if ($this->Competitions->save($competition)) {
+    		$this->Flash->success(__('La compétition a bien été sélectionnée.'));
+    	} else {
+    		$this->Flash->error(__('Erreur dans la sélection de la compétition.'));
+    	}
+    	return $this->redirect(['controller'=>'pages','action' => 'home']);
+    }
 }

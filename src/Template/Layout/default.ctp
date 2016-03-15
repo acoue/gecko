@@ -33,7 +33,7 @@ $cakeDescription = 'GeCKo';
 	            <?php 
 	            
 	            	echo "Compétition sélectionnée : ".$competition-> name ." ".$competition->category->name."&nbsp;&nbsp;&nbsp;&nbsp;";
-					echo $this->Html->link('Modifier', ['controller'=>'Competitions', 'action' => 'index'],['class' => 'btn btn-info']);
+					echo $this->Html->link('Modifier', ['controller'=>'Competitions', 'action' => 'select'],['class' => 'btn btn-info']);
 	           
 	            ?>
 	            
