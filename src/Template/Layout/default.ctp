@@ -43,7 +43,10 @@ $cakeDescription = 'GeCKo';
 		<div class="container-fluid">
 			<div class="row text-center">
 	    		<div class="col-lg-4 col-middle divBouton"><div class="item"><div class="content"><?php echo $this->element('bouton') ?></div></div></div>
-	    		<div class="col-lg-20 col-top"><?= $this->fetch('content') ?></div>
+	    		<div class="col-lg-20 col-top">
+	    			<?= $this->Flash->render() ?>
+	    			<?= $this->fetch('content') ?>
+	    		</div>
 			</div>
 		</div><br /><br /> 
 		<footer class="footer">

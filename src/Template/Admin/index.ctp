@@ -1,0 +1,43 @@
+<div class="blocGris">
+	<h2>Administration des paramètres</h2>
+	<div class="container">
+		<div class="table-responsive">
+	    	<table class="table" width="60%">
+			    <tbody>
+			        <tr>
+			            <td width='70%'>Administration des Compétitions</td>
+			            <td width='30%'><?= $this->Html->link('Compétition', ['controller'=>'competitions', 'action' => 'index'],['class' => 'btn btn-default']) ?></td>
+			        </tr>
+			        <tr>
+			            <td>Administration des Régions</td>
+			            <td><?= $this->Html->link('Régions', ['controller'=>'Regions', 'action' => 'index'],['class' => 'btn btn-default']) ?></td>
+			        </tr>	
+			        <tr>
+			            <td>Administration des Clubs</td>
+			            <td><?= $this->Html->link('Club', ['controller'=>'Clubs', 'action' => 'index'],['class' => 'btn btn-default']) ?></td>
+			        </tr>
+			        <tr>
+			            <td>Administration des Catégories</td>
+			            <td><?= $this->Html->link('Catégorie', ['controller'=>'Categories', 'action' => 'index'],['class' => 'btn btn-default']) ?></td>
+			        </tr>
+			        <tr>
+			            <td>Administration des Licenciés</td>
+			            <td><?= $this->Html->link('Catégorie', ['controller'=>'Licencies', 'action' => 'index'],['class' => 'btn btn-default']) ?></td>
+			        </tr>
+			        <tr>
+			            <td>Import des données via fichier : Club</td>
+			            <td><?= $this->Html->link('Import des clubs', ['controller'=>'', 'action' => ''],['class' => 'btn btn-default']) ?></td>
+			        </tr>	
+			        <tr>
+			            <td>Import des données via fichier : Licenciés</td>
+			            <td><?= $this->Html->link('Import des licenciés', ['controller'=>'', 'action' => ''],['class' => 'btn btn-default']) ?></td>
+			        </tr>	
+			        <tr>
+			            <td>Import des données via fichier : Répartition</td>
+			            <td><?= $this->Html->link('Import des répartitions', ['controller'=>'', 'action' => ''],['class' => 'btn btn-default']) ?></td>
+			        </tr>	
+			    </tbody>
+		    </table>
+		</div>
+	</div>
+</div>
