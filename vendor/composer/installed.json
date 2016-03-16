@@ -1261,5 +1261,51 @@
             "bake",
             "cakephp"
         ]
+    },
+    {
+        "name": "friendsofcake/cakepdf",
+        "version": "3.1.0",
+        "version_normalized": "3.1.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/FriendsOfCake/CakePdf.git",
+            "reference": "75b299ea7935570776f892206c78eecd1ac5b2a0"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/FriendsOfCake/CakePdf/zipball/75b299ea7935570776f892206c78eecd1ac5b2a0",
+            "reference": "75b299ea7935570776f892206c78eecd1ac5b2a0",
+            "shasum": ""
+        },
+        "require": {
+            "cakephp/cakephp": "~3.1",
+            "cakephp/plugin-installer": "*",
+            "php": ">=5.4.16"
+        },
+        "replace": {
+            "ceeram/cakepdf": "self.version"
+        },
+        "require-dev": {
+            "phpunit/phpunit": "*"
+        },
+        "suggest": {
+            "dompdf/dompdf": "If you wish to use the DomPdf engine",
+            "mpdf/mpdf": "If you wish to use the Mpdf engine",
+            "tecnick.com/tcpdf": "If you wish to use the Tcpdf engine"
+        },
+        "time": "2015-11-02 12:01:45",
+        "type": "cakephp-plugin",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "CakePdf\\": "src"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "description": "CakePHP plugin for creating and/or rendering Pdfs, several Pdf engines supported.",
+        "homepage": "http://github.com/friendsofcake/CakePdf"
     }
 ]

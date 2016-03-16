@@ -7,35 +7,39 @@
 			<div class="col-lg-20"> 
 				<table cellpadding="0" cellspacing="0" class="table table-striped">
 				    <thead>
-				        <tr align='center'>
- <th><?= $this->Paginator->sort('id') ?></th>
-                <th><?= $this->Paginator->sort('name') ?></th>
-                <th><?= $this->Paginator->sort('date_competition') ?></th>
-                <th><?= $this->Paginator->sort('lieux') ?></th>
-                <th><?= $this->Paginator->sort('type') ?></th>
-                <th><?= $this->Paginator->sort('selected') ?></th>
-                <th class="actions"><?= __('Actions') ?></th>
+				        <tr>
+			                <th><?= $this->Paginator->sort('name','Libellé') ?></th>
+			                <th><?= $this->Paginator->sort('date_competition','Date') ?></th>
+			                <th><?= $this->Paginator->sort('lieux','Lieux') ?></th>
+			                <th><?= $this->Paginator->sort('type','Type') ?></th>
+			                <th><?= $this->Paginator->sort('selected','Sélectionnée ?') ?></th>
+			                <th class="actions"><?= __('Actions') ?></th>
 				        </tr>
 				    </thead>
 				    <tbody> 
 				    <?php foreach ($competitions as $competition): ?>
 				        <tr>
-                <td><?= $this->Number->format($competition->id) ?></td>
-                <td><?= h($competition->name) ?></td>
-                <td><?= h($competition->date_competition) ?></td>
-                <td><?= h($competition->lieux) ?></td>
-                <td><?= $this->Number->format($competition->type) ?></td>
-                <td><?= $this->Number->format($competition->selected) ?></td>
-               <td class="actions">
-                    <?= $this->Html->link(__('View'), ['action' => 'view', $competition->id]) ?>
-                    <?= $this->Html->link(__('Edit'), ['action' => 'edit', $competition->id]) ?>
-                    <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $competition->id], ['confirm' => __('Are you sure you want to delete # {0}?', $competition->id)]) ?>
-                </td>
+			                <td><?= h($competition->name) ?></td>
+			                <td><?= h($competition->date_competition) ?></td>
+			                <td><?= h($competition->lieux) ?></td>
+			                <td><?= $competition->type == 1 ? 'Equipe' : 'Individuel'?></td>
+			                <td><?= $competition->selected == 1 ? 'Oui' : 'Non' ?></td>
+			               <td class="actions">
+			                    <?= $this->Html->link(__('Voir'), ['action' => 'view', $competition->id]) ?>
+			                    <?= $this->Html->link(__('Editer'), ['action' => 'edit', $competition->id]) ?>
+			                    <?= $this->Form->postLink(__('Supprimer'), ['action' => 'delete', $competition->id], ['confirm' => __('Etes-vous sûr de vouloir supprimer la compétition ID # {0}?', $competition->id)]) ?>
+			                </td>
 				        </tr>
 				
 				    <?php endforeach; ?>
 				    </tbody>
 				   </table>
+				   <br />
+		<p align="center">
+			<?= $this->Html->link(__('Créer une compétition'), ['action' => 'add'], ['class'=>'btn btn-default']) ?><br /><br />
+			<?= $this->Html->link(__('Retour'), ['controller'=>'admin', 'action' => 'index'],['class' => 'btn btn-info']) ?> 
+			
+		</p>
 					<div class="paginator">
 				        <ul class="pagination">
 				            <?= $this->Paginator->prev('< ' . __('Préc.')) ?>
@@ -47,8 +51,5 @@
 				</div>						
 			<div class="col-lg-2"></div>
 		</div>
-		<p align="center">
-			<?= $this->Html->link(__('Créer une compétition'), ['action' => 'add'], ['class'=>'btn btn-default']) ?>
-		</p>
 	</div>
 </div>

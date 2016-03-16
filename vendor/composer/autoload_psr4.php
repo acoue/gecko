@@ -23,6 +23,7 @@ return array(
     'Cake\\Composer\\' => array($vendorDir . '/cakephp/plugin-installer/src'),
     'Cake\\Chronos\\' => array($vendorDir . '/cakephp/chronos/src'),
     'Cake\\' => array($vendorDir . '/cakephp/cakephp/src'),
+    'CakePdf\\' => array($vendorDir . '/friendsofcake/cakepdf/src'),
     'Bake\\' => array($vendorDir . '/cakephp/bake/src'),
     'Aura\\Intl\\_Config\\' => array($vendorDir . '/aura/intl/config'),
     'App\\Test\\' => array($baseDir . '/tests'),

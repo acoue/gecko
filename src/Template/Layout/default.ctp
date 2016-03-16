@@ -1,6 +1,7 @@
 <?php
 //debug($this->request);die();
 $cakeDescription = 'GeCKo';
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -20,6 +21,8 @@ $cakeDescription = 'GeCKo';
     <?= $this->Html->css('bootstrap-theme.min.css') ?>
     <?= $this->Html->css('style.css') ?>
 
+    <?= $this->Html->css('jquery-ui.css') ?>
+    <?= $this->Html->css('jquery.minicolors.css') ?>
     <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>
 </head>
@@ -69,5 +72,16 @@ $cakeDescription = 'GeCKo';
     <?= $this->Html->script('jquery.js') ?>
     <?= $this->Html->script('bootstrap.min.js') ?>
     <?= $this->Html->script('main.js') ?>
+   
+    <?= $this->Html->script('validatr.js') ?>
+    
+    <?= $this->Html->script('jquery-ui.js') ?>
+    <?= $this->Html->script('userScript.js') ?>    
+    <?= $this->Html->script('userFunction.js') ?>  
+    
+    <?= $this->Html->script('jquery.minicolors.js') ?>
+    <?= $this->Html->script('jquery.minicolors.min.js') ?>
+    
+    <?= $this->fetch('script') ?>
 </body>
 </html>
