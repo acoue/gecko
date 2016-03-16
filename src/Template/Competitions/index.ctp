@@ -3,8 +3,8 @@
     <h3>Competition</h3>
 	<div class="blocblancContent">
 		<div class="row">
-			<div class="col-md-1"></div>
-			<div class="col-md-10"> 
+			<div class="col-lg-2"></div>
+			<div class="col-lg-20"> 
 				<table cellpadding="0" cellspacing="0" class="table table-striped">
 				    <thead>
 				        <tr align='center'>
@@ -45,7 +45,7 @@
 				        <p><?= $this->Paginator->counter() ?></p>
 				    </div>
 				</div>						
-			<div class="col-md-1"></div>
+			<div class="col-lg-2"></div>
 		</div>
 		<p align="center">
 			<?= $this->Html->link(__('Créer une compétition'), ['action' => 'add'], ['class'=>'btn btn-default']) ?>
