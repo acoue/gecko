@@ -20,7 +20,6 @@ $cakeDescription = 'GeCKo';
     <?= $this->Html->css('bootstrap.min.css') ?>
     <?= $this->Html->css('bootstrap-theme.min.css') ?>
     <?= $this->Html->css('style.css') ?>
-
     <?= $this->Html->css('jquery-ui.css') ?>
     <?= $this->Html->css('jquery.minicolors.css') ?>
     <?= $this->fetch('meta') ?>
@@ -34,10 +33,8 @@ $cakeDescription = 'GeCKo';
 	            <span class="header_titre">GeCKo</span> 
 	            <span class="header_texte">
 	            <?php 
-	            
 	            	echo "Compétition sélectionnée : ".$competition-> name ." ".$competition->category->name."&nbsp;&nbsp;&nbsp;&nbsp;";
 					echo $this->Html->link('Modifier', ['controller'=>'Competitions', 'action' => 'select'],['class' => 'btn btn-info']);
-	           
 	            ?>
 	            
 	            
@@ -70,17 +67,19 @@ $cakeDescription = 'GeCKo';
 
 
     <?= $this->Html->script('jquery.js') ?>
-    <?= $this->Html->script('bootstrap.min.js') ?>
-    <?= $this->Html->script('main.js') ?>
-   
-    <?= $this->Html->script('validatr.js') ?>
-    
     <?= $this->Html->script('jquery-ui.js') ?>
-    <?= $this->Html->script('userScript.js') ?>    
-    <?= $this->Html->script('userFunction.js') ?>  
     
     <?= $this->Html->script('jquery.minicolors.js') ?>
     <?= $this->Html->script('jquery.minicolors.min.js') ?>
+    
+    <?= $this->Html->script('form-validator/jquery.form-validator.js') ?>
+ 	<?= $this->Html->script('form-validator/messages_fr.js') ?>
+    <?= $this->Html->script('bootstrap.min.js') ?>
+    <?= $this->Html->script('main.js') ?>
+   
+    <?= $this->Html->script('validatr.js') ?>    
+    <?= $this->Html->script('userScript.js') ?>    
+    <?= $this->Html->script('userFunction.js') ?>  
     
     <?= $this->fetch('script') ?>
 </body>

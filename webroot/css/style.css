@@ -150,3 +150,10 @@ body, html{height:100%;}
 .btn {
   min-width: 200px;
 }
+
+.obligatoire {
+    color: red;
+}
+.sautPage {
+	page-break-after: always;
+}

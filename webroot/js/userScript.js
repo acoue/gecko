@@ -26,63 +26,16 @@ $(document).ready(function(){
 	
 	
 	/* Formulaire Engagement */
-	$( "#date_engagement" ).datepicker();
+	$( "#date_competition" ).datepicker();
+	
     //Validation des formulaires
     $.validate({
-        form : '#Inscription_form'
+        form : '#edit_competition_form'
     });
     $.validate({
         form : '#add_inscription_form'
     });
-    
-	
-	/*
-	 * Test du mot de passe
-	 * */
-	$('#pass1, #pass2').on('keyup', function(e) {
-		
-	     if($('#pass1').val() != '' && $('#pass2').val() != '' && $('#pass1').val() != $('#pass2').val()) {
-	    	 $('#messagePwdDifferent').removeClass().addClass('alert alert-danger').html('Les 2 valeurs ne correspondent pas ! ');
-	    	 return false;
-	     }
-	     // Must have capital letter, numbers and lowercase letters
-	     var strongRegex = new RegExp("^(?=.{8,})(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*\\W).*$", "g");
 
-	     // Must have either capitals and lowercase letters or lowercase and numbers
-	     var mediumRegex = new RegExp("^(?=.{7,})(((?=.*[A-Z])(?=.*[a-z]))|((?=.*[A-Z])(?=.*[0-9]))|((?=.*[a-z])(?=.*[0-9]))).*$", "g");
-	     if (strongRegex.test($(this).val())) {
-            // If reg ex matches strong password
-            $('#messagePwd').removeClass().addClass('alert alert-mdp-success').html('');
-	     } else if (mediumRegex.test($(this).val())) {
-            // If medium password matches the reg ex
-            $('#messagePwd').removeClass().addClass('alert alert-mdp-warning').html('');
-	     } else {
-            // If password is ok
-            $('#messagePwd').removeClass().addClass('alert alert-mdp-danger').html('');
-	     }
-        
-	     return true;
-	});
-	
-	$('#password').on('keyup', function(e) {		
-	     
-	     // Must have capital letter, numbers and lowercase letters
-	     var strongRegex = new RegExp("^(?=.{8,})(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*\\W).*$", "g");
-	     // Must have either capitals and lowercase letters or lowercase and numbers
-	     var mediumRegex = new RegExp("^(?=.{7,})(((?=.*[A-Z])(?=.*[a-z]))|((?=.*[A-Z])(?=.*[0-9]))|((?=.*[a-z])(?=.*[0-9]))).*$", "g");
-	     if (strongRegex.test($(this).val())) {
-           // If reg ex matches strong password
-           $('#messagePwd').removeClass().addClass('alert alert-mdp-success').html('');
-	     } else if (mediumRegex.test($(this).val())) {
-           // If medium password matches the reg ex
-           $('#messagePwd').removeClass().addClass('alert alert-mdp-warning').html('');
-	     } else {
-           // If password is ok
-           $('#messagePwd').removeClass().addClass('alert alert-mdp-danger').html('');
-	     }
-       
-	     return true;
-	});
 
 
 });

@@ -76,7 +76,7 @@ class CompetitionsController extends AppController
     public function edit($id = null)
     {
         $competition = $this->Competitions->get($id, [
-            'contain' => []
+            'contain' => ['Categories']
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $competition = $this->Competitions->patchEntity($competition, $this->request->data);

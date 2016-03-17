@@ -12,7 +12,6 @@
 			                <th><?= $this->Paginator->sort('date_competition','Date') ?></th>
 			                <th><?= $this->Paginator->sort('lieux','Lieux') ?></th>
 			                <th><?= $this->Paginator->sort('type','Type') ?></th>
-			                <th><?= $this->Paginator->sort('selected','Sélectionnée ?') ?></th>
 			                <th class="actions"><?= __('Actions') ?></th>
 				        </tr>
 				    </thead>
@@ -23,7 +22,6 @@
 			                <td><?= h($competition->date_competition) ?></td>
 			                <td><?= h($competition->lieux) ?></td>
 			                <td><?= $competition->type == 1 ? 'Equipe' : 'Individuel'?></td>
-			                <td><?= $competition->selected == 1 ? 'Oui' : 'Non' ?></td>
 			               <td class="actions">
 			                    <?= $this->Html->link(__('Voir'), ['action' => 'view', $competition->id]) ?>
 			                    <?= $this->Html->link(__('Editer'), ['action' => 'edit', $competition->id]) ?>
