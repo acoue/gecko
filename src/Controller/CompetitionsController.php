@@ -53,7 +53,25 @@ class CompetitionsController extends AppController
     {
         $competition = $this->Competitions->newEntity();
         if ($this->request->is('post')) {
-            $competition = $this->Competitions->patchEntity($competition, $this->request->data);
+        	$data = $this->request->data;
+        	//debug($data);die();
+        	if($data['description'])$desc=$data['description'];
+        	else $desc="";
+        	$date_competition=$data['date_competition'];
+        	//Transformation de la date : dd/mm/yyyy vers yyyy-mm-dd
+        	if(isset($date_competition)) {
+        		$tmp_date = $date_competition;
+        		$date_competition = substr($tmp_date, 6,4)."-".substr($tmp_date, 3,2)."-".substr($tmp_date, 0,2);
+        	}
+        	$competition->date_competition = $date_competition;
+        	$competition->name=$data['name'];
+        	$competition->lieux=$data['lieux'];
+        	$competition->type=$data['type'];
+        	$competition->description=$desc;
+        	$competition->selected=0;
+        	$competition->catagorie_id=$data['catagorie_id'];
+        	//Enregistrement
+            //$competition = $this->Competitions->patchEntity($competition);
             if ($this->Competitions->save($competition)) {
                 $this->Flash->success(__('The competition has been saved.'));
                 return $this->redirect(['action' => 'index']);

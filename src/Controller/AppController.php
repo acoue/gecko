@@ -46,9 +46,11 @@ class AppController extends Controller
 
         //Message
         $this->loadModel('Competitions');
-        $competition = $this->Competitions->find('all')->contain('Categories')->where(['selected' => '1'])->first();
+        $competitionSelected = $this->Competitions->find('all')->contain('Categories')->where(['selected' => '1'])->first();
+        //debug($competition->category->name);die();
     	//Envoi des objet retuor à la page
-    	$this->set(['competition' => $competition]);
+    	$this->set('competitionSelected', $competitionSelected);
+    	$this->set('_serialize', ['competitionSelected']);
     }
 
     /**

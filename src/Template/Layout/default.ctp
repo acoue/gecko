@@ -32,10 +32,10 @@ $cakeDescription = 'GeCKo';
 	        	<span class="header_logo"><?= $this->Html->image('logo.png', ['height' => '60px', 'title' => 'Gestion Compétition Kendo']) ?></span>
 	            <span class="header_titre">GeCKo</span> 
 	            <span class="header_texte">
-	            <?php 
-	            	echo "Compétition sélectionnée : ".$competition-> name ." ".$competition->category->name."&nbsp;&nbsp;&nbsp;&nbsp;";
+	            <?php
+	            	echo "Compétition sélectionnée : ".$competitionSelected-> name ." ".$competitionSelected->category->name."&nbsp;&nbsp;&nbsp;&nbsp;";
 					echo $this->Html->link('Modifier', ['controller'=>'Competitions', 'action' => 'select'],['class' => 'btn btn-info']);
-	            ?>
+				?>
 	            
 	            
 			</div>

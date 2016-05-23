@@ -33,7 +33,7 @@ $(document).ready(function(){
         form : '#edit_competition_form'
     });
     $.validate({
-        form : '#add_inscription_form'
+        form : '#formulaire'
     });
 
 
