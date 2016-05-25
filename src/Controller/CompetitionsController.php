@@ -73,10 +73,10 @@ class CompetitionsController extends AppController
         	//Enregistrement
             //$competition = $this->Competitions->patchEntity($competition);
             if ($this->Competitions->save($competition)) {
-                $this->Flash->success(__('The competition has been saved.'));
+                $this->Flash->success(__('La competition a bien été sauvegardée.'));
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error(__('The competition could not be saved. Please, try again.'));
+                $this->Flash->error(__('La competition ne peut être sauvegardée.'));
             }
         }
         $categories = $this->Competitions->Categories->find('list', ['limit' => 200]);
@@ -97,12 +97,18 @@ class CompetitionsController extends AppController
             'contain' => ['Categories']
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $competition = $this->Competitions->patchEntity($competition, $this->request->data);
+        	
+        	$d=$this->request->data;
+        	$tmp_date = $d['date_competition'];
+        	$date_competition = substr($tmp_date, 6,4)."-".substr($tmp_date, 3,2)."-".substr($tmp_date, 0,2);
+        	$d['date_competition']=$date_competition;
+        	//debug($d);die();
+            $competition = $this->Competitions->patchEntity($competition, $d);
             if ($this->Competitions->save($competition)) {
-                $this->Flash->success(__('The competition has been saved.'));
+                $this->Flash->success(__('La competition a bien été sauvegardée.'));
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error(__('The competition could not be saved. Please, try again.'));
+                $this->Flash->error(__('La competition ne peut être sauvegardée.'));
             }
         }
         $categories = $this->Competitions->Categories->find('list', ['limit' => 200]);
@@ -122,9 +128,9 @@ class CompetitionsController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $competition = $this->Competitions->get($id);
         if ($this->Competitions->delete($competition)) {
-            $this->Flash->success(__('The competition has been deleted.'));
+            $this->Flash->success(__('La competition a bien été supprimée.'));
         } else {
-            $this->Flash->error(__('The competition could not be deleted. Please, try again.'));
+            $this->Flash->error(__('La competition ne peut être supprimée.'));
         }
         return $this->redirect(['action' => 'index']);
     }

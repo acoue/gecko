@@ -1,56 +1,76 @@
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('Edit Competition'), ['action' => 'edit', $competition->id]) ?> </li>
-        <li><?= $this->Form->postLink(__('Delete Competition'), ['action' => 'delete', $competition->id], ['confirm' => __('Are you sure you want to delete # {0}?', $competition->id)]) ?> </li>
-        <li><?= $this->Html->link(__('List Competitions'), ['action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Competition'), ['action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('List Categories'), ['controller' => 'Categories', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Category'), ['controller' => 'Categories', 'action' => 'add']) ?> </li>
-    </ul>
-</nav>
-<div class="competitions view large-9 medium-8 columns content">
-    <h3><?= h($competition->name) ?></h3>
-    <table class="vertical-table">
-        <tr>
-            <th><?= __('Name') ?></th>
-            <td><?= h($competition->name) ?></td>
-        </tr>
-        <tr>
-            <th><?= __('Lieux') ?></th>
-            <td><?= h($competition->lieux) ?></td>
-        </tr>
-        <tr>
-            <th><?= __('Category') ?></th>
-            <td><?= $competition->has('category') ? $this->Html->link($competition->category->name, ['controller' => 'Categories', 'action' => 'view', $competition->category->id]) : '' ?></td>
-        </tr>
-        <tr>
-            <th><?= __('Id') ?></th>
-            <td><?= $this->Number->format($competition->id) ?></td>
-        </tr>
-        <tr>
-            <th><?= __('Type') ?></th>
-            <td><?= $this->Number->format($competition->type) ?></td>
-        </tr>
-        <tr>
-            <th><?= __('Selected') ?></th>
-            <td><?= $this->Number->format($competition->selected) ?></td>
-        </tr>
-        <tr>
-            <th><?= __('Date Competition') ?></th>
-            <td><?= h($competition->date_competition) ?></td>
-        </tr>
-        <tr>
-            <th><?= __('Created') ?></th>
-            <td><?= h($competition->created) ?></td>
-        </tr>
-        <tr>
-            <th><?= __('Modified') ?></th>
-            <td><?= h($competition->modified) ?></td>
-        </tr>
-    </table>
-    <div class="row">
-        <h4><?= __('Description') ?></h4>
-        <?= $this->Text->autoParagraph(h($competition->description)); ?>
-    </div>
+<div class="blocblanc">
+	<h2>Administration</h2>
+    <h3>Competition - Edition</h3>
+	<div class="blocblancContent">
+		<div class="row">
+			<div class="col-lg-2"></div>
+			<div class="col-lg-5">
+			<?= $this->Html->link(__('Edition'), ['action' => 'edit', $competition->id],['class' => 'btn btn-default']) ?><br /><br />
+			<?= $this->Form->postLink(__('Supprimer'), ['action' => 'delete', $competition->id], ['class'=>'btn btn-warning','confirm' => __('Etes-vous sûr de vouloir supprimer la compétition # {0} ?', $competition->id)]) ?><br /><br/>
+			<?= $this->Html->link(__('Retour'), ['action' => 'index'],['class' => 'btn btn-info']) ?> 
+			</div>
+			<div class="col-lg-15">
+				<div class="row">
+                	<label class="col-md-8 control-label" for="name">Libellé</label>
+                    <div class="col-md-14"><?= $this->Form->input('name', ['label' => false,'id'=>'name',
+														   	'div' => false,
+															'class' => 'form-control', 
+                    										'type' => 'text', 
+															'disabled' => 'disabled', 
+                    										'value' => h($competition->name)]); ?>
+                    </div>                          
+				</div><br />
+				<div class="row">
+                	<label class="col-lg-8 control-label" for="date_competition">Date de compétition</label>
+                    <div class="col-lg-14"><?= $this->Form->input('date_competition', ['label' => false,'id'=>'date_competition',
+														   	'div' => false,
+															'class' => 'form-control', 
+                    										'type' => 'text', 
+                    										'value' => h($competition->date_competition),
+															'disabled' => 'disabled']); ?>
+                    </div>                          
+				</div><br />  
+				<div class="row">
+                	<label class="col-md-8 control-label" for="lieux">Lieux</label>
+                    <div class="col-md-14"><?= $this->Form->input('lieux', ['label' => false,'id'=>'lieux',
+														   	'div' => false,
+															'class' => 'form-control', 
+                    										'type' => 'text', 
+															'disabled' => 'disabled', 
+                    										'value' => h($competition->lieux)]); ?>
+                    </div>                          
+				</div><br />
+				<div class="row">
+                	<label class="col-md-8 control-label" for="type">Type</label>
+                    <div class="col-md-14"><?= $this->Form->input('type', ['label' => false,'id'=>'type',
+														   	'div' => false,
+															'class' => 'form-control', 
+                    										'type' => 'text', 
+															'disabled' => 'disabled', 
+                    										'value' => h($competition->type) == 0 ? 'Individuel' : 'Equipe']); ?>
+                    </div>                          
+				</div><br />
+				<div class="row">
+                	<label class="col-md-8 control-label" for="description">Description</label>
+                    <div class="col-md-14"><?= $this->Form->input('description', ['label' => false,'id'=>'description',
+														   	'div' => false,
+															'class' => 'form-control', 
+                    										'type' => 'textarea', 'disabled' => 'disabled',
+                    										'value' => h($competition->description)]); ?>
+                    </div>                          
+				</div><br />
+				<div class="row">
+                	<label class="col-md-8 control-label" for="catagorie_id">Catégorie</label>
+                    <div class="col-md-14"><?= $this->Form->input('catagorie_id', ['label' => false,'id'=>'catagorie_id',
+														   	'div' => false,
+															'class' => 'form-control', 
+                    										'type' => 'text', 
+                    										'value' => $competition->category->name,
+															'disabled' => 'disabled']); ?>
+                    </div>                          
+				</div><br />
+			</div>						
+			<div class="col-lg-2"></div>
+		</div>
+	</div>
 </div>

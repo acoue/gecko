@@ -23,9 +23,9 @@
 			                <td><?= h($competition->lieux) ?></td>
 			                <td><?= $competition->type == 1 ? 'Equipe' : 'Individuel'?></td>
 			               <td class="actions">
-			                    <?= $this->Html->link(__('Voir'), ['action' => 'view', $competition->id]) ?>
+								<?= $this->Html->link(__('Voir'), ['action' => 'view', $competition->id]) ?>
 			                    <?= $this->Html->link(__('Editer'), ['action' => 'edit', $competition->id]) ?>
-			                    <?= $this->Form->postLink(__('Supprimer'), ['action' => 'delete', $competition->id], ['confirm' => __('Etes-vous sûr de vouloir supprimer la compétition ID # {0}?', $competition->id)]) ?>
+			                    <?= $this->Form->postLink(__('Supprimer'), ['action' => 'delete', $competition->id], ['confirm' => __('Etes-vous sûr de vouloir supprimer la compétition {0}?', $competition->name)]) ?>
 			                </td>
 				        </tr>
 				

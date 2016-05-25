@@ -1,6 +1,6 @@
 <div class="blocblanc">
 	<h2>Administration</h2>
-    <h3>Competition</h3>
+    <h3>Competition - Ajout</h3>
 	<div class="blocblancContent large-9 medium-8 columns content">
 		<div class="row">
 			<div class="col-lg-2"></div>

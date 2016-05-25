@@ -1,6 +1,6 @@
 <div class="blocblanc">
 	<h2>Administration</h2>
-    <h3>Competition</h3>
+    <h3>Competition - Edition</h3>
 	<div class="blocblancContent">
 		<div class="row">
 			<div class="col-lg-2"></div>
@@ -9,7 +9,7 @@
 			<?= $this->Html->link(__('Retour'), ['action' => 'index'],['class' => 'btn btn-info']) ?> 
 			</div>
 			<div class="col-lg-15">
-			    <?= $this->Form->create($competition, ['id'=>'edit_competition_form']) ?>
+			    <?= $this->Form->create($competition, ['id'=>'formulaire']) ?>
 				<div class="row">
                 	<label class="col-md-8 control-label" for="name">Libellé <span class="obligatoire"><sup> *</sup></span></label>
                     <div class="col-md-14"><?= $this->Form->input('name', ['label' => false,'id'=>'name',
@@ -20,20 +20,16 @@
                     										'value' => h($competition->name)]); ?>
                     </div>                          
 				</div><br />
-		 		<div class="row">
-                	<label class="col-md-8 control-label" for="date_competition">Date <span class="obligatoire"><sup> *</sup></span></label>
-                    <div class="col-md-14"><?= $this->Form->input('date_competition', ['id'=>'date_competition',
-                    										'label' => false,
+				<div class="row">
+                	<label class="col-lg-8 control-label" for="date_competition">Date de compétition <span class="obligatoire"><sup> *</sup></span></label>
+                    <div class="col-lg-14"><?= $this->Form->input('date_competition', ['label' => false,'id'=>'date_competition',
 														   	'div' => false,
 															'class' => 'form-control', 
-															'placeholder' => 'Date de la compétition', 
-															'required' =>'required',
+                    										'type' => 'text', 
                     										'value' => h($competition->date_competition),
-                    										'data-location' => 'bottom',
-                    										'data-validation'=>'date',
-                    										'data-validation-format' => 'dd/mm/yyyy']); ?>
+															'required' =>'required']); ?>
                     </div>                          
-				</div><br /> 
+				</div><br />  
 				<div class="row">
                 	<label class="col-md-8 control-label" for="lieux">Lieux <span class="obligatoire"><sup> *</sup></span></label>
                     <div class="col-md-14"><?= $this->Form->input('lieux', ['label' => false,'id'=>'lieux',
@@ -49,7 +45,6 @@
                     <div class="col-md-14"><?= $this->Form->input('type', ['label' => false,'id'=>'type',
 														   	'div' => false,
 															'class' => 'form-control', 
-                    										'type' => 'text', 
 															'required' =>'required', 
                     										'options' => ['0' => 'Individuel', '1'=>'Equipe'],
                     										'value' => h($competition->type)]); ?>
@@ -69,11 +64,11 @@
                     <div class="col-md-14"><?= $this->Form->input('catagorie_id', ['label' => false,'id'=>'catagorie_id',
 														   	'div' => false,
 															'class' => 'form-control', 
-                    										'type' => 'text', 
                     										'options'=>$categories, 
+                    										'value' => h($competition->catagorie),
 															'required' =>'required']); ?>
                     </div>                          
-				</div><br />
+				</div><br /> 
 				<div class="row">
 					<?= $this->Form->button('Valider', ['type' => 'submit','class' => 'btn btn-default']) ?>
 					<?= $this->Form->end() ?>
@@ -83,8 +78,3 @@
 		</div>
 	</div>
 </div>
-
-
-        <?php
-            echo $this->Form->input('catagorie_id', ['options' => $categories]);
-        ?>
