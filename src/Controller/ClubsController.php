@@ -55,10 +55,10 @@ class ClubsController extends AppController
         if ($this->request->is('post')) {
             $club = $this->Clubs->patchEntity($club, $this->request->data);
             if ($this->Clubs->save($club)) {
-                $this->Flash->success(__('The club has been saved.'));
+                $this->Flash->success(__('Le club a été sauvegardé.'));
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error(__('The club could not be saved. Please, try again.'));
+                $this->Flash->error(__('Le club n\'a pas été sauvegardé.'));
             }
         }
         $regions = $this->Clubs->Regions->find('list', ['limit' => 200]);
@@ -81,10 +81,10 @@ class ClubsController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $club = $this->Clubs->patchEntity($club, $this->request->data);
             if ($this->Clubs->save($club)) {
-                $this->Flash->success(__('The club has been saved.'));
+                $this->Flash->success(__('Le club a été sauvegardé.'));
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error(__('The club could not be saved. Please, try again.'));
+                $this->Flash->error(__('Le club n\'a pas été sauvegardé.'));
             }
         }
         $regions = $this->Clubs->Regions->find('list', ['limit' => 200]);
@@ -104,9 +104,9 @@ class ClubsController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $club = $this->Clubs->get($id);
         if ($this->Clubs->delete($club)) {
-            $this->Flash->success(__('The club has been deleted.'));
+            $this->Flash->success(__('Le club a été supprimé.'));
         } else {
-            $this->Flash->error(__('The club could not be deleted. Please, try again.'));
+            $this->Flash->error(__('Le club n\'a pas été supprimé.'));
         }
         return $this->redirect(['action' => 'index']);
     }
