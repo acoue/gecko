@@ -1,57 +1,60 @@
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('Edit Club'), ['action' => 'edit', $club->id]) ?> </li>
-        <li><?= $this->Form->postLink(__('Delete Club'), ['action' => 'delete', $club->id], ['confirm' => __('Are you sure you want to delete # {0}?', $club->id)]) ?> </li>
-        <li><?= $this->Html->link(__('List Clubs'), ['action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Club'), ['action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('List Regions'), ['controller' => 'Regions', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Region'), ['controller' => 'Regions', 'action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('List Licencies'), ['controller' => 'Licencies', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Licency'), ['controller' => 'Licencies', 'action' => 'add']) ?> </li>
-    </ul>
-</nav>
-<div class="clubs view large-9 medium-8 columns content">
-    <h3><?= h($club->name) ?></h3>
-    <table class="vertical-table">
-        <tr>
-            <th><?= __('Name') ?></th>
-            <td><?= h($club->name) ?></td>
-        </tr>
-        <tr>
-            <th><?= __('Region') ?></th>
-            <td><?= $club->has('region') ? $this->Html->link($club->region->name, ['controller' => 'Regions', 'action' => 'view', $club->region->id]) : '' ?></td>
-        </tr>
-        <tr>
-            <th><?= __('Id') ?></th>
-            <td><?= $this->Number->format($club->id) ?></td>
-        </tr>
-    </table>
-    <div class="related">
-        <h4><?= __('Related Licencies') ?></h4>
-        <?php if (!empty($club->licencies)): ?>
-        <table cellpadding="0" cellspacing="0">
-            <tr>
-                <th><?= __('Id') ?></th>
-                <th><?= __('Prenom') ?></th>
-                <th><?= __('Nom') ?></th>
-                <th><?= __('Club Id') ?></th>
-                <th class="actions"><?= __('Actions') ?></th>
-            </tr>
-            <?php foreach ($club->licencies as $licencies): ?>
-            <tr>
-                <td><?= h($licencies->id) ?></td>
-                <td><?= h($licencies->prenom) ?></td>
-                <td><?= h($licencies->nom) ?></td>
-                <td><?= h($licencies->club_id) ?></td>
-                <td class="actions">
-                    <?= $this->Html->link(__('View'), ['controller' => 'Licencies', 'action' => 'view', $licencies->id]) ?>
-                    <?= $this->Html->link(__('Edit'), ['controller' => 'Licencies', 'action' => 'edit', $licencies->id]) ?>
-                    <?= $this->Form->postLink(__('Delete'), ['controller' => 'Licencies', 'action' => 'delete', $licencies->id], ['confirm' => __('Are you sure you want to delete # {0}?', $licencies->id)]) ?>
-                </td>
-            </tr>
-            <?php endforeach; ?>
-        </table>
-        <?php endif; ?>
-    </div>
+<div class="blocblanc">
+	<h2>Administration</h2>
+    <h3>Club - Visualisation</h3>
+	<div class="blocblancContent">
+		<div class="row">
+			<div class="col-lg-2"></div>
+			<div class="col-lg-5">
+			<?= $this->Html->link(__('Edition'), ['action' => 'edit', $club->id],['class' => 'btn btn-default']) ?><br /><br />
+			<?= $this->Form->postLink(__('Supprimer'), ['action' => 'delete', $club->id], ['class'=>'btn btn-warning','confirm' => __('Etes-vous sûr de vouloir supprimer le club {0} ?', $club->name)]) ?><br /><br/>
+			<?= $this->Html->link(__('Retour'), ['action' => 'index'],['class' => 'btn btn-info']) ?> 
+			</div>
+			<div class="col-lg-15">
+				<div class="row">
+                	<label class="col-md-8 control-label" for="name">Libellé</label>
+                    <div class="col-md-14"><?= $this->Form->input('name', ['label' => false,'id'=>'name',
+														   	'div' => false,
+															'class' => 'form-control', 
+                    										'type' => 'text', 
+															'disabled' => 'disabled', 
+                    										'value' => h($club->name)]); ?>
+                    </div>                          
+				</div><br />
+				<div class="row">
+                	<label class="col-md-8 control-label" for="region_id">Région</label>
+                    <div class="col-md-14"><?= $this->Form->input('region_id', ['label' => false,'id'=>'region_id',
+														   	'div' => false,
+															'class' => 'form-control', 
+                    										'type' => 'text', 
+                    										'value' => $club->region->name,
+															'disabled' => 'disabled']); ?>
+                    </div>                          
+				</div><br /><br />
+				<div class="row">
+					<table cellpadding="0" cellspacing="0" class="table table-striped">
+					<caption>Licenciés </caption>
+					    <thead>
+					        <tr>
+				                <th><?= __('Prenom') ?></th>
+				                <th><?= __('Nom') ?></th>
+				                <th class="actions"><?= __('Actions') ?></th>
+					        </tr>
+					    </thead>
+					    <tbody> 
+				            <?php foreach ($club->licencies as $licencies): ?>
+				            <tr>
+				                <td><?= h($licencies->prenom) ?></td>
+				                <td><?= h($licencies->nom) ?></td>
+				                <td class="actions">
+				                    <?= $this->Html->link(__('View'), ['controller' => 'Licencies', 'action' => 'view', $licencies->id]) ?>
+				                </td>
+				            </tr>
+				            <?php endforeach; ?>
+					    </tbody>
+				    </table>
+				</div>				
+			</div>						
+			<div class="col-lg-2"></div>
+		</div>
+	</div>
 </div>

@@ -1,22 +1,37 @@
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('List Clubs'), ['action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('List Regions'), ['controller' => 'Regions', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Region'), ['controller' => 'Regions', 'action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Licencies'), ['controller' => 'Licencies', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Licency'), ['controller' => 'Licencies', 'action' => 'add']) ?></li>
-    </ul>
-</nav>
-<div class="clubs form large-9 medium-8 columns content">
-    <?= $this->Form->create($club) ?>
-    <fieldset>
-        <legend><?= __('Add Club') ?></legend>
-        <?php
-            echo $this->Form->input('name');
-            echo $this->Form->input('region_id', ['options' => $regions]);
-        ?>
-    </fieldset>
-    <?= $this->Form->button(__('Submit')) ?>
-    <?= $this->Form->end() ?>
+<div class="blocblanc">
+	<h2>Administration</h2>
+    <h3>Club - Ajout</h3>
+	<div class="blocblancContent large-9 medium-8 columns content">
+		<div class="row">
+			<div class="col-lg-2"></div>
+			<div class="col-lg-5">
+				<?= $this->Html->link(__('Retour'), ['action' => 'index'],['class' => 'btn btn-info']) ?> 
+			</div>
+			<div class="col-lg-15"> 
+			    <?= $this->Form->create($club, ['id'=>'formulaire']) ?>
+			    <div class="row">
+                	<label class="col-lg-8 control-label" for="name">Libellé <span class="obligatoire"><sup> *</sup></span></label>
+                    <div class="col-lg-16"><?= $this->Form->input('name', ['label' => false,'id'=>'name',
+														   	'div' => false,
+															'class' => 'form-control', 
+                    										'type' => 'text', 
+															'required' =>'required']); ?>
+                    </div>                          
+				</div><br /> 
+				<div class="row">
+                	<label class="col-lg-8 control-label" for="region_id">Région <span class="obligatoire"> *</span></label>
+                	<div class="col-lg-16"><?= $this->Form->input('region_id', ['label' => false,
+                											'options' => $regions,
+                											'div' => false,
+															'class' => 'form-control', 
+                    										'required' =>'required']) ?>    
+                	</div>                 
+				</div><br /> 
+			    <?= $this->Form->button(__('Valider'),['class'=>'btn btn-default']) ?>
+			    <?= $this->Form->end() ?>
+				<p align='left'><span class="obligatoire">&nbsp;&nbsp;&nbsp;&nbsp;<sup>*</sup></span> Champ obligatoire</p>	
+			</div>						
+			<div class="col-lg-2"></div>
+		</div>
+	</div>
 </div>
