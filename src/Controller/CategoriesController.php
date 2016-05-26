@@ -52,10 +52,10 @@ class CategoriesController extends AppController
         if ($this->request->is('post')) {
             $category = $this->Categories->patchEntity($category, $this->request->data);
             if ($this->Categories->save($category)) {
-                $this->Flash->success(__('The category has been saved.'));
+                $this->Flash->success(__('La catégorie a été sauvegardée.'));
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error(__('The category could not be saved. Please, try again.'));
+                $this->Flash->error(__('La catégorie n\'a pas été sauvegardée.'));
             }
         }
         $this->set(compact('category'));
@@ -77,10 +77,10 @@ class CategoriesController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $category = $this->Categories->patchEntity($category, $this->request->data);
             if ($this->Categories->save($category)) {
-                $this->Flash->success(__('The category has been saved.'));
+                $this->Flash->success(__('La catégorie a été sauvegardée.'));
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error(__('The category could not be saved. Please, try again.'));
+                $this->Flash->error(__('La catégorie n\'a pas été sauvegardée.'));
             }
         }
         $this->set(compact('category'));
@@ -99,9 +99,9 @@ class CategoriesController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $category = $this->Categories->get($id);
         if ($this->Categories->delete($category)) {
-            $this->Flash->success(__('The category has been deleted.'));
+            $this->Flash->success(__('La catégorie a été supprimée.'));
         } else {
-            $this->Flash->error(__('The category could not be deleted. Please, try again.'));
+            $this->Flash->error(__('TLa catégorie n\'a pas été supprimée.'));
         }
         return $this->redirect(['action' => 'index']);
     }
