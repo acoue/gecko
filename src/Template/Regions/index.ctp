@@ -1,41 +1,47 @@
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('New Region'), ['action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Clubs'), ['controller' => 'Clubs', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Club'), ['controller' => 'Clubs', 'action' => 'add']) ?></li>
-    </ul>
-</nav>
-<div class="regions index large-9 medium-8 columns content">
-    <h3><?= __('Regions') ?></h3>
-    <table cellpadding="0" cellspacing="0">
-        <thead>
-            <tr>
-                <th><?= $this->Paginator->sort('id') ?></th>
-                <th><?= $this->Paginator->sort('name') ?></th>
-                <th class="actions"><?= __('Actions') ?></th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($regions as $region): ?>
-            <tr>
-                <td><?= $this->Number->format($region->id) ?></td>
-                <td><?= h($region->name) ?></td>
-                <td class="actions">
-                    <?= $this->Html->link(__('View'), ['action' => 'view', $region->id]) ?>
-                    <?= $this->Html->link(__('Edit'), ['action' => 'edit', $region->id]) ?>
-                    <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $region->id], ['confirm' => __('Are you sure you want to delete # {0}?', $region->id)]) ?>
-                </td>
-            </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
-    <div class="paginator">
-        <ul class="pagination">
-            <?= $this->Paginator->prev('< ' . __('previous')) ?>
-            <?= $this->Paginator->numbers() ?>
-            <?= $this->Paginator->next(__('next') . ' >') ?>
-        </ul>
-        <p><?= $this->Paginator->counter() ?></p>
-    </div>
+<div class="blocblanc">
+	<h2>Administration</h2>
+    <h3>Région</h3>
+	<div class="blocblancContent">
+		<div class="row">
+			<div class="col-lg-2"></div>
+			<div class="col-lg-20"> 
+				<table cellpadding="0" cellspacing="0" class="table table-striped">
+				    <thead>
+				        <tr>
+			                <th><?= $this->Paginator->sort('id','Id') ?></th>
+			                <th><?= $this->Paginator->sort('name','Libellé') ?></th>
+			                <th class="actions"><?= __('Actions') ?></th>
+				        </tr>
+				    </thead>
+				    <tbody> 
+				    <?php foreach ($regions as $region): ?>
+			            <tr>
+			                <td><?= $this->Number->format($region->id) ?></td>
+			                <td><?= h($region->name) ?></td>
+			                <td class="actions">
+			                    <?= $this->Html->link(__('Voir'), ['action' => 'view', $region->id]) ?>
+			                    <?= $this->Html->link(__('Editer'), ['action' => 'edit', $region->id]) ?>
+			                    <?= $this->Form->postLink(__('Supprimer'), ['action' => 'delete', $region->id], ['confirm' => __('Etes-vous sûr de vouloir supprimer la région {0} ?', $region->name)]) ?>
+			                </td>
+			            </tr>
+			        <?php endforeach; ?>
+				    </tbody>
+				   </table>
+				   <br />
+					<p align="center">
+						<?= $this->Html->link(__('Créer une région'), ['action' => 'add'], ['class'=>'btn btn-default']) ?><br /><br />
+						<?= $this->Html->link(__('Retour'), ['controller'=>'admin', 'action' => 'index'],['class' => 'btn btn-info']) ?> 
+					</p>
+					<div class="paginator">
+				        <ul class="pagination">
+				            <?= $this->Paginator->prev('< ' . __('Préc.')) ?>
+				            <?= $this->Paginator->numbers() ?>
+				            <?= $this->Paginator->next(__('Suiv.') . ' >') ?>
+				        </ul>
+				        <p><?= $this->Paginator->counter() ?></p>
+				    </div><br />
+				</div>						
+			<div class="col-lg-2"></div>
+		</div>
+	</div>
 </div>

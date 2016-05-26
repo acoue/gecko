@@ -5,7 +5,7 @@
 		<div class="row">
 			<div class="col-lg-2"></div>
 			<div class="col-lg-5">
-			<?= $this->Form->postLink(__('Supprimer'), ['action' => 'delete', $competition->id], ['class'=>'btn btn-warning','confirm' => __('Etes-vous sûr de vouloir supprimer la compétition # {0} ?', $competition->id)]) ?><br /><br/>
+			<?= $this->Form->postLink(__('Supprimer'), ['action' => 'delete', $competition->id], ['class'=>'btn btn-warning','confirm' => __('Etes-vous sûr de vouloir supprimer la compétition {0} ?', $competition->name)]) ?><br /><br/>
 			<?= $this->Html->link(__('Retour'), ['action' => 'index'],['class' => 'btn btn-info']) ?> 
 			</div>
 			<div class="col-lg-15">

@@ -52,10 +52,10 @@ class RegionsController extends AppController
         if ($this->request->is('post')) {
             $region = $this->Regions->patchEntity($region, $this->request->data);
             if ($this->Regions->save($region)) {
-                $this->Flash->success(__('The region has been saved.'));
+                $this->Flash->success(__('La région a été sauvegardée'));
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error(__('The region could not be saved. Please, try again.'));
+                $this->Flash->error(__('La région ne peut pas être sauvegardée.'));
             }
         }
         $this->set(compact('region'));
@@ -77,10 +77,10 @@ class RegionsController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $region = $this->Regions->patchEntity($region, $this->request->data);
             if ($this->Regions->save($region)) {
-                $this->Flash->success(__('The region has been saved.'));
+                $this->Flash->success(__('La région a été sauvegardée.'));
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error(__('The region could not be saved. Please, try again.'));
+                $this->Flash->error(__('La région ne peut pas être sauvegardée.'));
             }
         }
         $this->set(compact('region'));
@@ -99,9 +99,9 @@ class RegionsController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $region = $this->Regions->get($id);
         if ($this->Regions->delete($region)) {
-            $this->Flash->success(__('The region has been deleted.'));
+            $this->Flash->success(__('La région a été supprimée.'));
         } else {
-            $this->Flash->error(__('The region could not be deleted. Please, try again.'));
+            $this->Flash->error(__('La région ne peut pas être supprimée.'));
         }
         return $this->redirect(['action' => 'index']);
     }
