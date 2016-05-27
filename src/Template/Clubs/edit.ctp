@@ -1,3 +1,4 @@
+<?php //debug($club);die();?>
 <div class="blocblanc">
 	<h2>Administration</h2>
     <h3>Club - Edition</h3>
@@ -26,7 +27,7 @@
 														   	'div' => false,
 															'class' => 'form-control', 
                     										'options'=>$regions, 
-                    										'value' => h($club->region),
+                    										'value' => h($club->region_id),
 															'required' =>'required']); ?>
                     </div>                          
 				</div><br /> 

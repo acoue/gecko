@@ -22,7 +22,7 @@
 			        </tr>
 			        <tr>
 			            <td>Administration des Licenciés</td>
-			            <td><?= $this->Html->link('Catégorie', ['controller'=>'Licencies', 'action' => 'index'],['class' => 'btn btn-default']) ?></td>
+			            <td><?= $this->Html->link('Licenciés', ['controller'=>'Licencies', 'action' => 'index'],['class' => 'btn btn-default']) ?></td>
 			        </tr>
 			        <tr>
 			            <td>Import des données via fichier : Club</td>

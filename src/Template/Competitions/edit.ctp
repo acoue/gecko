@@ -65,7 +65,7 @@
 														   	'div' => false,
 															'class' => 'form-control', 
                     										'options'=>$categories, 
-                    										'value' => h($competition->catagorie),
+                    										'value' => h($competition->catagorie_id),
 															'required' =>'required']); ?>
                     </div>                          
 				</div><br /> 
