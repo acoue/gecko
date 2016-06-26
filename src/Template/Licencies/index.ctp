@@ -5,45 +5,45 @@
 		<div class="row">
 			<div class="col-lg-2"></div>
 			<div class="col-lg-20"> 
-				<table cellpadding="0" cellspacing="0" class="table table-striped">
-				    <thead>
-				        <tr>
-			                <th><?= $this->Paginator->sort('prenom','Prénom') ?></th>
-			                <th><?= $this->Paginator->sort('nom','Nom') ?></th>
-			                <th><?= $this->Paginator->sort('club_id','Club') ?></th>
-			                <th class="actions"><?= __('Actions') ?></th>
-				        </tr>
-				    </thead>
-				    <tbody> 
-            <?php foreach ($licencies as $licency): ?>
-			            <tr>
-                			<td><?= h($licency->prenom) ?></td>
-                			<td><?= h($licency->nom) ?></td>
-			                <th><?= h($licency->club->name) ?></th>
-			                <td class="actions">
-			                    <?= $this->Html->link(__('Voir'), ['action' => 'view', $licency->id]) ?>
-			                    <?= $this->Html->link(__('Editer'), ['action' => 'edit', $licency->id]) ?>
-			                    <?= $this->Form->postLink(__('Supprimer'), ['action' => 'delete', $licency->id], ['confirm' => __('Etes-vous sûr de vouloir supprimer le licencié {0} ?', $licency->prenom." ".$licency->nom)]) ?>
-			                </td>
-			            </tr>
-			        <?php endforeach; ?>
-				    </tbody>
-				   </table>
-				   <br />
-					<p align="center">
-						<?= $this->Html->link(__('Créer un licencié'), ['action' => 'add'], ['class'=>'btn btn-default']) ?><br /><br />
-						<?= $this->Html->link(__('Retour'), ['controller'=>'admin', 'action' => 'index'],['class' => 'btn btn-info']) ?> 
-					</p>
-					<div class="paginator">
-				        <ul class="pagination">
-				            <?= $this->Paginator->prev('< ' . __('Préc.')) ?>
-				            <?= $this->Paginator->numbers() ?>
-				            <?= $this->Paginator->next(__('Suiv.') . ' >') ?>
-				        </ul>
-				        <p><?= $this->Paginator->counter() ?></p>
-				    </div><br />
+							<?= $this->Form->create(NULL); ?>
+				<div class="row">
+                	<label class="col-md-6 control-label" for="libelle">Entrez un Libellé pour la recherche : </label>
+                    <div class="col-md-14"><?= $this->Form->input('libelle', ['label' => false,'id'=>'libelle',
+														   	'div' => false,
+															'class' => 'form-control', 
+                    										'type' => 'text']); ?>
+                    </div> 
+                    <div class="col-md-3"></div>                         
+				</div><br />  
+			
+			<?= $this->Form->end() ?>
+				<div id="listeDiv"></div>
 				</div>						
 			<div class="col-lg-2"></div>
 		</div>
 	</div>
 </div>
+
+
+<?php $this->append('script');?>
+	<script>
+	$(function () {
+
+		$("#libelle").bind('input', function () {
+            $.ajax({
+                url: "<?= $this->Url->build(['controller'=>'licencies','action'=>'search'])?>",
+                data: {
+                    libelle: $("#libelle").val()
+                },
+                length: 3,
+                dataType: 'html',
+                type: 'post',
+                success: function (html) {
+                    $("#listeDiv").html(html);
+                }
+            })
+        });
+		
+	});
+	</script>
+<?php $this->end();?>

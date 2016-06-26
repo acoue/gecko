@@ -110,4 +110,19 @@ class LicenciesController extends AppController
         }
         return $this->redirect(['action' => 'index']);
     }
+
+    public function search() {
+    	if ($this->request->is(['ajax'])) {
+    		$libelle = $this->request->data['libelle'];
+    		
+    		$lic = $this->Licencies->find('all')
+    		->contain(['Clubs'])
+    		->limit(20)
+    		->where(['prenom like '=>'%'.$libelle.'%'])
+    		->orWhere(['nom like '=>'%'.$libelle.'%']);
+    		$this->set('licencies', $lic);
+    
+    		//% or name like %% or description like %%
+    	}
+    }
 }
