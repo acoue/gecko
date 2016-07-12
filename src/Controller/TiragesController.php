@@ -114,13 +114,14 @@ class TiragesController extends AppController
 						
 				
 						
-						
+						//****************
 						//Pas d'ecart club et pas d'ecart tete de serie
 						if($club == "N" && $tete == "N") { 
 							// Recuperation des competiteurs
 							shuffle($competiteurs);
 							$listeFinale=$competiteurs;
 						}
+						//****************
 						//Pas d'ecart club et ecart tete de serie
 						if($club == "N" && $tete == "O") { 
 							//Recuperation des identifiants licenciés des tetes
@@ -128,8 +129,6 @@ class TiragesController extends AppController
 							($data['tete2'] > -1) ? $tete2 = $data['tete2']:$tete2=null;
 							($data['tete3'] > -1) ? $tete3 = $data['tete3']:$tete3=null;
 							($data['tete4'] > -1) ? $tete4 = $data['tete4']:$tete4=null;
-							
-							debug($competiteurs);
 							//Tirage des tetes
 							$listeFinaleTmp=FonctionTirage::repartitionTete($competiteurs,$poule,$tete1,$tete2,$tete3,$tete4);
 							//Tirage des autres
@@ -137,14 +136,71 @@ class TiragesController extends AppController
 							$result=array_diff($competiteurs, $listeFinaleTmp);
 							//on fait un tirage simple
 							$listeFinale=FonctionTirage::repartitionAleatoire($result,$poule,$listeFinaleTmp);
-							
-							debug($listeFinale);die();
 						}
+						//****************
 						//Ecart club et pas d'ecart tete de serie
 						if($club == "O" && $tete == "N") { 
-						}					
+
+							//Liste triée par club
+							shuffle($competiteurs);
+							$compByClub=[];
+							$compByClubModel = $this->loadModel('Licencies');
+							$query = $compByClubModel->find()->contain(['Clubs']);
+							$compTmp = $query->select([
+														'club' => 'Clubs.id',
+														'count' => $query->func()->count('Licencies.id')])
+											 ->where(['licencies.id in ' => $competiteurs])
+											 ->group('Clubs.id')
+											 ->order('count DESC');
+							
+							foreach ($compTmp as $key):
+								$resComp = $compByClubModel->find('All')
+														   ->contain(['Clubs'])
+														   ->select('Licencies.id')
+														   ->where(['Clubs.id' => $key->club,'licencies.id in ' => $competiteurs])->toArray();
+								foreach ($resComp as $resTmp) : 
+									array_push($compByClub,$resTmp['id']);			
+								endforeach;				
+							endforeach;	
+							
+							$listeFinale=FonctionTirage::repartitionClub($compByClub,$poule);
+							
+							
+						}		
+						//****************
 						//Ecart club et ecart tete de serie
-						if($club == "O" && $tete == "O") { 
+						if($club == "O" && $tete == "O") {
+							//Recuperation des identifiants licenciés des tetes
+							($data['tete1'] > -1) ? $tete1 = $data['tete1']:$tete1=null;
+							($data['tete2'] > -1) ? $tete2 = $data['tete2']:$tete2=null;
+							($data['tete3'] > -1) ? $tete3 = $data['tete3']:$tete3=null;
+							($data['tete4'] > -1) ? $tete4 = $data['tete4']:$tete4=null;
+							//Tirage des tetes
+							$listeFinaleTmp=FonctionTirage::repartitionTete($competiteurs,$poule,$tete1,$tete2,$tete3,$tete4);
+							//Tirage des autres
+							
+							shuffle($competiteurs);
+							$compByClub=[];
+							$compByClubModel = $this->loadModel('Licencies');
+							$query = $compByClubModel->find()->contain(['Clubs']);
+							$compTmp = $query->select([
+									'club' => 'Clubs.id',
+									'count' => $query->func()->count('Licencies.id')])
+									->where(['licencies.id in ' => $competiteurs])
+									->group('Clubs.id')
+									->order('count DESC');
+								
+							foreach ($compTmp as $key):
+							$resComp = $compByClubModel->find('All')
+							->contain(['Clubs'])
+							->select('Licencies.id')
+							->where(['Clubs.id' => $key->club,'licencies.id in ' => $competiteurs])->toArray();
+							foreach ($resComp as $resTmp) :
+							array_push($compByClub,$resTmp['id']);
+							endforeach;
+							endforeach;
+							//Tirage pour club
+							$listeFinale=FonctionTirage::repartitionClubAvecTete($compByClub,$listeFinaleTmp,$poule);
 						}
 					} 
 					

@@ -29,6 +29,47 @@ class FonctionTirage {
 		return $listeAvecTete;
 	}
 	
+	function repartitionClubAvecTete($competiteurs,$final,$poule) {
+
+		$tailleListeFinale = count($final);
+		$pos=0;
+		$placement=0;
+		
+		for($i=0; $i< $tailleListeFinale;$i++) {
+			if($placement > $tailleListeFinale) {
+				if( $pos < $tailleListeFinale) $pos++;
+				else $pos=0;
+				$placement=$pos;
+			}
+			if($final[$placement]=="#" && in_array($final[$placement],$final) ) {
+				$final[$placement] = $competiteurs[$i];
+			}
+			$placement += $poule;
+		}
+		return $final;
+	}
+	
+	function repartitionClub($competiteurs,$poule) {
+		$final=[];
+		while(count($competiteurs) > count($final)) array_push($final,"#");
+		
+		$tailleListeFinale = count($final);
+		$pos=0;
+		$placement=0;
+		
+		for($i=0; $i< $tailleListeFinale;$i++) {
+			if($placement > $tailleListeFinale) {
+				if( $pos < $tailleListeFinale) $pos++;
+				else $pos=0;
+				$placement=$pos;
+			} 
+			if($final[$placement]=="#") {
+				$final[$placement] = $CompSansTete[$i];
+			} 
+			$placement += $poule;	
+		}
+		return $final;		
+	}
 	
 	function repartitionTete($competiteurs,$poule,$tete1,$tete2,$tete3,$tete4) {
 		
