@@ -84,15 +84,15 @@ class FonctionTirage {
 		if($tete4) $nbTete++;
 		
 		//positionnement de la tete 1
-		if($tete1) $final[0]=$tete1;
+		if($tete1) $final[0]=$tete1*1;
 		//positionnement de la tete 2
 		if($tete2){
 			//Si place 
-			if($final[$poule] && $final[$poule]=="#") $final[$poule]=$tete2; 
+			if($final[$poule] && $final[$poule]=="#") $final[$poule]=$tete2*1; 
 			else {//sinon on place au premier emplacement libre
 				for($i=0; $i<count($final);$i++) {
 					if($final[$i]=="#") {
-						$final[$i]=$tete2;
+						$final[$i]=$tete2*1;
 						break;
 					}
 				}
@@ -100,11 +100,11 @@ class FonctionTirage {
 		}
 		//positionnement de la tete 3
 		if($tete3){
-			if($final[$poule*2] && $final[$poule*2]=="#") $final[$poule*2]=$tete3;
+			if($final[$poule*2] && $final[$poule*2]=="#") $final[$poule*2]=$tete3*1;
 			else {//sinon on place au premier emplacement libre
 				for($i=0; $i<count($final);$i++) {
 					if($final[$i]=="#") {
-						$final[$i]=$tete2;
+						$final[$i]=$tete2*1;
 						break;
 					}
 				}	
@@ -112,11 +112,11 @@ class FonctionTirage {
 		}
 		//positionnement de la tete 4
 		if($tete4){
-			if($final[$poule*3] && $final[$poule*3]=="#") $final[$poule*3]=$tete4; 
+			if($final[$poule*3] && $final[$poule*3]=="#") $final[$poule*3]=$tete4*1; 
 			else {//sinon on place au premier emplacement libre mais en partant de la fin
 				for($i<count($final);$i=0;$i--) {
 					if($final[$i]=="#") {
-						$final[$i]=$tete2;
+						$final[$i]=$tete2*1;
 						break;
 					}
 				}

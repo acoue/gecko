@@ -20,20 +20,12 @@ class TiragesController extends AppController
     public function index()
     {
     	//debug($nblicencies);die();
-    	
-    	
-    	
-    	
-    	
     	$this->loadModel('Competitions');
     	$competitionSelected = $this->Competitions->find('all')->where(['selected' => '1'])->first();
     	
     	if ($this->request->is('post')) {
     		 
     		$data =$this->request->data;
-    		debug($data);
-    		//die();
-    		
     		// Recuperation des competiteurs
     		$this->loadModel('Repartitions');
     		$nblicencies = $this->Repartitions->find('all')->where(['competition_id' => $competitionSelected->id])->count();
@@ -111,9 +103,6 @@ class TiragesController extends AppController
 						$nbPouleChoix = (int)($nblicencies / $poule);
 						$nbPoulePlus = $nblicencies % $poule;
 						
-						
-				
-						
 						//****************
 						//Pas d'ecart club et pas d'ecart tete de serie
 						if($club == "N" && $tete == "N") { 
@@ -164,8 +153,7 @@ class TiragesController extends AppController
 							endforeach;	
 							
 							$listeFinale=FonctionTirage::repartitionClub($compByClub,$poule);
-							
-							
+				
 						}		
 						//****************
 						//Ecart club et ecart tete de serie
@@ -204,22 +192,25 @@ class TiragesController extends AppController
 						}
 					} 
 					
+					//debug($listeFinale); die();
+					$this->set('listeFinale',$listeFinale);
 					
-					
-					debug($listeFinale); die();
+					//Mise a jour de la table Repartition
+					 
+					//creation des combats
 				
 
 					//Enregistrement
-					//     		$tirage = $this->Tirages->newEntity();
-					//     		$tirage->type = $type;
-					//     		$tirage->competition_id=$competitionSelected->id;
+		     		$tirage = $this->Tirages->newEntity();
+					$tirage->type = $type;
+					$tirage->competition_id=$competitionSelected->id;
 					
-					//     		if ($this->Tirages->save($tirage)) {
-					//     			$this->Flash->success(__('Le tirage a été effectué.'));
-					//     			return $this->redirect(['action' => 'index']);
-					//     		} else {
-					//     			$this->Flash->error(__('Erreur lors du tirage au sort.'));
-					//     		}					
+					if ($this->Tirages->save($tirage)) {
+						$this->Flash->success(__('Le tirage a été effectué.'));
+						return $this->redirect(['action' => 'resume']);
+					} else {
+						$this->Flash->error(__('Erreur lors du tirage au sort.'));
+					}					
 					
 				}
 			} else {
@@ -249,7 +240,7 @@ class TiragesController extends AppController
      *
      * @return \Cake\Network\Response|void Redirects on successful add, renders view otherwise.
      */
-    public function add()
+    public function resume()
     {
         
         
