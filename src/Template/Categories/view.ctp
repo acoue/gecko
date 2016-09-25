@@ -20,16 +20,6 @@
                     										'value' => h($category->name)]); ?>
                     </div>                          
 				</div><br />
-				<div class="row">
-                	<label class="col-md-8 control-label" for="type">Type</label>
-                    <div class="col-md-14"><?= $this->Form->input('type', ['label' => false,'id'=>'type',
-														   	'div' => false,
-															'class' => 'form-control', 
-                    										'type' => 'text', 
-															'disabled' => 'disabled', 
-                    										'value' => h($category->type) == 0 ? 'Individuel' : 'Equipe']); ?>
-                    </div>                          
-				</div><br />
 			</div>						
 			<div class="col-lg-2"></div>
 		</div>

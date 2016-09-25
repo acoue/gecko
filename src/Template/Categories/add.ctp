@@ -18,15 +18,6 @@
 															'required' =>'required']); ?>
                     </div>                          
 				</div><br /> 
-				<div class="row">
-                	<label class="col-lg-8 control-label" for="type">Type <span class="obligatoire"> *</span></label>
-                	<div class="col-lg-16"><?= $this->Form->input('type', ['label' => false,
-                											'options' => ['' => 'Sélectionner', '0' => 'Individuel', '1' => 'Equipe'],
-                											'div' => false,
-															'class' => 'form-control', 
-                    										'required' =>'required']) ?>    
-                	</div>                 
-				</div><br />
 			    <?= $this->Form->button(__('Valider'),['class'=>'btn btn-default']) ?>
 			    <?= $this->Form->end() ?>
 				<p align='left'><span class="obligatoire">&nbsp;&nbsp;&nbsp;&nbsp;<sup>*</sup></span> Champ obligatoire</p>	

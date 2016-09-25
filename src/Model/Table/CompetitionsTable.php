@@ -62,11 +62,6 @@ class CompetitionsTable extends Table
             ->allowEmpty('lieux');
 
         $validator
-            ->integer('type')
-            ->requirePresence('type', 'create')
-            ->notEmpty('type');
-
-        $validator
             ->requirePresence('description', 'create')
             ->notEmpty('description');
 

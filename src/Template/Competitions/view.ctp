@@ -41,16 +41,6 @@
                     </div>                          
 				</div><br />
 				<div class="row">
-                	<label class="col-md-8 control-label" for="type">Type</label>
-                    <div class="col-md-14"><?= $this->Form->input('type', ['label' => false,'id'=>'type',
-														   	'div' => false,
-															'class' => 'form-control', 
-                    										'type' => 'text', 
-															'disabled' => 'disabled', 
-                    										'value' => h($competition->type) == 0 ? 'Individuel' : 'Equipe']); ?>
-                    </div>                          
-				</div><br />
-				<div class="row">
                 	<label class="col-md-8 control-label" for="description">Description</label>
                     <div class="col-md-14"><?= $this->Form->input('description', ['label' => false,'id'=>'description',
 														   	'div' => false,

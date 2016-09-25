@@ -10,7 +10,6 @@
 				        <tr>
 			                <th><?= $this->Paginator->sort('id','Id') ?></th>
 			                <th><?= $this->Paginator->sort('name','Libellé') ?></th>
-                			<th><?= $this->Paginator->sort('type') ?></th>
 			                <th class="actions"><?= __('Actions') ?></th>
 				        </tr>
 				    </thead>
@@ -19,7 +18,6 @@
 			            <tr>
 			                <td><?= $this->Number->format($category->id) ?></td>
 			                <td><?= h($category->name) ?></td>
-                			<td><?= $category->type == 0 ? "Individuel" : "Equipe"; ?></td>
 			                <td class="actions">
 			                    <?= $this->Html->link(__('Voir'), ['action' => 'view', $category->id]) ?>
 			                    <?= $this->Html->link(__('Editer'), ['action' => 'edit', $category->id]) ?>

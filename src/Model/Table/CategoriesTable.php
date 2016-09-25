@@ -46,11 +46,6 @@ class CategoriesTable extends Table
             ->notEmpty('name')
             ->add('name', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
 
-        $validator
-            ->integer('type')
-            ->requirePresence('type', 'create')
-            ->notEmpty('type');
-
         return $validator;
     }
 

@@ -36,15 +36,6 @@
                     </div>                          
 				</div><br /> 
 				<div class="row">
-                	<label class="col-lg-8 control-label" for="type">Type <span class="obligatoire"> *</span></label>
-                	<div class="col-lg-16"><?= $this->Form->input('type', ['label' => false,
-                											'options' => ['' => 'Sélectionner', '0' => 'Individuel', '1' => 'Equipe'],
-                											'div' => false,
-															'class' => 'form-control', 
-                    										'required' =>'required']) ?>    
-                	</div>                 
-				</div><br />
-				<div class="row">
                 	<label class="col-lg-8 control-label" for="description">Description</label>
                     <div class="col-lg-16"><?= $this->Form->input('description', ['label' => false,'id'=>'description',
 														   	'div' => false,'type' => 'textarea', 'escape' => false,

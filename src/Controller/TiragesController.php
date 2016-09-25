@@ -192,12 +192,69 @@ class TiragesController extends AppController
 						}
 					} 
 					
-					//debug($listeFinale); die();
-					$this->set('listeFinale',$listeFinale);
+					//Mise à jour table repatition 
+					$iNumero = 1;
+					$iBoucle=1;
+					if( count($listeFinale) % $poule == 0){
+						for($i=0;$i<count($listeFinale);$i++) {
+							if ($iNumero > $poule) {
+								$iBoucle++;
+								$iNumero = 1;
+							}
+							//Mise a jour de la table Repartition
+							$this->loadModel('Repartitions');
+							$repartitionQuery = $this->Repartitions->query();
+							$repartitionQuery->update()
+										 ->set(['numero_poule'=>$iNumPoule,'position_poule'=>$iPosition])
+										 ->where(['competition_id'=>$competitionSelected->id,'licencie-id'=>$listeFinale[$i]])
+										 ->execute();
+
+							$iNumero++;
+						}
+					} else {
+						$quotient = (int) (count($listeFinale) / $poule); // on prend la partie entiere du resultat de la division
+						//$reste = $nbParticipant - ($quotient * $nbInPoule);
+						$reste = count($listeFinale) % $poule;
+						 
+						$iBoucle = 1;
+						$iNumero = 1;
+						for($i=0;$i<count($listeFinale);$i++) {
+							if ($iBoucle <= ($quotient-$reste)){
+								if ($iNumero > $poule) {
+									$iBoucle++;
+									$iNumero = 1;
+								}
+							} else {
+								if ($iNumero > $poule +1) {
+									$iBoucle++;
+									$iNumero = 1;
+								}
+							}
+							//Mise a jour de la table Repartition
+							$this->loadModel('Repartitions');
+							$repartitionQuery = $this->Repartitions->query();
+							$repartitionQuery->update()
+										 ->set(['numero_poule'=>$iBoucle,'position_poule'=>$iNumero])
+										 ->where(['competition_id'=>$competitionSelected->id,'licencie_id'=>$listeFinale[$i]])
+										 ->execute();
+
+							$iNumero++;
+						}
+					}
 					
-					//Mise a jour de la table Repartition
-					 
-					//creation des combats
+					//Creation des combats
+					$this->loadModel('CombatPoules');
+					$combatQuery = $this->CombatPoules->query();
+					$combatQuery
+					->insert(['poule','ordre','licencie1','licencie2','competition_id'])
+					->values(['poule'=>1,'ordre'=>2,'licencie1'=>'12','licencie2'=>'21','competition_id'=>$competitionSelected->id])
+					->execute();
+					
+					
+					debug($listeFinale);
+					die();
+				
+					
 				
 
 					//Enregistrement

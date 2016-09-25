@@ -22,16 +22,6 @@
                     </div>                          
 				</div><br />
 				<div class="row">
-                	<label class="col-md-8 control-label" for="type">Type <span class="obligatoire"><sup> *</sup></span></label>
-                    <div class="col-md-14"><?= $this->Form->input('type', ['label' => false,'id'=>'type',
-														   	'div' => false,
-															'class' => 'form-control', 
-															'required' =>'required', 
-                    										'options' => ['0' => 'Individuel', '1'=>'Equipe'],
-                    										'value' => h($category->type)]); ?>
-                    </div>                          
-				</div><br />
-				<div class="row">
 					<?= $this->Form->button('Valider', ['type' => 'submit','class' => 'btn btn-default']) ?>
 					<?= $this->Form->end() ?>
 			    </div>

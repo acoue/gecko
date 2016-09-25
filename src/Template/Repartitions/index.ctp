@@ -32,6 +32,8 @@
 				        	<th>Id</th>
 			                <th>Prénom</th>
 			                <th>Nom</th>
+			                <th>Poule n°</th>
+			                <th>Position</th>
 			                <th class="actions"><?= __('Actions') ?></th>
 				        </tr>
 				    </thead>
@@ -41,6 +43,8 @@
 			                <td><?= $this->Number->format($repartition->id) ?></td>
 			                <td><?= h($repartition->licency->prenom) ?></td>
 			                <td><?= h($repartition->licency->nom) ?></td>
+			                <td><?= h($repartition->licency->numero_poule) ?></td>
+			                <td><?= h($repartition->licency->position_poule) ?></td>
 			                <td class="actions">
 			                    <?= $this->Form->postLink(__('Supprimer'), ['action' => 'delete', $repartition->id], ['confirm' => __('Etes-vous sûr de vouloir supprimer la ligne ?')]) ?>
 			                </td>

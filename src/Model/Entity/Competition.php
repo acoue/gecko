@@ -10,7 +10,6 @@ use Cake\ORM\Entity;
  * @property string $name
  * @property \Cake\I18n\Time $date_competition
  * @property string $lieux
- * @property int $type
  * @property string $description
  * @property int $selected
  * @property \Cake\I18n\Time $created
