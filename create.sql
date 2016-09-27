@@ -18,6 +18,30 @@ USE `gecko`;
 
 -- --------------------------------------------------------
 
+CREATE TABLE `users` (
+  `id` int(11) NOT NULL,
+  `username` varchar(45) NOT NULL,
+  `password` varchar(100) NOT NULL,
+  `nom` varchar(100) DEFAULT NULL,
+  `prenom` varchar(100) DEFAULT NULL,
+  `active` int(1) NOT NULL DEFAULT '0',
+  `lastlogin` datetime NOT NULL,
+  `created` datetime DEFAULT NULL,
+  `modified` datetime DEFAULT NULL,
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `username` (`username`);
+
+ALTER TABLE `users`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+
+
+  
+  INSERT INTO `users` (`id`, `username`, `password`, `nom`, `prenom`, `active`) VALUES
+  (1, 'acoue', '$2y$10$gxMkQQvFJzkvJX4nzM5dee6uoG5chAKhwF152BzCkVMIIfgGwlEO.', 'COUE', 'Anthony', 1);
+  
 --
 -- Structure de la table `categories`
 --
