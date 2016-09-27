@@ -242,17 +242,22 @@ class TiragesController extends AppController
 						}
 					}
 					
+					//
+					$this->loadModel('Repartitions');
+					$repartitions = $this->Repartitions->find('all')->contain(['Licencies'])->where(['competition_id'=>$competitionSelected->id])->toArray();
+					
+					debug($repartitions);
+					die();
+					
 					//Creation des combats
 					$this->loadModel('CombatPoules');
 					$combatQuery = $this->CombatPoules->query();
-					$combatQuery
-					->insert(['poule','ordre','licencie1','licencie2','competition_id'])
-					->values(['poule'=>1,'ordre'=>2,'licencie1'=>'12','licencie2'=>'21','competition_id'=>$competitionSelected->id])
-					->execute();
+					$combatQuery->insert(['poule','ordre','licencie1','licencie2','competition_id'])
+								->values(['poule'=>1,'ordre'=>2,'licencie1'=>'12','licencie2'=>'21','competition_id'=>$competitionSelected->id])
+								->execute();
 					
 					
-					debug($listeFinale);
-					die();
+					
 				
 					
 				
