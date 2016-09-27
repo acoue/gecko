@@ -5,8 +5,12 @@
 	    	<table class="table" width="60%">
 			    <tbody>
 			        <tr>
+			            <td width='70%'>Administration des Utilisateurs</td>
+			            <td width='30%'><?= $this->Html->link('Utilisateurs', ['controller'=>'utilisateurs', 'action' => 'index'],['class' => 'btn btn-default']) ?></td>
+			        </tr>
+			        <tr>
 			            <td width='70%'>Administration des Compétitions</td>
-			            <td width='30%'><?= $this->Html->link('Compétition', ['controller'=>'competitions', 'action' => 'index'],['class' => 'btn btn-default']) ?></td>
+			            <td width='30%'><?= $this->Html->link('Compétitions', ['controller'=>'competitions', 'action' => 'index'],['class' => 'btn btn-default']) ?></td>
 			        </tr>
 			        <tr>
 			            <td>Administration des Régions</td>
@@ -19,10 +23,6 @@
 			        <tr>
 			            <td>Administration des Catégories</td>
 			            <td><?= $this->Html->link('Catégorie', ['controller'=>'Categories', 'action' => 'index'],['class' => 'btn btn-default']) ?></td>
-			        </tr>
-			        <tr>
-			            <td>Administration des Licenciés</td>
-			            <td><?= $this->Html->link('Licenciés', ['controller'=>'Licencies', 'action' => 'index'],['class' => 'btn btn-default']) ?></td>
 			        </tr>
 			        <tr>
 			            <td>Import des données via fichier : Club</td>

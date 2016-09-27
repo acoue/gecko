@@ -37,7 +37,7 @@ trait DateFormatTrait
     /**
      * In-memory cache of date formatters
      *
-     * @var array
+     * @var IntlDateFormatter[]
      */
     protected static $_formatters = [];
 
@@ -55,12 +55,12 @@ trait DateFormatTrait
      * @var string|array|int
      * @see \Cake\I18n\Time::i18nFormat()
      */
-    protected static $_jsonEncodeFormat = "yyyy-MM-dd'T'HH:mm:ssZ";
+    protected static $_jsonEncodeFormat = "yyyy-MM-dd'T'HH:mm:ssxxx";
 
     /**
      * Caches whether or not this class is a subclass of a Date or MutableDate
      *
-     * @var boolean
+     * @var bool
      */
     protected static $_isDateInstance;
 
@@ -165,6 +165,7 @@ trait DateFormatTrait
 
         $format = $format !== null ? $format : static::$_toStringFormat;
         $locale = $locale ?: static::$defaultLocale;
+
         return $this->_formatObject($time, $format, $locale);
     }
 
@@ -312,8 +313,10 @@ trait DateFormatTrait
         $time = $formatter->parse($time);
         if ($time !== false) {
             $result = new static('@' . $time);
+
             return static::$_isDateInstance ? $result : $result->setTimezone($defaultTimezone);
         }
+
         return null;
     }
 
@@ -345,6 +348,7 @@ trait DateFormatTrait
             $format = [$format, -1];
         }
         $format = $format ?: static::$wordFormat;
+
         return static::parseDateTime($date, $format);
     }
 
@@ -374,6 +378,7 @@ trait DateFormatTrait
             $format = [-1, $format];
         }
         $format = $format ?: [-1, IntlDateFormatter::SHORT];
+
         return static::parseDateTime($time, $format);
     }
 
@@ -400,9 +405,11 @@ trait DateFormatTrait
             if (static::$diffFormatter === null) {
                 static::$diffFormatter = new RelativeTimeFormatter();
             }
+
             return static::$diffFormatter;
         }
-        return static::$diffFormatter = $translator;
+
+        return static::$diffFormatter = $formatter;
     }
 
     /**
