@@ -328,8 +328,16 @@ class TiragesController extends AppController
      */
     public function resume()
     {
-        
-        
+    	$this->loadModel('Competitions');
+    	$competitionSelected = $this->Competitions->find('all')->where(['selected' => '1'])->first();
+    	
+    	$this->loadModel('Repartitions');
+    	
+    	$repartitions = $this->Repartitions->find('all')->contain(['Licencies'=>['Clubs']])
+    		->where(['competition_id'=>$competitionSelected->id])
+    		->order('numero_poule,position_poule')->toArray();
+    	
+    	$this->set(compact('repartitions'));
     }
 
     /**

@@ -3,9 +3,7 @@
 	<div class="blocblancContent large-9 medium-8 columns content">
 		<div class="row">
 		
-		Poule : resumé<br /><br />
-		Poule 1 ....
-		
+		<?php debug($repartitions);?>
 				
 		</div>
 	</div>

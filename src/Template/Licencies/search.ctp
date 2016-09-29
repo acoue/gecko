@@ -15,6 +15,8 @@
             <td><?= h($licencie->club->name) ?></td>
             <td class="actions">
             <?= $this->html->link(__('Editer'), ['action' => 'edit', $licencie->id])?>
+            
+            <?= $this->html->link(__('Palmares'),['controller'=>'Palmares','action' => 'palmares', $licencie->id]) ?>
           	</td>
         </tr>
 
