@@ -241,27 +241,51 @@ class TiragesController extends AppController
 							$iNumero++;
 						}
 					}
-					
-					//
-					$this->loadModel('Repartitions');
-					$repartitions = $this->Repartitions->find('all')->contain(['Licencies'])->where(['competition_id'=>$competitionSelected->id])->toArray();
-					
-					debug($repartitions);
-					die();
-					
 					//Creation des combats
-					$this->loadModel('CombatPoules');
-					$combatQuery = $this->CombatPoules->query();
-					$combatQuery->insert(['poule','ordre','licencie1','licencie2','competition_id'])
-								->values(['poule'=>1,'ordre'=>2,'licencie1'=>'12','licencie2'=>'21','competition_id'=>$competitionSelected->id])
+					$combatModel=$this->loadModel('CombatPoules');
+					
+					
+					$this->loadModel('Repartitions');
+					for($i=1;$i<=$nbPouleChoix;$i++) {
+						$repartitions = $this->Repartitions->find()->select('licencie_id')
+						->where(['competition_id'=>$competitionSelected->id,'numero_poule'=>$i])
+						->order('position_poule')->toArray();
+						$combatQuery = $combatModel->query();
+						
+						if(count($repartitions)==3) { //Poule de 3
+							// 1x2 - 1x3 - 2x3
+							$combatQuery->insert(['poule','ordre','licencie1','licencie2','competition_id'])
+								->values(['poule'=>$i,'ordre'=>1,'licencie1'=>$repartitions[0]['licencie_id'],'licencie2'=>$repartitions[1]['licencie_id'],'competition_id'=>$competitionSelected->id])
+								->values(['poule'=>$i,'ordre'=>2,'licencie1'=>$repartitions[0]['licencie_id'],'licencie2'=>$repartitions[2]['licencie_id'],'competition_id'=>$competitionSelected->id])
+								->values(['poule'=>$i,'ordre'=>3,'licencie1'=>$repartitions[1]['licencie_id'],'licencie2'=>$repartitions[2]['licencie_id'],'competition_id'=>$competitionSelected->id])
 								->execute();
+						} else if(count($repartitions)==4) { //Poule de 4
+							// 1x2 - 3x4 - 1x4 - 1x3 - 2x3 - 2x4
+							$combatQuery->insert(['poule','ordre','licencie1','licencie2','competition_id'])
+							->values(['poule'=>$i,'ordre'=>1,'licencie1'=>$repartitions[0]['licencie_id'],'licencie2'=>$repartitions[1]['licencie_id'],'competition_id'=>$competitionSelected->id])
+							->values(['poule'=>$i,'ordre'=>2,'licencie1'=>$repartitions[2]['licencie_id'],'licencie2'=>$repartitions[3]['licencie_id'],'competition_id'=>$competitionSelected->id])
+							->values(['poule'=>$i,'ordre'=>3,'licencie1'=>$repartitions[0]['licencie_id'],'licencie2'=>$repartitions[3]['licencie_id'],'competition_id'=>$competitionSelected->id])
+							->values(['poule'=>$i,'ordre'=>4,'licencie1'=>$repartitions[0]['licencie_id'],'licencie2'=>$repartitions[2]['licencie_id'],'competition_id'=>$competitionSelected->id])
+							->values(['poule'=>$i,'ordre'=>5,'licencie1'=>$repartitions[1]['licencie_id'],'licencie2'=>$repartitions[2]['licencie_id'],'competition_id'=>$competitionSelected->id])
+							->values(['poule'=>$i,'ordre'=>6,'licencie1'=>$repartitions[1]['licencie_id'],'licencie2'=>$repartitions[3]['licencie_id'],'competition_id'=>$competitionSelected->id])
+							->execute();
+						} else if(count($repartitions)==5) { //Poule de 5
+							// 1x2 - 3x4 - 1x5 - 2x3 - 4x5 - 1x3 - 2x5 - 1x4 - 3x5 - 2x4
+							$combatQuery->insert(['poule','ordre','licencie1','licencie2','competition_id'])
+							->values(['poule'=>$i,'ordre'=>1,'licencie1'=>$repartitions[0]['licencie_id'],'licencie2'=>$repartitions[1]['licencie_id'],'competition_id'=>$competitionSelected->id])
+							->values(['poule'=>$i,'ordre'=>2,'licencie1'=>$repartitions[2]['licencie_id'],'licencie2'=>$repartitions[3]['licencie_id'],'competition_id'=>$competitionSelected->id])
+							->values(['poule'=>$i,'ordre'=>3,'licencie1'=>$repartitions[0]['licencie_id'],'licencie2'=>$repartitions[4]['licencie_id'],'competition_id'=>$competitionSelected->id])
+							->values(['poule'=>$i,'ordre'=>4,'licencie1'=>$repartitions[1]['licencie_id'],'licencie2'=>$repartitions[2]['licencie_id'],'competition_id'=>$competitionSelected->id])
+							->values(['poule'=>$i,'ordre'=>5,'licencie1'=>$repartitions[3]['licencie_id'],'licencie2'=>$repartitions[4]['licencie_id'],'competition_id'=>$competitionSelected->id])
+							->values(['poule'=>$i,'ordre'=>6,'licencie1'=>$repartitions[0]['licencie_id'],'licencie2'=>$repartitions[2]['licencie_id'],'competition_id'=>$competitionSelected->id])
+							->values(['poule'=>$i,'ordre'=>7,'licencie1'=>$repartitions[1]['licencie_id'],'licencie2'=>$repartitions[4]['licencie_id'],'competition_id'=>$competitionSelected->id])
+							->values(['poule'=>$i,'ordre'=>8,'licencie1'=>$repartitions[0]['licencie_id'],'licencie2'=>$repartitions[3]['licencie_id'],'competition_id'=>$competitionSelected->id])
+							->values(['poule'=>$i,'ordre'=>9,'licencie1'=>$repartitions[2]['licencie_id'],'licencie2'=>$repartitions[4]['licencie_id'],'competition_id'=>$competitionSelected->id])
+							->values(['poule'=>$i,'ordre'=>10,'licencie1'=>$repartitions[1]['licencie_id'],'licencie2'=>$repartitions[3]['licencie_id'],'competition_id'=>$competitionSelected->id])
+							->execute();
+						}
+					}
 					
-					
-					
-				
-					
-				
-
 					//Enregistrement
 		     		$tirage = $this->Tirages->newEntity();
 					$tirage->type = $type;
