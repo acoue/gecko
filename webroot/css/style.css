@@ -5,14 +5,14 @@ body, html{height:100%;}
 }
 
 .header_titre {
-    color: #fff;
+    color: #ffffff;
     padding: 10px 10px 20px 10px;
     font-size: 30px;
     float: left ;
 }
 
 .header_texte {
-    color: #000;
+    color: #000000;
     padding: 10px 20px 10px 10px;
     margin: 5px 50px 5px 5px;
     font-size: 25px;
@@ -25,18 +25,18 @@ body, html{height:100%;}
 }
 
 .text-footer-right {
-    color: #777;
+    color: #777777;
     text-align: right;
     vertical-align: middle;
 }
 .text-footer-left {
-    color: #777;
+    color: #777777;
     text-align: left;
     vertical-align: middle;
 }
 
 .divBouton {
-    background-color: #fff;
+    background-color: #ffffff;
     text-align: center;
     vertical-align: middle;
   min-height:100%;
@@ -62,7 +62,7 @@ body, html{height:100%;}
 }
 
 .blocblanc {
-    background: none repeat scroll 0 0 #fff;
+    background: none repeat scroll 0 0 #ffffff;
     margin-bottom: 20px;
     /*border-bottom: 1px solid #d9dbde;*/
 }
@@ -165,4 +165,9 @@ body, html{height:100%;}
 .divCache {
     display: none;
     /*visibility: hidden;*/
+}
+.pouleTab{
+  display:inline-block;
+  vertical-align:top;
+  width: 30%;
 }

@@ -1,30 +1,64 @@
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Form->postLink(
-                __('Delete'),
-                ['action' => 'delete', $palmare->id],
-                ['confirm' => __('Are you sure you want to delete # {0}?', $palmare->id)]
-            )
-        ?></li>
-        <li><?= $this->Html->link(__('List Palmares'), ['action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('List Licencies'), ['controller' => 'Licencies', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Licency'), ['controller' => 'Licencies', 'action' => 'add']) ?></li>
-    </ul>
-</nav>
-<div class="palmares form large-9 medium-8 columns content">
-    <?= $this->Form->create($palmare) ?>
-    <fieldset>
-        <legend><?= __('Edit Palmare') ?></legend>
-        <?php
-            echo $this->Form->input('competition');
-            echo $this->Form->input('lieux');
-            echo $this->Form->input('date_competition');
-            echo $this->Form->input('resultat');
-            echo $this->Form->input('commentaire');
-            echo $this->Form->input('licencie_id', ['options' => $licencies]);
-        ?>
-    </fieldset>
-    <?= $this->Form->button(__('Submit')) ?>
-    <?= $this->Form->end() ?>
+<div class="blocblanc">
+	<h2>Licencié : <?= $licencie->prenom." ".$licencie->nom." (".$licencie->club->name.")" ?></h2>
+    <h3>Ajout Palmarès</h3>
+	<div class="blocblancContent large-9 medium-8 columns content">
+		<div class="row">
+			<div class="col-lg-2"></div>
+			<div class="col-lg-5">
+				<?= $this->Form->postLink(__('Supprimer'), ['action' => 'delete', $palmare->id], ['class'=>'btn btn-warning','confirm' => __('Confirmer la suppression ?')]) ?><br /><br/>
+				<?= $this->Html->link(__('Retour'), ['action' => 'palmares',$palmare->licencie_id],['class' => 'btn btn-info']) ?> 
+			</div>
+			<div class="col-lg-15"> 
+			    <?= $this->Form->create($palmare, ['id'=>'formulaire']) ?>
+			    <div class="row">
+                	<label class="col-lg-8 control-label" for="competition">Competition <span class="obligatoire"><sup> *</sup></span></label>
+                    <div class="col-lg-16"><?= $this->Form->input('competition', ['label' => false,'id'=>'competition',
+														   	'div' => false,
+															'class' => 'form-control', 
+                    										'type' => 'text', 
+															'required' =>'required']); ?>
+                    </div>                          
+				</div><br /> 
+			    <div class="row">
+                	<label class="col-lg-8 control-label" for="lieux">Lieux <span class="obligatoire"><sup> *</sup></span></label>
+                    <div class="col-lg-16"><?= $this->Form->input('lieux', ['label' => false,'id'=>'lieux',
+														   	'div' => false,
+															'class' => 'form-control', 
+                    										'type' => 'text', 
+															'required' =>'required']); ?>
+                    </div>                          
+				</div><br /> 
+			    <div class="row">
+                	<label class="col-lg-8 control-label" for="date_competition">Date <span class="obligatoire"><sup> *</sup></span></label>
+                    <div class="col-lg-16"><?= $this->Form->input('date_competition', ['label' => false,'id'=>'date_competition',
+														   	'div' => false,
+															'class' => 'form-control', 
+                    										'type' => 'text', 
+															'required' =>'required']); ?>
+                    </div>                          
+				</div><br /> 
+			    <div class="row">
+                	<label class="col-lg-8 control-label" for="resultat">Résultat <span class="obligatoire"><sup> *</sup></span></label>
+                    <div class="col-lg-16"><?= $this->Form->input('resultat', ['label' => false,'id'=>'resultat',
+														   	'div' => false,
+															'class' => 'form-control', 
+                    										'type' => 'text', 
+															'required' =>'required']); ?>
+                    </div>                          
+				</div><br /> 
+				<div class="row">
+                	<label class="col-lg-8 control-label" for="commentaire">Commentaire</label>
+                	<div class="col-lg-16"><?= $this->Form->input('commentaire', ['label' => false,
+                											'type' => 'textarea', 'rows' => '5', 'cols' => '80',
+                											'div' => false,
+															'class' => 'form-control']) ?>    
+                	</div>                 
+				</div><br /> 
+			    <?= $this->Form->button(__('Valider'),['class'=>'btn btn-default']) ?>
+			    <?= $this->Form->end() ?>
+				<p align='left'><span class="obligatoire">&nbsp;&nbsp;&nbsp;&nbsp;<sup>*</sup></span> Champ obligatoire</p>	
+			</div>						
+			<div class="col-lg-2"></div>
+		</div>
+	</div>
 </div>

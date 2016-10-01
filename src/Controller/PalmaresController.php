@@ -19,7 +19,7 @@ class PalmaresController extends AppController
     public function index()
     {
         $this->paginate = [
-            'contain' => ['Licencies']
+            'contain' => ['Licencies'=>['Clubs']]
         ];
         $palmares = $this->paginate($this->Palmares);
 
@@ -31,49 +31,50 @@ class PalmaresController extends AppController
    
     public function palmares($id)
     {
-    	$palmares=$this->Palmares->find()->contain(['Licencies'])->where(['licencie_id'=>$id]);
+    	//Palmares
+    	$palmares=$this->Palmares->find()->where(['licencie_id'=>$id]);
     	
-    	$this->set(compact('palmares'));
+    	//Licencie
+    	$licencieModel=$this->loadModel('Licencies');
+    	$licencie=$licencieModel->find()->contain(['Clubs'])->where(['Licencies.id'=>$id])->first();
+    	
+    	$this->set(compact('palmares','licencie'));
     	$this->set('_serialize', ['palmares']);
     }
     
-    /**
-     * View method
-     *
-     * @param string|null $id Palmare id.
-     * @return \Cake\Network\Response|null
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
-    public function view($id = null)
-    {
-        $palmare = $this->Palmares->get($id, [
-            'contain' => ['Licencies']
-        ]);
-
-        $this->set('palmare', $palmare);
-        $this->set('_serialize', ['palmare']);
-    }
-
     /**
      * Add method
      *
      * @return \Cake\Network\Response|void Redirects on successful add, renders view otherwise.
      */
-    public function add()
+    public function add($licencie_id)
     {
         $palmare = $this->Palmares->newEntity();
         if ($this->request->is('post')) {
-            $palmare = $this->Palmares->patchEntity($palmare, $this->request->data);
-            if ($this->Palmares->save($palmare)) {
-                $this->Flash->success(__('The palmare has been saved.'));
+        	
 
-                return $this->redirect(['action' => 'index']);
+        	$date_competition=$this->request->data['date_competition'];
+        	//Transformation de la date : dd/mm/yyyy vers yyyy-mm-dd
+        	if(isset($date_competition)) {
+        		$tmp_date = $date_competition;
+        		$date_competition = substr($tmp_date, 6,4)."-".substr($tmp_date, 3,2)."-".substr($tmp_date, 0,2);
+        	}
+            $palmare = $this->Palmares->patchEntity($palmare, $this->request->data);
+            $palmare->licencie_id=$licencie_id;
+            $palmare->date_competition=$date_competition;
+            
+            if ($this->Palmares->save($palmare)) {
+                $this->Flash->success(__('Le palmarès a été créé.'));
+                return $this->redirect(['action' => 'palmares',$licencie_id]);
             } else {
-                $this->Flash->error(__('The palmare could not be saved. Please, try again.'));
+                $this->Flash->error(__('Erreur dans la création du palmarès.'));
             }
         }
-        $licencies = $this->Palmares->Licencies->find('list', ['limit' => 200]);
-        $this->set(compact('palmare', 'licencies'));
+        //Licencie
+        $licencieModel=$this->loadModel('Licencies');
+        $licencie=$licencieModel->find()->contain(['Clubs'])->where(['Licencies.id'=>$licencie_id])->first();
+         
+        $this->set(compact('palmare','licencie'));
         $this->set('_serialize', ['palmare']);
     }
 
@@ -86,9 +87,7 @@ class PalmaresController extends AppController
      */
     public function edit($id = null)
     {
-        $palmare = $this->Palmares->get($id, [
-            'contain' => []
-        ]);
+        $palmare = $this->Palmares->get($id);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $palmare = $this->Palmares->patchEntity($palmare, $this->request->data);
             if ($this->Palmares->save($palmare)) {
@@ -99,8 +98,11 @@ class PalmaresController extends AppController
                 $this->Flash->error(__('The palmare could not be saved. Please, try again.'));
             }
         }
-        $licencies = $this->Palmares->Licencies->find('list', ['limit' => 200]);
-        $this->set(compact('palmare', 'licencies'));
+        //Licencie
+        $licencieModel=$this->loadModel('Licencies');
+        $licencie=$licencieModel->find()->contain(['Clubs'])->where(['Licencies.id'=>$palmare->licencie_id])->first();
+         
+        $this->set(compact('palmare', 'licencie'));
         $this->set('_serialize', ['palmare']);
     }
 

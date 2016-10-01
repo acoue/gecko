@@ -6,7 +6,7 @@
 			    <tbody>
 			        <tr>
 			            <td width='70%'>Administration des Utilisateurs</td>
-			            <td width='30%'><?= $this->Html->link('Utilisateurs', ['controller'=>'utilisateurs', 'action' => 'index'],['class' => 'btn btn-default']) ?></td>
+			            <td width='30%'><?= $this->Html->link('Utilisateurs', ['controller'=>'users', 'action' => 'index'],['class' => 'btn btn-default']) ?></td>
 			        </tr>
 			        <tr>
 			            <td width='70%'>Administration des Compétitions</td>
@@ -23,6 +23,10 @@
 			        <tr>
 			            <td>Administration des Catégories</td>
 			            <td><?= $this->Html->link('Catégorie', ['controller'=>'Categories', 'action' => 'index'],['class' => 'btn btn-default']) ?></td>
+			        </tr>
+			        <tr>
+			            <td width='70%'>Administration des Palmarès</td>
+			            <td width='30%'><?= $this->Html->link('Palmarès', ['controller'=>'palmares', 'action' => 'index'],['class' => 'btn btn-default']) ?></td>
 			        </tr>
 			        <tr>
 			            <td>Import des données via fichier : Club</td>
