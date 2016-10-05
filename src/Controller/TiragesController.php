@@ -337,7 +337,15 @@ class TiragesController extends AppController
     		->where(['competition_id'=>$competitionSelected->id])
     		->order('numero_poule,position_poule')->toArray();
     	
-    	$this->set(compact('repartitions'));
+    	$query = $this->Repartitions->find();
+    	$query->select(['poule'=>'numero_poule','max' => $query->func()->max('position_poule')])->group('numero_poule');
+    	$pouleTab=[];
+    	foreach ($query as $value) {
+    		$pouleTab[$value->poule]=$value->max;
+    	}
+    	//debug($pouleTab);die();
+    	
+    	$this->set(compact('repartitions','pouleTab'));
     }
 
     /**

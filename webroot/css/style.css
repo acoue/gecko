@@ -171,3 +171,92 @@ body, html{height:100%;}
   vertical-align:top;
   width: 30%;
 }
+
+/*Cellule des poules */
+.cellule1111 {
+	border-top:1px solid black;	
+	border-bottom:1px solid black;	
+	border-right:1px solid black;	
+	border-left:1px solid black;	
+	height:40px;
+}
+.cellule1000 {
+	border-left:1px solid black;	
+	height:40px;	
+}
+.cellule0100 {
+	border-top:1px solid black;		
+	height:40px;
+}
+.cellule0010 {
+	border-right:1px solid black;		
+	height:40px;
+}
+.cellule0001 {
+	border-bottom:1px solid black;		
+	height:40px;
+}
+.cellule1100 {
+	border-left:1px solid black;	
+	border-top:1px solid black;		
+	height:40px;
+}
+
+.cellule1001 {
+	border-left:1px solid black;	
+	border-bottom:1px solid black;		
+	height:40px;
+}
+
+.cellule1010 {
+	border-left:1px solid black;	
+	border-right:1px solid black;		
+	height:40px;
+}
+
+.cellule1110 {
+	border-left:1px solid black;	
+	border-right:1px solid black;		
+	border-top:1px solid black;	
+	height:40px;
+}
+.cellule1011 {
+	border-left:1px solid black;	
+	border-right:1px solid black;		
+	border-bottom:1px solid black;	
+	height:40px;
+}
+.cellule0101 {
+	border-top:1px solid black;			
+	border-bottom:1px solid black;	
+	height:40px;
+}
+.cellule0110 {
+	border-top:1px solid black;			
+	border-right:1px solid black;	
+	height:40px;
+}
+.cellule0111 {
+	border-top:1px solid black;			
+	border-right:1px solid black;
+	border-bottom:1px solid black;	
+	height:40px;
+}
+.cellule0011 {
+	border-bottom:1px solid black;			
+	border-right:1px solid black;	
+	height:40px;
+}
+.celluleGrise{
+	background-color: grey;
+	/*background-color : #c6c3bd;*/
+}
+.libClub {
+  color: #595959;
+  font-size: 12px;
+  font-style: italic;
+}
+.libLicencie {
+  color: #333333;
+  font-size: 16px;
+}
