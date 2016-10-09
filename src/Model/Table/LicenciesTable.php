@@ -1,7 +1,6 @@
 <?php
 namespace App\Model\Table;
 
-use App\Model\Entity\Licency;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
@@ -11,6 +10,16 @@ use Cake\Validation\Validator;
  * Licencies Model
  *
  * @property \Cake\ORM\Association\BelongsTo $Clubs
+ *
+ * @method \App\Model\Entity\Licency get($primaryKey, $options = [])
+ * @method \App\Model\Entity\Licency newEntity($data = null, array $options = [])
+ * @method \App\Model\Entity\Licency[] newEntities(array $data, array $options = [])
+ * @method \App\Model\Entity\Licency|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\Licency patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\Licency[] patchEntities($entities, array $data, array $options = [])
+ * @method \App\Model\Entity\Licency findOrCreate($search, callable $callback = null)
+ *
+ * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */
 class LicenciesTable extends Table
 {
@@ -28,6 +37,8 @@ class LicenciesTable extends Table
         $this->table('licencies');
         $this->displayField('id');
         $this->primaryKey('id');
+
+        $this->addBehavior('Timestamp');
 
         $this->belongsTo('Clubs', [
             'foreignKey' => 'club_id',
@@ -55,6 +66,20 @@ class LicenciesTable extends Table
             ->requirePresence('nom', 'create')
             ->notEmpty('nom');
 
+        $validator
+            ->date('sexe')
+            ->allowEmpty('sexe');
+
+        $validator
+            ->allowEmpty('ddn');
+
+        $validator
+            ->integer('licence')
+            ->allowEmpty('licence');
+
+        $validator
+            ->allowEmpty('grade');
+
         return $validator;
     }
 
@@ -68,6 +93,7 @@ class LicenciesTable extends Table
     public function buildRules(RulesChecker $rules)
     {
         $rules->add($rules->existsIn(['club_id'], 'Clubs'));
+
         return $rules;
     }
 }

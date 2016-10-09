@@ -4,12 +4,19 @@ namespace App\Model\Entity;
 use Cake\ORM\Entity;
 
 /**
- * Licency Entity.
+ * Licency Entity
  *
  * @property int $id
  * @property string $prenom
  * @property string $nom
+ * @property \Cake\I18n\Time $sexe
+ * @property string $ddn
+ * @property int $licence
+ * @property string $grade
  * @property int $club_id
+ * @property \Cake\I18n\Time $created
+ * @property \Cake\I18n\Time $modified
+ *
  * @property \App\Model\Entity\Club $club
  */
 class Licency extends Entity
@@ -26,6 +33,6 @@ class Licency extends Entity
      */
     protected $_accessible = [
         '*' => true,
-        'id' => false,
+        'id' => false
     ];
 }

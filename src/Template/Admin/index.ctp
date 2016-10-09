@@ -13,6 +13,10 @@
 			            <td width='30%'><?= $this->Html->link('Compétitions', ['controller'=>'competitions', 'action' => 'index'],['class' => 'btn btn-default']) ?></td>
 			        </tr>
 			        <tr>
+			            <td width='70%'>Administration des Passages de grades</td>
+			            <td width='30%'><?= $this->Html->link('Passages', ['controller'=>'passages', 'action' => 'index'],['class' => 'btn btn-default']) ?></td>
+			        </tr>
+			        <tr>
 			            <td>Administration des Régions</td>
 			            <td><?= $this->Html->link('Régions', ['controller'=>'Regions', 'action' => 'index'],['class' => 'btn btn-default']) ?></td>
 			        </tr>	
@@ -23,6 +27,10 @@
 			        <tr>
 			            <td>Administration des Catégories</td>
 			            <td><?= $this->Html->link('Catégorie', ['controller'=>'Categories', 'action' => 'index'],['class' => 'btn btn-default']) ?></td>
+			        </tr>
+			        <tr>
+			            <td>Administration des Jurés de passages de grades</td>
+			            <td><?= $this->Html->link('Jurés', ['controller'=>'Jures', 'action' => 'index'],['class' => 'btn btn-default']) ?></td>
 			        </tr>
 			        <tr>
 			            <td width='70%'>Administration des Palmarès</td>
