@@ -25,8 +25,9 @@ $(document).ready(function(){
 	
 	
 	
-	/* Formulaire Engagement */
 	$( "#date_competition" ).datepicker();
+	
+	$( "#date_passage" ).datepicker();
 	
     //Validation des formulaires
     $.validate({

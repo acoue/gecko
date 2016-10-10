@@ -1,23 +1,37 @@
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('List Passages'), ['action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('List Evalues'), ['controller' => 'Evalues', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Evalue'), ['controller' => 'Evalues', 'action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Juges'), ['controller' => 'Juges', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Juge'), ['controller' => 'Juges', 'action' => 'add']) ?></li>
-    </ul>
-</nav>
-<div class="passages form large-9 medium-8 columns content">
-    <?= $this->Form->create($passage) ?>
-    <fieldset>
-        <legend><?= __('Add Passage') ?></legend>
-        <?php
-            echo $this->Form->input('name');
-            echo $this->Form->input('date_passage');
-            echo $this->Form->input('selected');
-        ?>
-    </fieldset>
-    <?= $this->Form->button(__('Submit')) ?>
-    <?= $this->Form->end() ?>
+<div class="blocblanc">
+	<h2>Administration</h2>
+    <h3>Passage de grade - Ajout</h3>
+	<div class="blocblancContent large-9 medium-8 columns content">
+		<div class="row">
+			<div class="col-lg-2"></div>
+			<div class="col-lg-5">
+				<?= $this->Html->link(__('Retour'), ['action' => 'index'],['class' => 'btn btn-info']) ?> 
+			</div>
+			<div class="col-lg-15"> 
+			    <?= $this->Form->create($passage, ['id'=>'formulaire']) ?>
+			    <div class="row">
+                	<label class="col-lg-8 control-label" for="name">Libellé <span class="obligatoire"><sup> *</sup></span></label>
+                    <div class="col-lg-16"><?= $this->Form->input('name', ['label' => false,'id'=>'name',
+														   	'div' => false,
+															'class' => 'form-control', 
+                    										'type' => 'text', 
+															'required' =>'required']); ?>
+                    </div>                          
+				</div><br /> 
+				<div class="row">
+                	<label class="col-lg-8 control-label" for="date_passage">Date du passage <span class="obligatoire"><sup> *</sup></span></label>
+                    <div class="col-lg-16"><?= $this->Form->input('date_passage', ['label' => false,'id'=>'date_passage',
+														   	'div' => false,
+															'class' => 'form-control', 
+                    										'type' => 'text', 
+															'required' =>'required']); ?>
+                    </div>                          
+				</div><br /> 			
+			    <?= $this->Form->button(__('Valider'),['class'=>'btn btn-default']) ?>
+			    <?= $this->Form->end() ?>
+				<p align='left'><span class="obligatoire">&nbsp;&nbsp;&nbsp;&nbsp;<sup>*</sup></span> Champ obligatoire</p>	
+			</div>						
+			<div class="col-lg-2"></div>
+		</div>
+	</div>
 </div>

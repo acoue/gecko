@@ -62,7 +62,6 @@ class JurysTable extends Table
             ->notEmpty('prenom');
 
         $validator
-            ->integer('grade')
             ->requirePresence('grade', 'create')
             ->notEmpty('grade');
 

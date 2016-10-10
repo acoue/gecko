@@ -18,10 +18,10 @@ class JurysController extends AppController
      */
     public function index()
     {
-        $Jurys = $this->paginate($this->Jurys);
+        $jurys = $this->paginate($this->Jurys);
 
-        $this->set(compact('Jurys'));
-        $this->set('_serialize', ['Jurys']);
+        $this->set(compact('jurys'));
+        $this->set('_serialize', ['jurys']);
     }
 
     /**
@@ -52,11 +52,11 @@ class JurysController extends AppController
         if ($this->request->is('post')) {
             $jury = $this->Jurys->patchEntity($jury, $this->request->data);
             if ($this->Jurys->save($jury)) {
-                $this->Flash->success(__('The jury has been saved.'));
+                $this->Flash->success(__('Le Jury a été créé.'));
 
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error(__('The jury could not be saved. Please, try again.'));
+                $this->Flash->error(__('Erreur dans la création du jury.'));
             }
         }
         $this->set(compact('jury'));
@@ -78,11 +78,11 @@ class JurysController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $jury = $this->Jurys->patchEntity($jury, $this->request->data);
             if ($this->Jurys->save($jury)) {
-                $this->Flash->success(__('The jury has been saved.'));
+                $this->Flash->success(__('Le jury a été sauvegardé.'));
 
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error(__('The jury could not be saved. Please, try again.'));
+                $this->Flash->error(__('Erreur dans la sauvegarde du jury.'));
             }
         }
         $this->set(compact('jury'));
@@ -101,9 +101,9 @@ class JurysController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $jury = $this->Jurys->get($id);
         if ($this->Jurys->delete($jury)) {
-            $this->Flash->success(__('The jury has been deleted.'));
+            $this->Flash->success(__('Le jury a été supprimé.'));
         } else {
-            $this->Flash->error(__('The jury could not be deleted. Please, try again.'));
+            $this->Flash->error(__('Erreur dans la suppresion du jury.'));
         }
 
         return $this->redirect(['action' => 'index']);

@@ -1,4 +1,4 @@
-<div class="blocBlanc">
+<div class="blocblanc">
 	<h2>Sélection</h2>
     <h3>Competition</h3>
 	<div class="blocblancContent">

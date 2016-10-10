@@ -1,6 +1,6 @@
 <div class="blocblanc">
 	<h2>Administration</h2>
-    <h3>Competition - Edition</h3>
+    <h3>Competition - Visualisation</h3>
 	<div class="blocblancContent">
 		<div class="row">
 			<div class="col-lg-2"></div>

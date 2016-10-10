@@ -9,7 +9,7 @@
 	echo $this->Html->link('Poule - Résultats', ['controller'=>'', 'action' => ''],['class' => 'btn btn-primary'])."<br /><br />";
 	//echo $this->Html->link('Poule - Résultats complets', ['controller'=>'', 'action' => ''],['class' => 'btn btn-primary'])."<br /><br />";
 	echo $this->Html->link('Génération des tableaux', ['controller'=>'', 'action' => ''],['class' => 'btn btn-primary'])."<br /><br />";
-	echo $this->Html->link('Passage de grade', ['controller'=>'Passages', 'action' => 'index'],['class' => 'btn btn-warning'])."<br /><br />";
+	echo $this->Html->link('Passage de grade', ['controller'=>'Passages', 'action' => 'gestion'],['class' => 'btn btn-warning'])."<br /><br />";
 
 	echo $this->Html->link('Mon compte', ['controller'=>'', 'action' => ''],['class' => 'btn btn-danger'])."<br /><br />";
 ?>        

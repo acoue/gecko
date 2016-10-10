@@ -50,11 +50,7 @@
 															'class' => 'form-control', 
                     										'required' =>'required']) ?>    
                 	</div>                 
-				</div><br />  
-			    
-			    
-			    
-			
+				</div><br /> 			
 			    <?= $this->Form->button(__('Valider'),['class'=>'btn btn-default']) ?>
 			    <?= $this->Form->end() ?>
 				<p align='left'><span class="obligatoire">&nbsp;&nbsp;&nbsp;&nbsp;<sup>*</sup></span> Champ obligatoire</p>	

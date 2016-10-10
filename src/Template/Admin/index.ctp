@@ -29,8 +29,8 @@
 			            <td><?= $this->Html->link('Catégorie', ['controller'=>'Categories', 'action' => 'index'],['class' => 'btn btn-default']) ?></td>
 			        </tr>
 			        <tr>
-			            <td>Administration des Jurés de passages de grades</td>
-			            <td><?= $this->Html->link('Jurés', ['controller'=>'Jures', 'action' => 'index'],['class' => 'btn btn-default']) ?></td>
+			            <td>Administration des Jurys de passages de grades</td>
+			            <td><?= $this->Html->link('Jurys', ['controller'=>'Jurys', 'action' => 'index'],['class' => 'btn btn-default']) ?></td>
 			        </tr>
 			        <tr>
 			            <td width='70%'>Administration des Palmarès</td>

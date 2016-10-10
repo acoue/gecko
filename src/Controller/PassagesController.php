@@ -24,6 +24,10 @@ class PassagesController extends AppController
         $this->set('_serialize', ['passages']);
     }
 
+    public function gestion()
+    {
+    	
+    }
     /**
      * View method
      *
@@ -50,13 +54,22 @@ class PassagesController extends AppController
     {
         $passage = $this->Passages->newEntity();
         if ($this->request->is('post')) {
-            $passage = $this->Passages->patchEntity($passage, $this->request->data);
+        	$data = $this->request->data;
+            $passage = $this->Passages->patchEntity($passage, $data);
+            $date_passage = $data['date_passage'];
+            //Transformation de la date : dd/mm/yyyy vers yyyy-mm-dd
+            if(isset($date_passage)) {
+            	$tmp_date = $date_passage;
+            	$date_passage = substr($tmp_date, 6,4)."-".substr($tmp_date, 3,2)."-".substr($tmp_date, 0,2);
+            }
+            $passage->date_passage = $date_passage;
+            
             if ($this->Passages->save($passage)) {
-                $this->Flash->success(__('The passage has been saved.'));
+                $this->Flash->success(__('Le passage a été créé.'));
 
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error(__('The passage could not be saved. Please, try again.'));
+                $this->Flash->error(__('Erreur dans la création du passage.'));
             }
         }
         $this->set(compact('passage'));
@@ -72,17 +85,24 @@ class PassagesController extends AppController
      */
     public function edit($id = null)
     {
-        $passage = $this->Passages->get($id, [
-            'contain' => []
-        ]);
+        $passage = $this->Passages->get($id);
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $passage = $this->Passages->patchEntity($passage, $this->request->data);
+
+        	$data = $this->request->data;
+            $passage = $this->Passages->patchEntity($passage, $data);
+            $date_passage = $data['date_passage'];
+            //Transformation de la date : dd/mm/yyyy vers yyyy-mm-dd
+            if(isset($date_passage)) {
+            	$tmp_date = $date_passage;
+            	$date_passage = substr($tmp_date, 6,4)."-".substr($tmp_date, 3,2)."-".substr($tmp_date, 0,2);
+            }
+            $passage->date_passage = $date_passage;
             if ($this->Passages->save($passage)) {
-                $this->Flash->success(__('The passage has been saved.'));
+                $this->Flash->success(__('Le passage a été sauvegardé.'));
 
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error(__('The passage could not be saved. Please, try again.'));
+                $this->Flash->error(__('Erreur dans la sauvegarde du passage.'));
             }
         }
         $this->set(compact('passage'));
@@ -101,11 +121,33 @@ class PassagesController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $passage = $this->Passages->get($id);
         if ($this->Passages->delete($passage)) {
-            $this->Flash->success(__('The passage has been deleted.'));
+            $this->Flash->success(__('Le passage a été supprimé.'));
         } else {
-            $this->Flash->error(__('The passage could not be deleted. Please, try again.'));
+            $this->Flash->error(__('Erreur dans la suppression du passage.'));
         }
 
         return $this->redirect(['action' => 'index']);
+    }
+
+
+    public function select()
+    {
+    	$passages = $this->Passages->find('all');
+    	$this->set(compact('passages'));
+    	$this->set('_serialize', ['passages']);
+    }
+     
+    public function choisir($id)
+    {
+    	$this->Passages->updateAll(['selected' => 0],[]);
+    	 
+    	$passage = $this->Passages->get($id);
+    	$passage->selected=1;
+    	if ($this->Passages->save($passage)) {
+    		$this->Flash->success(__('Le pasage de grade a bien été sélectionné.'));
+    	} else {
+    		$this->Flash->error(__('Erreur dans la sélection du passage de grade.'));
+    	}
+    	return $this->redirect(['controller'=>'passages','action' => 'index']);
     }
 }

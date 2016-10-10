@@ -4,12 +4,12 @@ namespace App\Model\Entity;
 use Cake\ORM\Entity;
 
 /**
- * Jure Entity
+ * Jury Entity
  *
  * @property int $id
  * @property string $nom
  * @property string $prenom
- * @property int $grade
+ * @property string $grade
  * @property int $actif
  *
  * @property \App\Model\Entity\Juge[] $juges
