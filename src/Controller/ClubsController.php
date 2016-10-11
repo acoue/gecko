@@ -18,6 +18,7 @@ class ClubsController extends AppController
      */
     public function index()
     {
+    	if(! $this->Securite->isAdmin()) return $this->redirect(['controller'=>'pages', 'action'=>'permission']);
         $this->paginate = [
             'contain' => ['Regions']
         ];
@@ -36,6 +37,7 @@ class ClubsController extends AppController
      */
     public function view($id = null)
     {
+    	if(! $this->Securite->isAdmin()) return $this->redirect(['controller'=>'pages', 'action'=>'permission']);
         $club = $this->Clubs->get($id, [
             'contain' => ['Regions', 'Licencies']
         ]);
@@ -51,6 +53,7 @@ class ClubsController extends AppController
      */
     public function add()
     {
+    	if(! $this->Securite->isAdmin()) return $this->redirect(['controller'=>'pages', 'action'=>'permission']);
         $club = $this->Clubs->newEntity();
         if ($this->request->is('post')) {
             $club = $this->Clubs->patchEntity($club, $this->request->data);
@@ -75,6 +78,7 @@ class ClubsController extends AppController
      */
     public function edit($id = null)
     {
+    	if(! $this->Securite->isAdmin()) return $this->redirect(['controller'=>'pages', 'action'=>'permission']);
         $club = $this->Clubs->get($id, [
             'contain' => []
         ]);
@@ -101,6 +105,7 @@ class ClubsController extends AppController
      */
     public function delete($id = null)
     {
+    	if(! $this->Securite->isAdmin()) return $this->redirect(['controller'=>'pages', 'action'=>'permission']);
         $this->request->allowMethod(['post', 'delete']);
         $club = $this->Clubs->get($id);
         if ($this->Clubs->delete($club)) {

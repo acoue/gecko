@@ -7,94 +7,20 @@ use App\Controller\AppController;
 use Cake\Network\Exception\NotFoundException;
 use Cake\ORM\TableRegistry;
 use Cake\Network\Request;
-use Cake\Network\Email\Email;
+use \Lib\UserConnected;
 use Cake\Event\Event;
 
 class UsersController extends AppController
 {
 	//Actions publiques
-  	public function beforeFilter(Event $event)
-  	{
-  		parent::beforeFilter($event);
-  		$this->Auth->allow(['activate', 'login', 'password','mentions','changePwd']);  		
-  	}
-	
-	public function isAuthorized($user)
-	{	
-			
-		// Droits de tous les utilisateurs connectes sur les actions
-		if(in_array($this->request->action, ['logout','compte'])){
-			return true;
-		} 
-		
-		if(in_array($this->request->action, ['index'])){
-			if (isset($user['role']) && $user['role'] === 'has') {
-				return true;
-			}
-		}
-		
-		return parent::isAuthorized($user);
-	}
 
+	
 	public function initialize()
 	{
 		parent::initialize();
 		$this->loadComponent('Securite');
 	}
 	
-	public function activate($token =null) {
-    	//Menu et sous-menu
-	    $session = $this->request->session();
-	    $session->write('Equipe.Engagement','0');
-	    $session->write('Progress.Menu','0');
-	    $session->write('Progress.SousMenu','0');
-		
-		if(!isset($token)) {
-			$this->Flash->error(__("Ce lien d'activation ne semble pas valide."));
-			$this->redirect("/users/login");
-		} else {
-			$tokenTab = explode('-',$token);
-			$user = $this->Users->find('all')->where(['id'=>$tokenTab[0],'token'=>$tokenTab[1], 'active'=>'0'])->first();
-			//debug($user); die();
-			
-			if(!empty($user)){
-				$usersTable = TableRegistry::get('Users');
-				$modif_user = $usersTable->get($user->id); 			
-				$modif_user->active = 1;	
-				//Mise à jour du token pour eviter une 2eme validation
-				$token = $this->Securite->getToken();
-				$modif_user->token = $token;
-				$usersTable->save($modif_user);				
-
-				//Recuperation libelle etab + equipe => session
-				$this->loadModel('Equipes');
-				$equipe = $this->Equipes->find('all')
-				->contain(['Etablissements'])
-				->where(['Equipes.user_id' => $user['id']])
-				->first();
-				$session->write('Equipe.Identifiant',$equipe->id);
-				$session->write('Equipe.Libelle',$equipe->name);
-				$session->write('Equipe.Libelle_Etablissement',$equipe->etablissement->libelle);
-					
-				//recuperation de la demarche en cours pour l'equipe => session
-				$this->loadModel('Demarches');
-				$demarche = $this->Demarches->find('all')
-				->where(['equipe_id' => $equipe->id])
-				->first();
-				$session->write('Equipe.Demarche',$demarche->id);
-				
-				//Login du User
-				$this->Auth->setUser($user);
-				$this->Flash->success(__("Votre compte a bien été validé."));
-				$this->redirect($this->Auth->redirectUrl());
-				
-			} else {
-				//debug($this->request->data); die();
-				$this->Flash->error(__("Ce lien d'activation ne semble pas valide."));
-				$this->redirect($this->Auth->logout());
-			}
-		}
-	}
 	
 	public function login()
 	{			
@@ -103,82 +29,38 @@ class UsersController extends AppController
 		$session->destroy();
 			
 		if ($this->request->is('post')) {
+			
+			//recuperation du formulaire de saisie
+			$dataForm = $this->request->data;
+					
+			
 			$user = $this->Auth->identify();
 			if ($user) {	
-				//debug($user->role); die();
-				
-				if($user['role'] == 'equipe') {
-					
-					//Recuperation libelle etab + equipe => session
-					$this->loadModel('Equipes');
-					$equipe = $this->Equipes->find('all')
-					->contain(['Etablissements'])
-					->where(['Equipes.user_id' => $user['id']])
-					->first();					
-					$session->write('Equipe.Identifiant',$equipe->id);
-					$session->write('Equipe.Libelle',$equipe->name);
-					$session->write('Equipe.Libelle_Etablissement',$equipe->etablissement->libelle);
-					
-					//recuperation de la demarche en cours pour l'equipe => session
-					$this->loadModel('Demarches');
-					$demarche = $this->Demarches->find('all')				
-					->where(['equipe_id' => $equipe->id])
-					->first();
-					$session->write('Equipe.Demarche',$demarche->id);
-					$session->write('Equipe.DemarcheEtat',$demarche->statut);
-
-					//Récupération de l'état de l'engagement de l'équipe
-					$this->loadModel('DemarchePhases');
-					$etat = $this->DemarchePhases->find('all')
-					->where(['demarche_id' => $demarche->id]);
-					
-					foreach ($etat as $e) {
-						//Mise à jour de la session
-						switch ($e->phase_id) {
-							case 1:
-								if(empty($e->date_validation)) $session->write('Equipe.Engagement',0);
-								else $session->write('Equipe.Engagement',1);
-							break;
-							case 2:
-								if(empty($e->date_validation)) $session->write('Equipe.Diagnostic',0);
-								else $session->write('Equipe.Diagnostic',1);
-							
-							break;						
-							case 3:
-								if(empty($e->date_validation)) $session->write('Equipe.MiseEnOeuvre',0);
-								else $session->write('Equipe.MiseEnOeuvre',1);
-							break;						
-							case 4:
-								if(empty($e->date_validation)) $session->write('Equipe.Evaluation',0);
-								else {
-									$session->write('Equipe.Evaluation',1);
-									$dateCloture = strftime('%d/%m/%y', strtotime($e->date_validation));
-								}
-							break;						
-						}					
-					}						
-				}	
 				//Mise a jour de la date de last login 
-				$usersTable = TableRegistry::get('Users');
-				$modif_user = $usersTable->get($user['id']);
+				$modif_user = $this->Users->get($user['id'], ['contain' => ['Profils']]);
+				//debug($modif_user); die();
+				
 				$modif_user->lastlogin = date('Y-m-d H:i:s');
-				$usersTable->save($modif_user);				
+				$this->Users->save($modif_user);	
 				$this->Auth->setUser($user);
 				
-				//$this->set('demarche', $demarche);
-				if(isset($dateCloture)) $this->set('dateCloture', $dateCloture);
-				//$this->set('_serialize', ['demarche']);
+				//On construit l'objet utilisateur connecte et on la place en session
+				$session = $this->request->session();
+				$userConnected = new UserConnected();
+				$userConnected->setId($modif_user->id);
+				$userConnected->setNom($modif_user->nom);
+				$userConnected->setPrenom($modif_user->prenom);
+				$userConnected->setLastlogin($modif_user->lastlogin);
+				$userConnected->setLogin($dataForm['username']);
+				$userConnected->setProfil($modif_user->profil->name);
+				
+				$session->write('UserConnected',$userConnected);
 				
 				return $this->redirect($this->Auth->redirectUrl());
 								
 			} else $this->Flash->error(__("Nom d'utilisateur ou mot de passe incorrect, essayez à nouveau."));
 		}
-		$messageCnil = "";
-		//Message
-		$this->loadModel('Parametres');
-		$message = $this->Parametres->find('all')->where(['name' => 'DeclarationCNIL'])->first();
-		$messageCnil = $message->valeur;
-		$this->set('messageCnil', $messageCnil);
+		
 		
 	}
 	
@@ -192,14 +74,16 @@ class UsersController extends AppController
 	
  	public function index()
  	{
+    	if(! $this->Securite->isAdmin()) return $this->redirect(['controller'=>'pages', 'action'=>'permission']);
         $this->set('users', $this->paginate($this->Users));
         $this->set('_serialize', ['users']);
  	}
 
  	public function view($id)
  	{
+    	if(! $this->Securite->isAdmin()) return $this->redirect(['controller'=>'pages', 'action'=>'permission']);
  		$user = $this->Users->get($id, [
- 				'contain' => []
+ 				'contain' => ['Profils']
  				]);
  		$this->set('user', $user);
  		$this->set('_serialize', ['user']);
@@ -214,9 +98,8 @@ class UsersController extends AppController
  	 */
  	public function edit($id = null)
  	{
- 		$user = $this->Users->get($id, [
- 				'contain' => []
- 				]);
+    	if(! $this->Securite->isAdmin()) return $this->redirect(['controller'=>'pages', 'action'=>'permission']);
+ 		$user = $this->Users->get($id);
  		if ($this->request->is(['patch', 'post', 'put'])) {
  			$user = $this->Users->patchEntity($user, $this->request->data);
  			if ($this->Users->save($user)) {
@@ -232,6 +115,7 @@ class UsersController extends AppController
  	
  	public function add()
  	{
+    	if(! $this->Securite->isAdmin()) return $this->redirect(['controller'=>'pages', 'action'=>'permission']);
  		$user = $this->Users->newEntity();
  		if ($this->request->is('post')) {
  			//debug($this->request->data);
@@ -247,14 +131,17 @@ class UsersController extends AppController
  		$this->set('user', $user);
  	}
 
- 	public function compte($id = null)
+ 	public function compte()
  	{
- 		$user = $this->Users->get($id);
+ 		$uc=$this->request->session()->read("UserConnected");
+ 		
+ 		
+ 		$user = $this->Users->get($uc->getId(), ['contain' => ['Profils']] 	);
  		if ($this->request->is(['patch', 'post', 'put'])) {
  			$user = $this->Users->patchEntity($user, $this->request->data);
  			if ($this->Users->save($user)) {
  				$this->Flash->success('L\'utilisateur a bien été sauvegardé.');
-				return $this->redirect(['action' => 'compte/'.$id]);
+				return $this->redirect(['action' => 'compte']);
  			} else {
  				$this->Flash->error('Erreur lors de la sauvegarde de l\'utilisateur.');
  			}
@@ -264,9 +151,10 @@ class UsersController extends AppController
  		
  	}
  	
-	public function changePwd($id = null) {
-    	
-		$user = $this->Users->get($id);
+	public function changePwd() {
+		$uc=$this->request->session()->read("UserConnected");
+			
+		$user = $this->Users->get($uc->getId());
 		
 		if(!$user) {
 			$this->redirect('/');
@@ -354,32 +242,7 @@ class UsersController extends AppController
 	    }
 	}
 	
-	public function activeUser($id = null) {
-		
-		$user = $this->Users->get($id);
-		if ($this->request->is(['post'])) {
-			$user->active = 1;
-			if ($this->Users->save($user)) {
-				$this->Flash->success('L\'utilisateur a bien été activé.');
-				return $this->redirect(['action' => 'index']);
-			} else {
-				$this->Flash->error('Erreur lors de l\'activation de l\'utilisateur.');
-			}
-		}
-	}	
 	
-	public function desactiveUser($id = null) {
-		$user = $this->Users->get($id);
-		if ($this->request->is(['post'])) {
-			$user->active = 0;
-			if ($this->Users->save($user)) {
-				$this->Flash->success('L\'utilisateur a bien été désactivé.');
-				return $this->redirect(['action' => 'index']);
-			} else {
-				$this->Flash->error('Erreur lors de la désactivation de l\'utilisateur.');
-			}
-		}
-	}
 	
 	public function regeneratePassword($id = null) {
 		if($id) $user = $this->Users->get($id);
@@ -411,6 +274,7 @@ class UsersController extends AppController
 	 */
 	public function delete($id = null)
 	{
+    	if(! $this->Securite->isAdmin()) return $this->redirect(['controller'=>'pages', 'action'=>'permission']);
 		$this->request->allowMethod(['post', 'delete']);
 		$user = $this->Users->get($id);
 		if ($this->Users->delete($user)) {
@@ -420,30 +284,5 @@ class UsersController extends AppController
 		}
 		return $this->redirect(['action' => 'index']);
 	}
-	
-	public function sendMail() {
-		
-		if ($this->request->is(['patch', 'post', 'put'])) {
-	    	$d = $this->request->data;   
 
-	    	$userDestinataires = explode( ';', $d['destinataire'] );
-	    		
-			$email = new Email('default');
-			$email->template('default')
-			->emailFormat('html')
-			->from(trim(rtrim(strip_tags(EMAIL_ADMIN))))
-			->to(trim(rtrim(strip_tags($userDestinataires))))
-			->subject('[Pacte]'.$d['sujet'])
-    		->viewVars(['content' => $d['body']])
-			->send();
-			
-			$this->Flash->success('Message envoyé.');
-			
-		}
-		
-	}
-	
-	public function mentions() {
-		
-	}
 }

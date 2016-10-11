@@ -18,6 +18,7 @@ class JurysController extends AppController
      */
     public function index()
     {
+    	if(! $this->Securite->isAdmin()) return $this->redirect(['controller'=>'pages', 'action'=>'permission']);
         $jurys = $this->paginate($this->Jurys);
 
         $this->set(compact('jurys'));
@@ -33,6 +34,7 @@ class JurysController extends AppController
      */
     public function view($id = null)
     {
+    	if(! $this->Securite->isAdmin()) return $this->redirect(['controller'=>'pages', 'action'=>'permission']);
         $jury = $this->Jurys->get($id, [
             'contain' => ['Juges']
         ]);
@@ -48,6 +50,7 @@ class JurysController extends AppController
      */
     public function add()
     {
+    	if(! $this->Securite->isAdmin()) return $this->redirect(['controller'=>'pages', 'action'=>'permission']);
         $jury = $this->Jurys->newEntity();
         if ($this->request->is('post')) {
             $jury = $this->Jurys->patchEntity($jury, $this->request->data);
@@ -72,6 +75,7 @@ class JurysController extends AppController
      */
     public function edit($id = null)
     {
+    	if(! $this->Securite->isAdmin()) return $this->redirect(['controller'=>'pages', 'action'=>'permission']);
         $jury = $this->Jurys->get($id, [
             'contain' => []
         ]);
@@ -98,6 +102,7 @@ class JurysController extends AppController
      */
     public function delete($id = null)
     {
+    	if(! $this->Securite->isAdmin()) return $this->redirect(['controller'=>'pages', 'action'=>'permission']);
         $this->request->allowMethod(['post', 'delete']);
         $jury = $this->Jurys->get($id);
         if ($this->Jurys->delete($jury)) {

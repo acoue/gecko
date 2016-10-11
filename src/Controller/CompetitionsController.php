@@ -18,6 +18,7 @@ class CompetitionsController extends AppController
      */
     public function index()
     {
+    	if(! $this->Securite->isAdmin()) return $this->redirect(['controller'=>'pages', 'action'=>'permission']);
         $this->paginate = [
             'contain' => ['Categories']
         ];
@@ -36,6 +37,7 @@ class CompetitionsController extends AppController
      */
     public function view($id = null)
     {
+    	if(! $this->Securite->isAdmin()) return $this->redirect(['controller'=>'pages', 'action'=>'permission']);
         $competition = $this->Competitions->get($id, [
             'contain' => ['Categories']
         ]);
@@ -51,6 +53,7 @@ class CompetitionsController extends AppController
      */
     public function add()
     {
+    	if(! $this->Securite->isAdmin()) return $this->redirect(['controller'=>'pages', 'action'=>'permission']);
         $competition = $this->Competitions->newEntity();
         if ($this->request->is('post')) {
         	$data = $this->request->data;
@@ -93,6 +96,7 @@ class CompetitionsController extends AppController
      */
     public function edit($id = null)
     {
+    	if(! $this->Securite->isAdmin()) return $this->redirect(['controller'=>'pages', 'action'=>'permission']);
         $competition = $this->Competitions->get($id, [
             'contain' => ['Categories']
         ]);
@@ -125,6 +129,7 @@ class CompetitionsController extends AppController
      */
     public function delete($id = null)
     {
+    	if(! $this->Securite->isAdmin()) return $this->redirect(['controller'=>'pages', 'action'=>'permission']);
         $this->request->allowMethod(['post', 'delete']);
         $competition = $this->Competitions->get($id);
         if ($this->Competitions->delete($competition)) {

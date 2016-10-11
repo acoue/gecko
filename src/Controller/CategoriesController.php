@@ -18,6 +18,8 @@ class CategoriesController extends AppController
      */
     public function index()
     {
+    	if(! $this->Securite->isAdmin()) return $this->redirect(['controller'=>'pages', 'action'=>'permission']);
+    	
         $categories = $this->paginate($this->Categories);
 
         $this->set(compact('categories'));
@@ -33,6 +35,7 @@ class CategoriesController extends AppController
      */
     public function view($id = null)
     {
+    	if(! $this->Securite->isAdmin()) return $this->redirect(['controller'=>'pages', 'action'=>'permission']);
         $category = $this->Categories->get($id, [
             'contain' => []
         ]);
@@ -48,6 +51,7 @@ class CategoriesController extends AppController
      */
     public function add()
     {
+    	if(! $this->Securite->isAdmin()) return $this->redirect(['controller'=>'pages', 'action'=>'permission']);
         $category = $this->Categories->newEntity();
         if ($this->request->is('post')) {
             $category = $this->Categories->patchEntity($category, $this->request->data);
@@ -71,6 +75,7 @@ class CategoriesController extends AppController
      */
     public function edit($id = null)
     {
+    	if(! $this->Securite->isAdmin()) return $this->redirect(['controller'=>'pages', 'action'=>'permission']);
         $category = $this->Categories->get($id, [
             'contain' => []
         ]);
@@ -96,6 +101,7 @@ class CategoriesController extends AppController
      */
     public function delete($id = null)
     {
+    	if(! $this->Securite->isAdmin()) return $this->redirect(['controller'=>'pages', 'action'=>'permission']);
         $this->request->allowMethod(['post', 'delete']);
         $category = $this->Categories->get($id);
         if ($this->Categories->delete($category)) {

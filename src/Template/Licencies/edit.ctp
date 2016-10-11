@@ -8,6 +8,7 @@
 			<div class="col-lg-2"></div>
 			<div class="col-lg-5">
 			<?= $this->Form->postLink(__('Supprimer'), ['action' => 'delete', $licency->id], ['class'=>'btn btn-warning','confirm' => __('Etes-vous sûr de vouloir supprimer le licencié {0} ?', $licency->prenom." ".$licency->nom)]) ?><br /><br/>
+			<?= $this->Html->link(__('Palmarés'), ['controller'=>'Palmares','action' => 'palmares', $licency->id],['class' => 'btn btn-success']) ?> <br /><br />
 			<?= $this->Html->link(__('Retour'), ['action' => 'index'],['class' => 'btn btn-info']) ?> 
 			</div>
 			<div class="col-lg-15">

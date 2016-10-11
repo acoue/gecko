@@ -41,9 +41,25 @@ class AppController extends Controller
     {
         parent::initialize();
 
+        $this->loadComponent('Securite');
         $this->loadComponent('RequestHandler');
         $this->loadComponent('Flash');
 
+        $this->loadComponent('Auth', [
+        		'loginRedirect' => [
+        				'controller' => 'Pages',
+        				'action' => 'display',
+        							'home'],
+        		'logoutRedirect' => [
+        				'controller' => 'Users',
+        				'action' => 'login'],
+        		'authenticate' => [
+        				'Form' => [
+        				'scope' => ['Users.active' => 1]]
+        		]
+        	]);
+
+        
         //Message
         $this->loadModel('Competitions');
         $competitionSelected = $this->Competitions->find('all')->contain('Categories')->where(['selected' => '1'])->first();

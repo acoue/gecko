@@ -18,6 +18,7 @@ class PassagesController extends AppController
      */
     public function index()
     {
+    	if(! $this->Securite->isAdmin()) return $this->redirect(['controller'=>'pages', 'action'=>'permission']);
         $passages = $this->paginate($this->Passages);
 
         $this->set(compact('passages'));
@@ -37,6 +38,7 @@ class PassagesController extends AppController
      */
     public function view($id = null)
     {
+    	if(! $this->Securite->isAdmin()) return $this->redirect(['controller'=>'pages', 'action'=>'permission']);
         $passage = $this->Passages->get($id, [
             'contain' => ['Evalues', 'Juges']
         ]);
@@ -52,6 +54,7 @@ class PassagesController extends AppController
      */
     public function add()
     {
+    	if(! $this->Securite->isAdmin()) return $this->redirect(['controller'=>'pages', 'action'=>'permission']);
         $passage = $this->Passages->newEntity();
         if ($this->request->is('post')) {
         	$data = $this->request->data;
@@ -85,6 +88,7 @@ class PassagesController extends AppController
      */
     public function edit($id = null)
     {
+    	if(! $this->Securite->isAdmin()) return $this->redirect(['controller'=>'pages', 'action'=>'permission']);
         $passage = $this->Passages->get($id);
         if ($this->request->is(['patch', 'post', 'put'])) {
 
@@ -118,6 +122,7 @@ class PassagesController extends AppController
      */
     public function delete($id = null)
     {
+    	if(! $this->Securite->isAdmin()) return $this->redirect(['controller'=>'pages', 'action'=>'permission']);
         $this->request->allowMethod(['post', 'delete']);
         $passage = $this->Passages->get($id);
         if ($this->Passages->delete($passage)) {

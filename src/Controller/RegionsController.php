@@ -18,6 +18,7 @@ class RegionsController extends AppController
      */
     public function index()
     {
+    	if(! $this->Securite->isAdmin()) return $this->redirect(['controller'=>'pages', 'action'=>'permission']);
         $regions = $this->paginate($this->Regions);
 
         $this->set(compact('regions'));
@@ -33,6 +34,7 @@ class RegionsController extends AppController
      */
     public function view($id = null)
     {
+    	if(! $this->Securite->isAdmin()) return $this->redirect(['controller'=>'pages', 'action'=>'permission']);
         $region = $this->Regions->get($id, [
             'contain' => ['Clubs']
         ]);
@@ -48,6 +50,7 @@ class RegionsController extends AppController
      */
     public function add()
     {
+    	if(! $this->Securite->isAdmin()) return $this->redirect(['controller'=>'pages', 'action'=>'permission']);
         $region = $this->Regions->newEntity();
         if ($this->request->is('post')) {
             $region = $this->Regions->patchEntity($region, $this->request->data);
@@ -71,6 +74,7 @@ class RegionsController extends AppController
      */
     public function edit($id = null)
     {
+    	if(! $this->Securite->isAdmin()) return $this->redirect(['controller'=>'pages', 'action'=>'permission']);
         $region = $this->Regions->get($id, [
             'contain' => []
         ]);
@@ -96,6 +100,7 @@ class RegionsController extends AppController
      */
     public function delete($id = null)
     {
+    	if(! $this->Securite->isAdmin()) return $this->redirect(['controller'=>'pages', 'action'=>'permission']);
         $this->request->allowMethod(['post', 'delete']);
         $region = $this->Regions->get($id);
         if ($this->Regions->delete($region)) {

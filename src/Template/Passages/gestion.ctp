@@ -12,13 +12,13 @@
 			</ul>
 			<div class="tab-content ">
 				<div class="tab-pane active" id="1">
-					<h3>Onglet listant les membre du jury</h3>
+					<h4>Onglet listant les membres du jury</h4>
 				</div>
 				<div class="tab-pane" id="2">
-					<h3>Notice the gap between the content and tab after applying a background color</h3>
+					<h4>Onglet listant les licenciés</h4>
 				</div>
 		        <div class="tab-pane" id="3">
-					<h3>add clearfix to tab-content (see the css)</h3>
+					<h4>Onglet listant les résultats par membre du jury</h4>
 				</div>
 			</div>
 

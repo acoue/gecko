@@ -2,6 +2,10 @@
 //debug($this->request);die();
 $cakeDescription = 'GeCKo';
 
+//Chargement de la session
+$session = $this->request->session();
+if($session->check("UserConnected")) $uc=$session->read("UserConnected");
+else $uc =null;
 ?>
 <!DOCTYPE html>
 <html>
@@ -33,8 +37,10 @@ $cakeDescription = 'GeCKo';
 	            <span class="header_titre">GeCKo</span> 
 	            <span class="header_texte">
 	            <?php
+	            if($uc){
 	            	echo "Compétition sélectionnée : ".$competitionSelected-> name ." ".$competitionSelected->category->name."&nbsp;&nbsp;&nbsp;&nbsp;";
 					echo $this->Html->link('Modifier', ['controller'=>'Competitions', 'action' => 'select'],['class' => 'btn btn-info']);
+				}
 				?>
 	            
 	            
@@ -42,7 +48,14 @@ $cakeDescription = 'GeCKo';
 		</header><br />
 		<div class="container-fluid">
 			<div class="row text-center">
-	    		<div class="col-lg-4 col-middle divBouton"><div class="item"><div class="content"><?php echo $this->element('bouton') ?></div></div></div>
+				<div class="col-lg-4 col-middle divBouton">
+	    			<div class="item">
+	    				<div class="content">
+	    					<?php if($uc) echo $this->element('bouton'); ?>
+	    				</div>
+	    			</div>
+	    		</div>
+	    	
 	    		<div class="col-lg-20 col-top">
 	    			<?= $this->Flash->render() ?>
 	    			<?= $this->fetch('content') ?>
@@ -51,10 +64,12 @@ $cakeDescription = 'GeCKo';
 		</div><br /><br /> 
 		<footer class="footer">
 	   		<div class="container-fluid">
-	        	<div class="col-lg-6 text-footer-left">&copy; Anthony COUE</div>
+	        	<div class="col-lg-6 text-footer-left">
+	        	<?= $this->Html->image('by-nc-nd.eu.png', ['title' => "GeCKo de Anthony COUE est mis à disposition selon les termes de la licence Creative Commons Attribution - Pas d'Utilisation Commerciale - Pas de Modification 4.0 International."]) ?>
+	        	&copy; Anthony COUE</div>
 	        	<div class="col-lg-6 text-footer-left">
 	        	<?php 
-				echo $this->Html->link('Administration', ['controller'=>'admin', 'action' => 'index'],['class' => 'btn btn-default']);
+	        	if($uc && $uc->getProfil()=='admin') 	echo $this->Html->link('Administration', ['controller'=>'admin', 'action' => 'index'],['class' => 'btn btn-default']);
 				
 	        	?> 
 	        	

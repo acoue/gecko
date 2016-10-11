@@ -17,6 +17,6 @@ class AdminController extends AppController
      */
     public function index()
     {
-        
+    	if(! $this->Securite->isAdmin()) return $this->redirect(['controller'=>'pages', 'action'=>'permission']);
     }
 }

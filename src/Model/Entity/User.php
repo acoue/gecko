@@ -13,6 +13,7 @@ use Cake\ORM\Entity;
  * @property string $prenom
  * @property int $active
  * @property \Cake\I18n\Time $lastlogin
+ * @property int $profil_id
  * @property \Cake\I18n\Time $created
  * @property \Cake\I18n\Time $modified
  */

@@ -18,6 +18,7 @@ class LicenciesController extends AppController
      */
     public function index()
     {
+    	if(! $this->Securite->isAdmin()) return $this->redirect(['controller'=>'pages', 'action'=>'permission']);
         $this->paginate = [
             'contain' => ['Clubs']
         ];
@@ -36,6 +37,7 @@ class LicenciesController extends AppController
      */
     public function view($id = null)
     {
+    	if(! $this->Securite->isAdmin()) return $this->redirect(['controller'=>'pages', 'action'=>'permission']);
         $licency = $this->Licencies->get($id, [
             'contain' => ['Clubs']
         ]);
@@ -51,6 +53,7 @@ class LicenciesController extends AppController
      */
     public function add()
     {
+    	if(! $this->Securite->isAdmin()) return $this->redirect(['controller'=>'pages', 'action'=>'permission']);
         $licency = $this->Licencies->newEntity();
         if ($this->request->is('post')) {
             $licency = $this->Licencies->patchEntity($licency, $this->request->data);
@@ -75,6 +78,7 @@ class LicenciesController extends AppController
      */
     public function edit($id = null)
     {
+    	if(! $this->Securite->isAdmin()) return $this->redirect(['controller'=>'pages', 'action'=>'permission']);
         $licency = $this->Licencies->get($id, [
             'contain' => []
         ]);
@@ -101,6 +105,7 @@ class LicenciesController extends AppController
      */
     public function delete($id = null)
     {
+    	if(! $this->Securite->isAdmin()) return $this->redirect(['controller'=>'pages', 'action'=>'permission']);
         $this->request->allowMethod(['post', 'delete']);
         $licency = $this->Licencies->get($id);
         if ($this->Licencies->delete($licency)) {
