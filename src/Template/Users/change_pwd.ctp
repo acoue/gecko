@@ -21,8 +21,8 @@
 					</div>			
 				</div><br />
 				<div  class="row">		
-					<label class="col-md-4 control-label" for="pass1">Mot de passe <br />(8 caractères minimun)</label>
-					<div class="col-md-12">
+					<label class="col-md-10 control-label" for="pass1">Mot de passe <br />(8 caractères minimun)</label>
+					<div class="col-md-8">
 						<?= $this->Form->input('pass1', ['label' => false,'id'=>'pass1',
 															'class' => 'form-control', 
                     										'type' => 'password',
@@ -33,8 +33,8 @@
                     <div class="col-md-3"><div class="" id="messagePwd"></div></div>	
 				</div><br />
 				<div  class="row">		
-					<label class="col-md-4 control-label" for="pass2">Vérification du mot de passe</label>
-					<div class="col-md-12">
+					<label class="col-md-10 control-label" for="pass2">Vérification du mot de passe</label>
+					<div class="col-md-8">
 						<?= $this->Form->input('pass2', ['label' => false,'id'=>'pass2',
 														   	'div' => false,
 															'class' => 'form-control', 

@@ -68,10 +68,12 @@ class UsersTable extends Table
             ->notEmpty('password');
 
         $validator
-            ->allowEmpty('nom');
+            ->requirePresence('nom', 'create')
+            ->notEmpty('nom');
 
         $validator
-            ->allowEmpty('prenom');
+            ->requirePresence('prenom', 'create')
+            ->notEmpty('prenom');
 
         $validator
             ->integer('active')
@@ -80,8 +82,7 @@ class UsersTable extends Table
 
         $validator
             ->dateTime('lastlogin')
-            ->requirePresence('lastlogin', 'create')
-            ->notEmpty('lastlogin');
+            ->allowEmpty('lastlogin');
 
         return $validator;
     }

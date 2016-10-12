@@ -1,19 +1,26 @@
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('List Regions'), ['action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('List Clubs'), ['controller' => 'Clubs', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Club'), ['controller' => 'Clubs', 'action' => 'add']) ?></li>
-    </ul>
-</nav>
-<div class="regions form large-9 medium-8 columns content">
-    <?= $this->Form->create($region) ?>
+<div class="blocblanc">
+	<h2>Administration</h2>
+    <h3>Région - Ajout</h3>
+	<div class="blocblancContent large-9 medium-8 columns content">
+		<div class="row">
+			<div class="col-lg-2"></div>
+			<div class="col-lg-5">
+				<?= $this->Html->link(__('Retour'), ['action' => 'index'],['class' => 'btn btn-info']) ?> 
+			</div>
+			<div class="col-lg-15"> 
+    <?= $this->Form->create($region, ['id'=>'formulaire']) ?>
     <fieldset>
         <legend><?= __('Add Region') ?></legend>
         <?php
             echo $this->Form->input('name');
         ?>
     </fieldset>
-    <?= $this->Form->button(__('Submit')) ?>
-    <?= $this->Form->end() ?>
+<?= $this->Form->button(__('Valider'),['class'=>'btn btn-default']) ?>
+			    <?= $this->Form->end() ?>
+				<p align='left'><span class="obligatoire">&nbsp;&nbsp;&nbsp;&nbsp;<sup>*</sup></span> Champ obligatoire</p>	
+			</div>						
+			<div class="col-lg-2"></div>
+		</div>
+	</div>
 </div>
+    v>

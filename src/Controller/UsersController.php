@@ -85,7 +85,7 @@ class UsersController extends AppController
  		$user = $this->Users->get($id, [
  				'contain' => ['Profils']
  				]);
- 		$this->set('user', $user);
+ 		$this->set(compact('user' ));
  		$this->set('_serialize', ['user']);
  	}
 
@@ -99,7 +99,9 @@ class UsersController extends AppController
  	public function edit($id = null)
  	{
     	if(! $this->Securite->isAdmin()) return $this->redirect(['controller'=>'pages', 'action'=>'permission']);
- 		$user = $this->Users->get($id);
+ 		$user = $this->Users->get($id, [
+ 				'contain' => ['Profils']
+ 				]);
  		if ($this->request->is(['patch', 'post', 'put'])) {
  			$user = $this->Users->patchEntity($user, $this->request->data);
  			if ($this->Users->save($user)) {
@@ -109,7 +111,8 @@ class UsersController extends AppController
  				$this->Flash->error('Erreur lors de la sauvegarde de l\'utilisateur.');
  			}
  		}
- 		$this->set(compact('user'));
+ 		$profils = $this->Users->Profils->find('list', ['limit' => 200]);
+ 		$this->set(compact('user','profils'));
  		$this->set('_serialize', ['user']);
  	}
  	
@@ -128,7 +131,8 @@ class UsersController extends AppController
  			}
  			$this->Flash->error(__("Impossible d'ajouter l'utilisateur."));
  		}
- 		$this->set('user', $user);
+ 		$profils = $this->Users->Profils->find('list', ['limit' => 200]);
+ 		$this->set(compact('user','profils' ));
  	}
 
  	public function compte()
@@ -183,66 +187,6 @@ class UsersController extends AppController
  		$this->set(compact('user'));
  		$this->set('_serialize', ['user']);
 	}
-	
-	public function password() {
-		
-		//Menu et sous-menu
-	    $session = $this->request->session();
-	    $session->write('Progress.Menu','0');
-	    $session->write('Progress.SousMenu','0');
-	    
-	    if(!empty($this->request->query['token'])){
-	    	$token = $this->request->query['token'];
-	    	$tokenTab = explode('-',$token);
-	    	$user = $this->Users->find('all')->where(['id'=>$tokenTab[0],'token'=>$tokenTab[1], 'active'=>'1'])->first();
-	    	
-	    	//debug($user);die();
-	    	
-	    	//debug($user); die();
-	    	if($user){
-				$usersTable = TableRegistry::get('Users');
-				$modif_user = $usersTable->get($user->id); 
-				//Mise à jour du token pour eviter une 2eme validation
-     			$password = $this->Securite->getPassword();
-    			$token = $this->Securite->getToken();
-				$modif_user->token = $token;
-				$modif_user->password = $password;
-				$usersTable->save($modif_user);				
-				//Affichage du mot de passe
-				$this->Flash->success(__("Votre mot de passe a bien été réinitialisé, voici votre nouveau mot de passe : $password"));
-			} else {
-				$this->Flash->error(__("Ce lien ne semble pas valide."));
-			}
-	    }
-	    
-	    if ($this->request->is(['post'])) {
-	    	$d = $this->request->data;    	
-	    	$user = $this->Users->find('all')->where(['username'=> $d['identifiant']])->first();
-	    	if(empty($user)) {
-	    		$this->Flash->error('Aucun utilisateur ne correspond à cet identifiant.');	    	
-	    	} else {
-	    		//Recuperation des parametres
-	    		$this->loadModel('Parametres');
-	    		$from = $this->Parametres->find('all')->where(['name' => 'EmailContact'])->first();
-	    		
-	    		//Enregistrement de l'ID en session en cas de retour
-	    		$link = ['controller'=>'users', 'action' => 'password', 'token'=> $user->id."-".$user->token, '_full' => true];
-	    			    		
-	    		$email = new Email('default');
-	    		$email->template('mdp')
-	    		->emailFormat('html')
-	    		->to(trim(rtrim(strip_tags($d['email']))))
-	    		->from(trim(rtrim(strip_tags($from->valeur))))
-	    		->subject('[Pacte] Regénération de votre mot de passe')
-	    		->viewVars(['link'=>$link])
-	    		->send();
-
-	    		$this->Flash->success('Un message vient de vous être envoyé pour regénérer votre mot de passe.');
-	    	}
-	    }
-	}
-	
-	
 	
 	public function regeneratePassword($id = null) {
 		if($id) $user = $this->Users->get($id);
