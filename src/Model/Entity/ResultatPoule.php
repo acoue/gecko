@@ -4,14 +4,15 @@ namespace App\Model\Entity;
 use Cake\ORM\Entity;
 
 /**
- * ResultatPoule Entity.
+ * ResultatPoule Entity
  *
  * @property int $id
  * @property int $numero_poule
  * @property int $classement
  * @property int $licencie_id
- * @property \App\Model\Entity\Licency $licency
  * @property int $competition_id
+ *
+ * @property \App\Model\Entity\Licency $licency
  * @property \App\Model\Entity\Competition $competition
  */
 class ResultatPoule extends Entity
@@ -28,6 +29,6 @@ class ResultatPoule extends Entity
      */
     protected $_accessible = [
         '*' => true,
-        'id' => false,
+        'id' => false
     ];
 }

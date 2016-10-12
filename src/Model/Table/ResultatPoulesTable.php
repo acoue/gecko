@@ -1,7 +1,6 @@
 <?php
 namespace App\Model\Table;
 
-use App\Model\Entity\ResultatPoule;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
@@ -12,6 +11,14 @@ use Cake\Validation\Validator;
  *
  * @property \Cake\ORM\Association\BelongsTo $Licencies
  * @property \Cake\ORM\Association\BelongsTo $Competitions
+ *
+ * @method \App\Model\Entity\ResultatPoule get($primaryKey, $options = [])
+ * @method \App\Model\Entity\ResultatPoule newEntity($data = null, array $options = [])
+ * @method \App\Model\Entity\ResultatPoule[] newEntities(array $data, array $options = [])
+ * @method \App\Model\Entity\ResultatPoule|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\ResultatPoule patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\ResultatPoule[] patchEntities($entities, array $data, array $options = [])
+ * @method \App\Model\Entity\ResultatPoule findOrCreate($search, callable $callback = null)
  */
 class ResultatPoulesTable extends Table
 {
@@ -76,6 +83,7 @@ class ResultatPoulesTable extends Table
     {
         $rules->add($rules->existsIn(['licencie_id'], 'Licencies'));
         $rules->add($rules->existsIn(['competition_id'], 'Competitions'));
+
         return $rules;
     }
 }
