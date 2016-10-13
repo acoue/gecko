@@ -285,6 +285,28 @@ class TiragesController extends AppController
 // 							->execute();
 // 						}
 // 					}
+					//Insertion dans la table resultatPoules
+					
+					$this->loadModel('Repartitions');
+					$repartitions = $this->Repartitions->find()
+					->where(['competition_id'=>$competitionSelected->id])
+					->order('numero_poule')->toArray();
+
+					$resultatPoulesModel=$this->loadModel('ResultatPoules');
+					$resultatQuery = $resultatPoulesModel->query();
+					
+					foreach ($repartitions as $value) {
+						$resultatQuery->insert(['numero_poule','classement','licencie_id','competition_id'])
+						->values(['numero_poule'=>$value['numero_poule'],'classement'=>0,'licencie_id'=>$value['licencie_id'],'competition_id'=>$competitionSelected->id]);
+						
+					}
+					$resultatQuery->execute();
+						
+						
+					
+					
+					
+					
 					
 					//Enregistrement
 		     		$tirage = $this->Tirages->newEntity();

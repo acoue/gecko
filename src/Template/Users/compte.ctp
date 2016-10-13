@@ -36,7 +36,7 @@
                     <div class="col-md-12"><?= $this->Form->input('username', ['label' => false,'id'=>'username',
 														   	'div' => false,
 															'class' => 'form-control', 
-                    										'type' => 'texte', 'value'=>$user->login ,
+                    										'type' => 'texte', 'value'=>$user->username ,
 															'disabled' =>'disabled']); ?>
                     </div>                          
 				</div><br />   
