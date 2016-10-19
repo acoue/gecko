@@ -2,7 +2,11 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
-use Lib\Tableau;
+use Lib\Tableau4;
+use Lib\Tableau6;
+use Lib\Tableau8;
+use Lib\Tableau12;
+use Lib\Tableau16;
 /**
  * ResultatPoules Controller
  *
@@ -66,7 +70,7 @@ class ResultatPoulesController extends AppController
     public function makeTableau() {
 
     	$this->loadModel('Competitions');
-    	$competitionSelected = $this->Competitions->find('all')->where(['selected' => '1'])->first();
+    	$competitionSelected = $this->Competitions->find('all')->contain(['Categories'])->where(['selected' => '1'])->first();
     	 
     	$resultatPoules = $this->ResultatPoules->find('all')->contain(['Licencies'])
     	->where(['competition_id'=>$competitionSelected->id, 'classement < ' => 3])
@@ -83,8 +87,49 @@ class ResultatPoulesController extends AppController
     		}
     	}
     	
-    	$resultat="<table cellpadding='0' cellspacing='0' width='70%'>";
-    	$resultat.=Tableau::dessineTableau(8);
+    	//entete du tableau
+    	$resultat= "
+    	<table cellpadding='0' cellspacing='0' width='100%' >
+    		<tr>
+		    	<td align='left'>Comité National de Kendo F.F.J.D.A.</td>
+		    	<td align='right'>Date : ".$competitionSelected->date_competition."</td>
+	    	</tr>
+	    	<tr>
+	    		<td align='left'>Commission sportive</td>
+	    		<td></td>
+	    	</tr>
+	    	<tr>
+	    		<td align='left'>Nom et visa du commissaire de table :</td>
+	    		<td align='right'>Catégorie : ".$competitionSelected->category->name."</td>
+	    	</tr>
+	    	<tr>
+	    		<td align='center' colspan='2'>".$competitionSelected->name."</td>
+	    	</tr>
+	    	<tr>
+	    		<td align='center' colspan='2'><br /><br /><b><u>Tableau de ".$tailleTableau." combattants</u></b></td>
+	    	</tr>
+    	</table>";
+    	$resultat.="<br /><br /><br /><br /><table cellpadding='0' cellspacing='0' width='80%'>";
+    	
+    	$tailleTableau=12;
+    	switch ($tailleTableau) {
+    		case 4:
+    			$resultat.=Tableau4::dessineTableau();
+    			break;
+    		case 6:
+    			$resultat.=Tableau6::dessineTableau();
+    			break;
+    		case 8:
+    			$resultat.=Tableau8::dessineTableau();
+    			break;
+    		case 12:
+    			$resultat.=Tableau12::dessineTableau();
+    			break;
+    		case 16:
+    			$resultat.=Tableau16::dessineTableau();
+    			break;
+    	}
+    	
     	
     	$resultat.="</table>";
     	

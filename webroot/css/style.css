@@ -172,83 +172,95 @@ body, html{height:100%;}
   width: 30%;
 }
 
+
 /*Cellule des poules */
-.cellule0000 {	
+/* Taille */
+.cellule10{	
+	height:10px;
+}
+
+.cellule20{	
+	height:20px;
+}
+
+.cellule30{	
+	height:30px;
+}
+
+.cellule40{	
 	height:40px;
+}
+
+.cellule50{	
+	height:50px;
+}
+
+.cellule60{	
+	height:60px;
+}
+
+/* Bordure */
+.cellule0000 {	
 }
 .cellule1111 {
 	border-top:1px solid black;	
 	border-bottom:1px solid black;	
 	border-right:1px solid black;	
-	border-left:1px solid black;	
-	height:40px;
+	border-left:1px solid black;
 }
 .cellule1000 {
-	border-left:1px solid black;	
-	height:40px;	
+	border-left:1px solid black;
 }
 .cellule0100 {
 	border-top:1px solid black;		
-	height:40px;
 }
 .cellule0010 {
-	border-right:1px solid black;		
-	height:40px;
+	border-right:1px solid black;
 }
 .cellule0001 {
-	border-bottom:1px solid black;		
-	height:40px;
+	border-bottom:1px solid black;	
 }
 .cellule1100 {
 	border-left:1px solid black;	
-	border-top:1px solid black;		
-	height:40px;
+	border-top:1px solid black;	
 }
 
 .cellule1001 {
 	border-left:1px solid black;	
-	border-bottom:1px solid black;		
-	height:40px;
+	border-bottom:1px solid black;	
 }
 
 .cellule1010 {
 	border-left:1px solid black;	
-	border-right:1px solid black;		
-	height:40px;
+	border-right:1px solid black;
 }
 
 .cellule1110 {
 	border-left:1px solid black;	
 	border-right:1px solid black;		
 	border-top:1px solid black;	
-	height:40px;
 }
 .cellule1011 {
 	border-left:1px solid black;	
 	border-right:1px solid black;		
-	border-bottom:1px solid black;	
-	height:40px;
+	border-bottom:1px solid black;
 }
 .cellule0101 {
 	border-top:1px solid black;			
-	border-bottom:1px solid black;	
-	height:40px;
+	border-bottom:1px solid black;
 }
 .cellule0110 {
 	border-top:1px solid black;			
-	border-right:1px solid black;	
-	height:40px;
+	border-right:1px solid black;
 }
 .cellule0111 {
 	border-top:1px solid black;			
 	border-right:1px solid black;
 	border-bottom:1px solid black;	
-	height:40px;
 }
 .cellule0011 {
 	border-bottom:1px solid black;			
 	border-right:1px solid black;	
-	height:40px;
 }
 .celluleGrise{
 	background-color: grey;
