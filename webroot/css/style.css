@@ -179,12 +179,24 @@ body, html{height:100%;}
 	height:10px;
 }
 
+.cellule15{	
+	height:15px;
+}
+
 .cellule20{	
 	height:20px;
 }
 
+.cellule25{	
+	height:25px;
+}
+
 .cellule30{	
 	height:30px;
+}
+
+.cellule35{	
+	height:35px;
 }
 
 .cellule40{	
@@ -264,7 +276,6 @@ body, html{height:100%;}
 }
 .celluleGrise{
 	background-color: grey;
-	/*background-color : #c6c3bd;*/
 }
 .libClub {
   color: #595959;
@@ -274,4 +285,10 @@ body, html{height:100%;}
 .libLicencie {
   color: #333333;
   font-size: 16px;
+}
+.portrait {
+	orientation: portrait;
+}
+.paysage {	
+	orientation: landscape;
 }

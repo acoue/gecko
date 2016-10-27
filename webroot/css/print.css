@@ -1,0 +1,65 @@
+
+@media print
+{	
+	
+body {
+	height: 100%;
+	font-family: Trebuchet MS, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	
+	background-image: none;
+}
+
+.sautPage {
+	page-break-after: always;
+}
+	
+	.divBoutton{
+		display: none;
+	}
+	
+	.blocblanc > h2 {
+		display: none;
+	}
+	
+	.blocblanc > h3 {
+		display: none;
+	}
+	
+	.blocblancContent > h4 {
+		display: none;
+	}
+	
+
+	.entete {
+		display: none;
+	}
+	
+	.header_titre {
+		display: none;
+	}
+	
+	.header_texte {
+	        display: none;
+	}
+	
+	.header_logo {
+	        display: none;
+	}
+	
+	.text-footer-right {
+	        display: none;
+	}
+	.text-footer-left {
+	        display: none;
+	}
+	
+	.divBouton{
+	        display: none;
+	}
+	
+	.celluleGrise{
+		
+	background-color: #D3D8D7;
+	}
+}

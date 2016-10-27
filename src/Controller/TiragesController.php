@@ -360,7 +360,14 @@ class TiragesController extends AppController
     		->order('numero_poule,position_poule')->toArray();
     	//debug($pouleTab);die();
 
-    	$messagePoule= "
+    	$query = $this->Repartitions->find();
+    	$query->select(['poule'=>'numero_poule','max' => $query->func()->max('position_poule')])->group('numero_poule');
+    	$pouleTab=[];
+    	foreach ($query as $value) {
+    		$pouleTab[$value->poule]=$value->max;
+    	}
+    	
+    	$messagePouleResume= "
     	<table cellpadding='0' cellspacing='0' width='100%' >
     		<tr>
 		    	<td align='left'>Comité National de Kendo F.F.J.D.A.</td>
@@ -379,10 +386,35 @@ class TiragesController extends AppController
 	    	</tr>
     	</table>";
     	 
-    	$this->set(compact('repartitions','messagePoule'));
+    	$messagePoule= "
+    	<table cellpadding='0' cellspacing='0' width='100%' >
+    		<tr>
+		    	<td align='left'>Comité National de Kendo F.F.J.D.A.</td>
+		    	<td align='right'>Date : ".$competitionSelected->date_competition."</td>
+	    	</tr>
+	    	<tr>
+	    		<td align='left'>Commission sportive</td>
+	    		<td></td>
+	    	</tr>
+	    	<tr>
+	    		<td align='left'>Nom et visa du commissaire de table :</td>
+	    		<td align='right'>Catégorie : ".$competitionSelected->category->name."</td>
+	    	</tr>
+	    	<tr>
+	    		<td align='center' colspan='2'>".$competitionSelected->name."</td>
+	    	</tr>
+	    	<tr>
+	    		<td align='center' colspan='2'>Poule @@@</td>
+	    	</tr>
+	    	<tr>
+	    		<td align='left'>@@combat@@</td>
+	    	</tr>
+    	</table>";
+    	
+    	$this->set(compact('repartitions','messagePouleResume','pouleTab','messagePoule'));
     }
 
-    public function printPoule() {
+    /* public function printPoule() {
     	$this->loadModel('Competitions');
     	$competitionSelected = $this->Competitions->find('all')->contain('Categories')->where(['selected' => '1'])->first();
     	//debug($competitionSelected);
@@ -431,7 +463,7 @@ class TiragesController extends AppController
     	
     	$this->set(compact('repartitions','pouleTab','messagePoule'));
     }
-    
+     */
     
     /**
      * Edit method

@@ -26,6 +26,8 @@ else $uc =null;
     <?= $this->Html->css('style.css') ?>
     <?= $this->Html->css('jquery-ui.css') ?>
     <?= $this->Html->css('jquery.minicolors.css') ?>
+    <?= $this->Html->css(['print'],['media' => 'print']); ?>
+    
     <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>
 </head>

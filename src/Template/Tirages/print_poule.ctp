@@ -1,3 +1,8 @@
+<?php 
+//https://www.sitepoint.com/create-a-customized-print-stylesheet-in-minutes/
+//http://www.chiny.me/les-media-queries-responsive-design-5-14.php
+?>
+
 <div class="blocblanc">	
 	<div class="blocblancContent large-9 medium-8 columns content">
 		<div class="row">

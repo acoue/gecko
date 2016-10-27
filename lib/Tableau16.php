@@ -3,12 +3,8 @@ namespace Lib;
 
 
 class Tableau16 {
-	function dessineTableau() {
-		$sortie="";
-		
-		$width=15;
-		$height=30;
-		
+	function dessineTableau($width,$height) {
+		$sortie="";	
 		$sortie.="<tr>
 					<td width='".($width/3)."%'></td>
 					<td width='".$width."%' class='cellule".$height." cellule0001'>@1@</td>

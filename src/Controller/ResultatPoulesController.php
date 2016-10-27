@@ -109,24 +109,24 @@ class ResultatPoulesController extends AppController
 	    		<td align='center' colspan='2'><br /><br /><b><u>Tableau de ".$tailleTableau." combattants</u></b></td>
 	    	</tr>
     	</table>";
-    	$resultat.="<br /><br /><br /><br /><table cellpadding='0' cellspacing='0' width='80%'>";
+    	$resultat.="<br /><br /><br /><br /><table cellpadding='0' cellspacing='0' width='100%'>";
     	
     	$tailleTableau=12;
     	switch ($tailleTableau) {
     		case 4:
-    			$resultat.=Tableau4::dessineTableau();
+    			$resultat.=Tableau4::dessineTableau('30','40');
     			break;
     		case 6:
-    			$resultat.=Tableau6::dessineTableau();
+    			$resultat.=Tableau6::dessineTableau('20','40');
     			break;
     		case 8:
-    			$resultat.=Tableau8::dessineTableau();
+    			$resultat.=Tableau8::dessineTableau('22','30');
     			break;
     		case 12:
-    			$resultat.=Tableau12::dessineTableau();
+    			$resultat.=Tableau12::dessineTableau('20','20');
     			break;
     		case 16:
-    			$resultat.=Tableau16::dessineTableau();
+    			$resultat.=Tableau16::dessineTableau('15','30');
     			break;
     	}
     	
