@@ -175,6 +175,12 @@ body, html{height:100%;}
 
 /*Cellule des poules */
 /* Taille */
+.tablePolice { font-size: 50%; }
+
+.tabPolice8{
+	text-align: left;
+    font-size: 4px;
+}
 .cellule10{	
 	height:10px;
 }

@@ -7,6 +7,7 @@ use Lib\Tableau6;
 use Lib\Tableau8;
 use Lib\Tableau12;
 use Lib\Tableau16;
+use Lib\Tableau24;
 /**
  * ResultatPoules Controller
  *
@@ -109,32 +110,46 @@ class ResultatPoulesController extends AppController
 	    		<td align='center' colspan='2'><br /><br /><b><u>Tableau de ".$tailleTableau." combattants</u></b></td>
 	    	</tr>
     	</table>";
-    	$resultat.="<br /><br /><br /><br /><table cellpadding='0' cellspacing='0' width='100%'>";
+    	$resultat.="<br /><br /><table cellpadding='0' cellspacing='0' width='100%' style='font-size: 80%;'>";
     	
     	$tailleTableau=12;
     	switch ($tailleTableau) {
     		case 4:
-    			$resultat.=Tableau4::dessineTableau('30','40');
+    			$resultat.=Tableau4::dessineTableau('30','50');
     			break;
     		case 6:
     			$resultat.=Tableau6::dessineTableau('20','40');
     			break;
     		case 8:
-    			$resultat.=Tableau8::dessineTableau('22','30');
+    			$resultat.=Tableau8::dessineTableau('22','40');
     			break;
     		case 12:
-    			$resultat.=Tableau12::dessineTableau('20','20');
+    			$resultat.=Tableau12::dessineTableau('18','25');
     			break;
     		case 16:
-    			$resultat.=Tableau16::dessineTableau('15','30');
+    			$resultat.=Tableau16::dessineTableau('15','20');
+    			break;
+    		case 24:
+    			$resultat.=Tableau24::dessineTableau('12','10');
     			break;
     	}
     	
-    	
     	$resultat.="</table>";
     	
+    	$resultatPoules = $this->ResultatPoules->find('all')->contain(['Licencies'])
+    	->select(['prenom'=>'prenom', 'nom'=>'nom' , 'res'=> 'concat(numero_poule,".",classement)'])
+    	->where(['competition_id'=>$competitionSelected->id,'classement < '=>3])
+    	->order('numero_poule asc,classement asc');
+    	
+    	$tabResultat = [];
+    	foreach ($resultatPoules as $value) {
+    		$resultat = str_replace("@".$value->res."@",$value->prenom." ".$value->nom,$resultat);
+    		
+    	}
+    	//remplacement des ligne non completees
+    	$resultat=preg_replace('/@\d.\d@/', '', $resultat);
+    	
     	$this->set(compact('resultat'));
-    	$this->set('_serialize', ['resultatPoules']);
     	 
     }
 }

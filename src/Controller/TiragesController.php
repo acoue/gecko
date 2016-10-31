@@ -320,6 +320,9 @@ class TiragesController extends AppController
 						$this->Flash->error(__('Erreur lors du tirage au sort.'));
 					}					
 					
+				} else {
+					
+					//Tirage tableau
 				}
 			} else {
 				$this->Flash->error(__('Erreur : merci d\'effectuer la répartition.'));
@@ -386,6 +389,27 @@ class TiragesController extends AppController
 	    	</tr>
     	</table>";
     	 
+    	
+    	$this->set(compact('repartitions','messagePouleResume','pouleTab'));
+    }
+
+    public function affichePoule() {
+    	$this->loadModel('Competitions');
+    	$competitionSelected = $this->Competitions->find('all')->contain('Categories')->where(['selected' => '1'])->first();
+    	//debug($competitionSelected);
+    	$this->loadModel('Repartitions');
+    	 
+    	$repartitions = $this->Repartitions->find('all')->contain(['Licencies'=>['Clubs']])
+    	->where(['competition_id'=>$competitionSelected->id])
+    	->order('numero_poule,position_poule')->toArray();
+    	 
+    	$query = $this->Repartitions->find();
+    	$query->select(['poule'=>'numero_poule','max' => $query->func()->max('position_poule')])->group('numero_poule');
+    	$pouleTab=[];
+    	foreach ($query as $value) {
+    		$pouleTab[$value->poule]=$value->max;
+    	}
+    	//debug($pouleTab);die();
     	$messagePoule= "
     	<table cellpadding='0' cellspacing='0' width='100%' >
     		<tr>
@@ -411,59 +435,9 @@ class TiragesController extends AppController
 	    	</tr>
     	</table>";
     	
-    	$this->set(compact('repartitions','messagePouleResume','pouleTab','messagePoule'));
-    }
-
-    /* public function printPoule() {
-    	$this->loadModel('Competitions');
-    	$competitionSelected = $this->Competitions->find('all')->contain('Categories')->where(['selected' => '1'])->first();
-    	//debug($competitionSelected);
-    	$this->loadModel('Repartitions');
-    	 
-    	$repartitions = $this->Repartitions->find('all')->contain(['Licencies'=>['Clubs']])
-    	->where(['competition_id'=>$competitionSelected->id])
-    	->order('numero_poule,position_poule')->toArray();
-    	 
-    	$query = $this->Repartitions->find();
-    	$query->select(['poule'=>'numero_poule','max' => $query->func()->max('position_poule')])->group('numero_poule');
-    	$pouleTab=[];
-    	foreach ($query as $value) {
-    		$pouleTab[$value->poule]=$value->max;
-    	}
-    	//debug($pouleTab);die();
-    	
-    	$messagePoule= "
-    	<table cellpadding='0' cellspacing='0' width='100%' >
-    		<tr>
-		    	<td align='left'>Comité National de Kendo F.F.J.D.A.</td>
-		    	<td align='right'>Date : ".$competitionSelected->date_competition."</td>
-	    	</tr>
-	    	<tr>
-	    		<td align='left'>Commission sportive</td>
-	    		<td></td>
-	    	</tr>
-	    	<tr>
-	    		<td align='left'>Nom et visa du commissaire de table :</td>
-	    		<td align='right'>Catégorie : ".$competitionSelected->category->name."</td>
-	    	</tr>
-	    	<tr>
-	    		<td align='center' colspan='2'>".$competitionSelected->name."</td>
-	    	</tr>	
-	    	<tr>
-	    		<td align='center' colspan='2'>Poule @@@</td>
-	    	</tr>	
-	    	<tr>
-	    		<td align='left'>Poule de 3 : 1x2 - 1x3 - 2x3</td>
-	    	</tr>
-    	</table>";
-    	
-    	
-    	
-    	
-    	
     	$this->set(compact('repartitions','pouleTab','messagePoule'));
     }
-     */
+    
     
     /**
      * Edit method
