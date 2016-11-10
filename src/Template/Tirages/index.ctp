@@ -12,8 +12,8 @@
 			        <thead>
 			            <tr>
 			                <th width='10%'><?= $this->Paginator->sort('id') ?></th>
-			                <th width='60%'><?= $this->Paginator->sort('type') ?></th>
-			                <th width='30%'><?= $this->Paginator->sort('created','Date') ?></th>
+			                <th width='70%'><?= $this->Paginator->sort('type') ?></th>
+			                <th width='20%'><?= $this->Paginator->sort('created','Date') ?></th>
 			            </tr>
 			        </thead>
 			        <tbody>

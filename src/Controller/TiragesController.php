@@ -332,7 +332,7 @@ class TiragesController extends AppController
     	
     	//Recuperartion des licencies
     	$this->loadModel('Repartitions');
-    	$repartitions = $this->Repartitions->find('all')->contain(['Licencies'])->where(['competition_id' => $competitionSelected->id])->order(['licencies.nom'=>'asc']);
+    	$repartitions = $this->Repartitions->find('all')->contain(['Licencies'])->where(['competition_id' => $competitionSelected->id])->order(['Licencies.nom'=>'asc']);
     	$repartitionListe = ["-1"=>"Tête de série"];
     	foreach ($repartitions as $value):
     	array_push($repartitionListe,[$value->licencie_id => $value->licency->prenom." ".$value->licency->nom]);

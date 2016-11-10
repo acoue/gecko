@@ -40,8 +40,8 @@ else $uc =null;
 	            <span class="header_texte">
 	            <?php
 	            if($uc){
-	            	echo "Compétition sélectionnée : ".$competitionSelected-> name ." ".$competitionSelected->category->name."&nbsp;&nbsp;&nbsp;&nbsp;";
-					echo $this->Html->link('Modifier', ['controller'=>'Competitions', 'action' => 'select'],['class' => 'btn btn-info']);
+	            	echo $competitionSelected-> name ." ".$competitionSelected->category->name."&nbsp;&nbsp;&nbsp;&nbsp;";
+					echo $this->Html->link('Sélectioner', ['controller'=>'Competitions', 'action' => 'select'],['class' => 'btn btn-info']);
 				}
 				?>
 	            
