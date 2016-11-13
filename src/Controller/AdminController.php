@@ -29,6 +29,8 @@ class AdminController extends AppController
     	$session->write('Module',$id);
     	 
     
-    	return $this->redirect(['controller'=>'Pages','action' => 'home']);
+    	if($id==1) return $this->redirect(['controller'=>'Licencies','action' => 'index']);
+    	else if($id==3)return $this->redirect(['controller'=>'Passages','action' => 'gestion']);
+    	else return $this->redirect(['controller'=>'Pages','action' => 'home']);
     }
 }

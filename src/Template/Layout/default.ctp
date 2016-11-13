@@ -7,9 +7,6 @@ $session = $this->request->session();
 if($session->check("UserConnected")) $uc=$session->read("UserConnected");
 else $uc =null;
 ?>
-$session = $this->request->session();
-if($session->check("UserConnected")) $uc=$session->read("UserConnected");
-else $uc =null;
 <!DOCTYPE html>
 <html>
 <head>
@@ -44,6 +41,7 @@ else $uc =null;
 	            <?php
 	            if($uc){
 	            	if($session->check("Module")) $module=$session->read("Module");
+	            	
 	            	if($module==1) {
 	            		echo "Module licenciés";
 	            	} else if($module==2) {
@@ -53,7 +51,9 @@ else $uc =null;
 	            		echo $passageSelected-> name ."&nbsp;&nbsp;&nbsp;&nbsp;";
 						echo $this->Html->link('Sélectioner', ['controller'=>'Passages', 'action' => 'select'],['class' => 'btn btn-info']);
 	            		
-	            	} else if($module = 4) echo "Administration";
+	            	} else if($module == 4) {
+						echo "Administration";
+	            	} else echo "";
 	            }
 				?>
 	            
@@ -76,7 +76,14 @@ else $uc =null;
 	    					if($module == '1' ) echo $this->element('menuLicencie'); //Espagce licencié
 	    					else if ($module == '2') echo $this->element('menuCompetition'); //Espace competition	
 	    					else if ($module == '3') echo $this->element('menuPassage'); //Espace passage de grade
-	    					else if($module== '0') echo $this->element('menu');
+	    					else echo $this->element('menu');
+	    					
+	    					if($uc->getProfil()=='admin') echo $this->element('menuAdmin'); //Menu administration
+	    					
+	    					//Menu mon compte
+	    					echo $this->Html->link('Mon compte', ['controller'=>'Users', 'action' => 'compte'],['class' => 'btn btn-warning'])."<br /><br />";
+	    					echo $this->Html->link('Déconnexion', ['controller'=>'Users', 'action' => 'logout'],['class' => 'btn btn-danger'])."<br /><br />";
+	    					
 	   					?>
 	    				</div>
 	    			</div>

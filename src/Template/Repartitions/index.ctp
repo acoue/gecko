@@ -22,7 +22,7 @@
 			<div class="col-lg-2"></div>
 		</div>
 	
-	
+	<h4>Déjà sélectionné</h4>
 		<div class="row">
 			<div class="col-lg-2"></div>
 			<div class="col-lg-20"> 
