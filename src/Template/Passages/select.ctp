@@ -20,7 +20,7 @@
 			                <td><?= $passage->name ?></td>
 			                <td><?= $passage->date_passage ?></td>
 			                <td><?= $passage->selected == 1 ? 'Oui' : 'Non' ?></td>
-			                <td><? if($passage->selected == 0) echo $this->Html->link('Sélectionner', ['controller'=>'passages', 'action' => 'choisir/'.$passage->id],['class' => 'btn btn-primary']) ?></td>
+			                <td><?php if($passage->selected == 0) echo $this->Html->link('Sélectionner', ['controller'=>'passages', 'action' => 'choisir/'.$passage->id],['class' => 'btn btn-primary']) ?></td>
 				        </tr>
 				    <?php endforeach; ?>
 				    </tbody>

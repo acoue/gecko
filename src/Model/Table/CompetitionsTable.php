@@ -66,6 +66,11 @@ class CompetitionsTable extends Table
             ->notEmpty('description');
 
         $validator
+            ->date('type')
+            ->requirePresence('type', 'create')
+            ->notEmpty('type');
+
+        $validator
             ->integer('selected')
             ->requirePresence('selected', 'create')
             ->notEmpty('selected');

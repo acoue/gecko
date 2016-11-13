@@ -12,7 +12,7 @@
 			                <th align='center'>Catégorie</th>
 			                <th>Date</th>
 			                <th>Lieux</th>
-			                <th>Sélectionnée ?</th>
+			                <th>Type</th>
 			                <th></th>
                 		</tr>
 				    </thead>
@@ -23,8 +23,8 @@
 			                <td><?= $competition->category->name ?></td>
 			                <td><?= $competition->date_competition?></td>
 			                <td><?= $competition->lieux ?></td>
-			                <td><?= $competition->selected == 1 ? 'Oui' : 'Non' ?></td>
-			                <td><? if($competition->selected == 0) echo $this->Html->link('Sélectionner', ['controller'=>'competitions', 'action' => 'choisir/'.$competition->id],['class' => 'btn btn-primary']) ?></td>
+			                <td><?= $competition->type == 0 ? 'Individuelle' : 'Equipe' ?></td>
+				       		<td><?= $competition->selected == 1 ? '<span class="badge badge-success">Oui</span>' : $this->Html->link('Sélectionner', ['controller'=>'competitions', 'action' => 'choisir/'.$competition->id],['class' => 'btn btn-primary']) ?></td>
 				        </tr>
 				    <?php endforeach; ?>
 				    </tbody>

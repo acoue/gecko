@@ -35,7 +35,7 @@ class LicenciesTable extends Table
         parent::initialize($config);
 
         $this->table('licencies');
-        $this->displayField('id');
+        $this->displayField('display_name');
         $this->primaryKey('id');
 
         $this->addBehavior('Timestamp');
@@ -66,6 +66,10 @@ class LicenciesTable extends Table
             ->requirePresence('nom', 'create')
             ->notEmpty('nom');
 
+        $validator
+            ->requirePresence('display_name', 'create')
+            ->notEmpty('display_name');
+        
         $validator
             ->date('sexe')
             ->allowEmpty('sexe');

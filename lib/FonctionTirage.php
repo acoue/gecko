@@ -71,6 +71,37 @@ class FonctionTirage {
 		return $final;		
 	}
 	
+	function repartitionTeteTableau($competiteurs,$tete1,$tete2,$tete3,$tete4) {
+		$final=[];
+		while(count($competiteurs) > count($final)) array_push($final,"#");
+		//Grand tableau > 6 competiteurs
+		if(count($competiteurs)>6) {
+			//positionnement de la tete 1 => 1.1
+			if($tete1) $final[0]=$tete1*1;
+			//positionnement de la tete 2  => 2.1
+			if($tete2) $final[2]=$tete2*1;
+			//positionnement de la tete 3  => 3.1
+			if($tete3) $final[4]=$tete3*1;
+			//positionnement de la tete 4  => 4.1
+			if($tete4) $final[6]=$tete4*1;
+		} else {
+			//Petit tableau 
+			//Tableau de 4
+			if(count($competiteurs) == 4) {
+				if($tete1) $final[0]=$tete1*1;
+				if($tete2) $final[2]=$tete2*1;
+				if($tete3) $final[1]=$tete3*1;
+				if($tete4) $final[3]=$tete4*1;
+			} else if(count($competiteurs) > 5) { //Tableau de 6
+				if($tete1) $final[0]=$tete1*1; //=> 1.1
+				if($tete2) $final[2]=$tete2*1; //=> 2.1
+				if($tete3) $final[4]=$tete3*1; //=> 3.1
+				if($tete4) $final[3]=$tete4*1; //=> 1.2
+			} 
+		}
+		return $final;
+	}
+	
 	function repartitionTete($competiteurs,$poule,$tete1,$tete2,$tete3,$tete4) {
 		
 		$final=[];

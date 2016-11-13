@@ -55,7 +55,7 @@ class UsersController extends AppController
 				$userConnected->setProfil($modif_user->profil->name);
 				
 				$session->write('UserConnected',$userConnected);
-				
+				$session->write('Module',"-1");
 				return $this->redirect($this->Auth->redirectUrl());
 								
 			} else $this->Flash->error(__("Nom d'utilisateur ou mot de passe incorrect, essayez à nouveau."));

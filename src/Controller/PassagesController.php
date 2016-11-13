@@ -149,7 +149,7 @@ class PassagesController extends AppController
     	$passage = $this->Passages->get($id);
     	$passage->selected=1;
     	if ($this->Passages->save($passage)) {
-    		$this->Flash->success(__('Le pasage de grade a bien été sélectionné.'));
+    		$this->Flash->success(__('Le passage de grade a bien été sélectionné.'));
     	} else {
     		$this->Flash->error(__('Erreur dans la sélection du passage de grade.'));
     	}

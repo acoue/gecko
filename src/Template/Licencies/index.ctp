@@ -7,8 +7,8 @@
 			<div class="col-lg-20"> 
 							<?= $this->Form->create(NULL); ?>
 				<div class="row">
-                	<label class="col-md-6 control-label" for="libelle">Entrez un Libellé pour la recherche : </label>
-                    <div class="col-md-14"><?= $this->Form->input('libelle', ['label' => false,'id'=>'libelle',
+                	<label class="col-md-10 control-label" for="libelle">Entrez un libellé pour la recherche : </label>
+                    <div class="col-md-10"><?= $this->Form->input('libelle', ['label' => false,'id'=>'libelle',
 														   	'div' => false,
 															'class' => 'form-control', 
                     										'type' => 'text']); ?>
@@ -31,7 +31,7 @@
 
 		$("#libelle").bind('input', function () {
             $.ajax({
-                url: "<?= $this->Url->build(['controller'=>'licencies','action'=>'search'])?>",
+                url: "<?= $this->Url->build(['controller'=>'Licencies','action'=>'search'])?>",
                 data: {
                     libelle: $("#libelle").val()
                 },

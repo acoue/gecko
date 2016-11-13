@@ -43,9 +43,18 @@
                     </div>                          
 				</div><br />  
 				<div class="row">
-                	<label class="col-lg-8 control-label" for="catagorie_id">Catégories <span class="obligatoire"> *</span></label>
-                	<div class="col-lg-16"><?= $this->Form->input('catagorie_id', ['label' => false,
+                	<label class="col-lg-8 control-label" for="categorie_id">Catégories <span class="obligatoire"> *</span></label>
+                	<div class="col-lg-16"><?= $this->Form->input('categorie_id', ['label' => false,
                 											'options' => $categories,
+                											'div' => false,
+															'class' => 'form-control', 
+                    										'required' =>'required']) ?>    
+                	</div>                 
+				</div><br />  
+				<div class="row">
+                	<label class="col-lg-8 control-label" for="type">Type <span class="obligatoire"> *</span></label>
+                	<div class="col-lg-16"><?= $this->Form->input('type', ['label' => false,
+                											'options' => [0 => 'Individuelle', 1=>'Equipe'],
                 											'div' => false,
 															'class' => 'form-control', 
                     										'required' =>'required']) ?>    

@@ -112,7 +112,7 @@ class ResultatPoulesController extends AppController
     	</table>";
     	$resultat.="<br /><br /><table cellpadding='0' cellspacing='0' width='100%' style='font-size: 80%;'>";
     	
-    	$tailleTableau=12;
+    	$tailleTableau=6;
     	switch ($tailleTableau) {
     		case 4:
     			$resultat.=Tableau4::dessineTableau('30','50');

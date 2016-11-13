@@ -32,7 +32,7 @@
 				   </table>
 				   <br />
 					<p align="center">
-						<?= $this->Html->link(__('Créer un palmarès'), ['action' => 'add',$licencie->id], ['class'=>'btn btn-default']) ?><br /><br />
+						<?= $this->Html->link(__('Ajouter un palmarès'), ['action' => 'add',$licencie->id], ['class'=>'btn btn-default']) ?><br /><br />
 						<?= $this->Html->link(__('Retour'), ['controller'=>'licencies', 'action' => 'view',$licencie->id],['class' => 'btn btn-info']) ?> 
 					</p>
 				</div>						

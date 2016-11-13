@@ -11,6 +11,7 @@ use Cake\ORM\Entity;
  * @property \Cake\I18n\Time $date_competition
  * @property string $lieux
  * @property string $description
+ * @property int $type
  * @property int $selected
  * @property \Cake\I18n\Time $created
  * @property \Cake\I18n\Time $modified

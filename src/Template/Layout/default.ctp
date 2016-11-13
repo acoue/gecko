@@ -7,6 +7,9 @@ $session = $this->request->session();
 if($session->check("UserConnected")) $uc=$session->read("UserConnected");
 else $uc =null;
 ?>
+$session = $this->request->session();
+if($session->check("UserConnected")) $uc=$session->read("UserConnected");
+else $uc =null;
 <!DOCTYPE html>
 <html>
 <head>
@@ -40,9 +43,18 @@ else $uc =null;
 	            <span class="header_texte">
 	            <?php
 	            if($uc){
-	            	echo $competitionSelected-> name ." ".$competitionSelected->category->name."&nbsp;&nbsp;&nbsp;&nbsp;";
-					echo $this->Html->link('Sélectioner', ['controller'=>'Competitions', 'action' => 'select'],['class' => 'btn btn-info']);
-				}
+	            	if($session->check("Module")) $module=$session->read("Module");
+	            	if($module==1) {
+	            		echo "Module licenciés";
+	            	} else if($module==2) {
+	            		echo $competitionSelected-> name ." ".$competitionSelected->category->name."&nbsp;&nbsp;&nbsp;&nbsp;";
+						echo $this->Html->link('Sélectioner', ['controller'=>'Competitions', 'action' => 'select'],['class' => 'btn btn-info']);
+	            	} else if($module==3) {
+	            		echo $passageSelected-> name ."&nbsp;&nbsp;&nbsp;&nbsp;";
+						echo $this->Html->link('Sélectioner', ['controller'=>'Passages', 'action' => 'select'],['class' => 'btn btn-info']);
+	            		
+	            	} else if($module = 4) echo "Administration";
+	            }
 				?>
 	            
 	            
@@ -50,18 +62,37 @@ else $uc =null;
 		</header><br />
 		<div class="container-fluid">
 			<div class="row text-center">
+			
+			<?php if($uc) { ?>
+			
+			
 				<div class="col-lg-4 col-middle divBouton">
 	    			<div class="item">
 	    				<div class="content">
-	    					<?php if($uc) echo $this->element('bouton'); ?>
+	   					<?php 
+	   						if($session->check("Module")) $module=$session->read("Module");
+	   						else $module = -1;
+	    					
+	    					if($module == '1' ) echo $this->element('menuLicencie'); //Espagce licencié
+	    					else if ($module == '2') echo $this->element('menuCompetition'); //Espace competition	
+	    					else if ($module == '3') echo $this->element('menuPassage'); //Espace passage de grade
+	    					else if($module== '0') echo $this->element('menu');
+	   					?>
 	    				</div>
 	    			</div>
 	    		</div>
-	    	
 	    		<div class="col-lg-20 col-top">
 	    			<?= $this->Flash->render() ?>
 	    			<?= $this->fetch('content') ?>
 	    		</div>
+			<?php } else {?>
+			
+	    		<div class="col-lg-20 col-top">
+	    			<?= $this->Flash->render() ?>
+	    			<?= $this->fetch('content') ?>
+	    		</div>
+			<?php } ?>
+	    	
 			</div>
 		</div><br /><br /> 
 		<footer class="footer">
@@ -70,13 +101,10 @@ else $uc =null;
 	        	<?= $this->Html->image('by-nc-nd.eu.png', ['title' => "GeCKo de Anthony COUE est mis à disposition selon les termes de la licence Creative Commons Attribution - Pas d'Utilisation Commerciale - Pas de Modification 4.0 International."]) ?>
 	        	&copy; Anthony COUE</div>
 	        	<div class="col-lg-6 text-footer-left">
-	        	<?php 
-	        	if($uc && $uc->getProfil()=='admin') 	echo $this->Html->link('Administration', ['controller'=>'admin', 'action' => 'index'],['class' => 'btn btn-default']);
-				
-	        	?> 
+	        	
 	        	
 	        	</div>
-	            <div class="col-lg-6 text-footer-right">Version 1.0<br />19/12/2015</div>                    
+	            <div class="col-lg-6 text-footer-right">Version 1.0<br />13/11/2016</div>                    
 	            <div class="col-lg-6 text-footer-right">Mentions légales</div>
 	  		</div>
 	   </footer><!-- /.footer -->

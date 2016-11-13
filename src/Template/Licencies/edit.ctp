@@ -44,6 +44,42 @@
                     </div>                          
 				</div><br /> 
 				<div class="row">
+                	<label class="col-md-8 control-label" for="ddn">Date de naissance</label>
+                    <div class="col-md-14"><?= $this->Form->input('ddn', ['label' => false,'id'=>'ddn',
+														   	'div' => false,
+															'class' => 'form-control', 
+                    										'type' => 'text',  
+                    										'value' => h($licency->ddn)]); ?>
+                    </div>                          
+				</div><br />
+				<div class="row">
+                	<label class="col-md-8 control-label" for="sexe">Sexe</label>
+                    <div class="col-md-14"><?= $this->Form->input('sexe', ['label' => false,'id'=>'sexe',
+														   	'div' => false,
+															'class' => 'form-control', 
+                    										'options'=>[''=>'Sélectionner','F'=>'Femme','H'=>'Homme'],
+                    										'value' => ($licency->prenom == 'H') ? "Homme" : "Femme"]); ?>
+                    </div>                          
+				</div><br />
+				<div class="row">
+                	<label class="col-md-8 control-label" for="licence">Numéro de licence </label>
+                    <div class="col-md-14"><?= $this->Form->input('licence', ['label' => false,'id'=>'licence',
+														   	'div' => false,
+															'class' => 'form-control', 
+                    										'type' => 'text',  
+                    										'value' => h($licency->licence)]); ?>
+                    </div>                          
+				</div><br />
+				<div class="row">
+                	<label class="col-md-8 control-label" for="grade">Grade</label>
+                    <div class="col-md-14"><?= $this->Form->input('grade', ['label' => false,'id'=>'grade',
+														   	'div' => false,
+															'class' => 'form-control', 
+                    										'type' => 'text', 
+                    										'value' => h($licency->grade)]); ?>
+                    </div>                          
+				</div><br />
+				<div class="row">
 					<?= $this->Form->button('Valider', ['type' => 'submit','class' => 'btn btn-default']) ?>
 					<?= $this->Form->end() ?>
 			    </div>

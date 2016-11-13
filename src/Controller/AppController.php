@@ -59,13 +59,26 @@ class AppController extends Controller
         		]
         	]);
 
+        $session = $this->request->session();
+        if($session->check("Module")) $module=$session->read("Module");
+        else {
+        	$module=0;
+        	$session->write("Module",$module);
+        }
         
-        //Message
-        $this->loadModel('Competitions');
-        $competitionSelected = $this->Competitions->find('all')->contain('Categories')->where(['selected' => '1'])->first();
+        if($module==2) {
+	        //Message
+	        $this->loadModel('Competitions');
+	        $competitionSelected = $this->Competitions->find('all')->contain('Categories')->where(['selected' => '1'])->first();
+    		$this->set('competitionSelected', $competitionSelected);
+        } else if($module==3) {
+	        //Message
+	        $this->loadModel('Passages');
+	        $passageSelected = $this->Passages->find('all')->where(['selected' => '1'])->first();
+    		$this->set('passageSelected', $passageSelected);
+        }
         //debug($competition->category->name);die();
     	//Envoi des objet retuor à la page
-    	$this->set('competitionSelected', $competitionSelected);
     	$this->set('_serialize', ['competitionSelected']);
     }
 

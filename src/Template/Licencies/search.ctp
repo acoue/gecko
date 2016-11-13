@@ -1,3 +1,10 @@
+<?php 
+$licencies->count();
+foreach ($licencies as $licencie): 
+ echo $licencie->prenom."<br /> ";
+endforeach;
+
+?>
 <table cellpadding="0" cellspacing="0" class="table table-striped">
     <thead>
         <tr align='center'>

@@ -18,5 +18,17 @@ class AdminController extends AppController
     public function index()
     {
     	if(! $this->Securite->isAdmin()) return $this->redirect(['controller'=>'pages', 'action'=>'permission']);
+    	$session = $this->request->session();
+    	$session->write('Module',4);
+    }
+    
+
+    public function change($id) {
+    	
+    	$session = $this->request->session();
+    	$session->write('Module',$id);
+    	 
+    
+    	return $this->redirect(['controller'=>'Pages','action' => 'home']);
     }
 }

@@ -76,19 +76,22 @@ class TiragesController extends AppController
 				else $type.= "Sans éloignement des clubs.";
 				
 	    		//Tirage au sort
+
+				// Recuperation des competiteurs
+				$this->loadModel('Repartitions');
+				//Liste en tableau
+				$queryCompetiteurs = $this->Repartitions->find()->select('licencie_id')
+				->where(['competition_id' => $competitionSelected->id]);
+				$competiteurs=[];
+				foreach ($queryCompetiteurs as $key) {
+					array_push($competiteurs,$key['licencie_id']);
+				}
+				//Calcul du nombre de competiteurs
+				$nblicencies=count($competiteurs);
+				
+				
 	    		//1er cas : Tirage par poule
 				if ($poule > -1 ) { 
-					
-					// Recuperation des competiteurs
-	    			$this->loadModel('Repartitions');
-					//Liste en tableau
-					$queryCompetiteurs = $this->Repartitions->find()->select('licencie_id')->where(['competition_id' => $competitionSelected->id]);
-					$competiteurs=[];
-					foreach ($queryCompetiteurs as $key) {
-						array_push($competiteurs,$key['licencie_id']);
-					}
-					//Calcul du nombre de competiteurs
-					$nblicencies=count($competiteurs);
 					
 					//Test du nombre de participants par rapport au nombre de personnes dans la poule
 					if($nblicencies < $poule) {
@@ -302,28 +305,91 @@ class TiragesController extends AppController
 					}
 					$resultatQuery->execute();
 						
-						
-					
-					
-					
-					
-					
-					//Enregistrement
-		     		$tirage = $this->Tirages->newEntity();
-					$tirage->type = $type;
-					$tirage->competition_id=$competitionSelected->id;
-					
-					if ($this->Tirages->save($tirage)) {
-						$this->Flash->success(__('Le tirage a été effectué.'));
-						return $this->redirect(['action' => 'resume']);
-					} else {
-						$this->Flash->error(__('Erreur lors du tirage au sort.'));
-					}					
 					
 				} else {
 					
 					//Tirage tableau
+					
+					//****************
+					//Pas d'ecart club et pas d'ecart tete de serie
+					if($club == "N" && $tete == "N") {
+						// Recuperation des competiteurs
+						shuffle($competiteurs);
+						$listeFinale=$competiteurs;
+					}
+					//****************
+					//Pas d'ecart club et ecart tete de serie
+					if($club == "N" && $tete == "O") {
+						
+						//Recuperation des identifiants licenciés des tetes
+						($data['tete1'] > -1) ? $tete1 = $data['tete1']:$tete1=null;
+						($data['tete2'] > -1) ? $tete2 = $data['tete2']:$tete2=null;
+						($data['tete3'] > -1) ? $tete3 = $data['tete3']:$tete3=null;
+						($data['tete4'] > -1) ? $tete4 = $data['tete4']:$tete4=null;
+						//Tirage des tetes
+						$listeFinaleTmp=FonctionTirage::repartitionTeteTableau($competiteurs,$tete1,$tete2,$tete3,$tete4);
+						//Tirage des autres
+						//on retire les tetes du tableau competiteur
+						$result=array_diff($competiteurs, $listeFinaleTmp);
+						//on fait un tirage simple
+						$listeFinale=FonctionTirage::repartitionAleatoire($result,0,$listeFinaleTmp);
+					}
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					//Mise a jour de la table Repartition
+					$this->loadModel('Repartitions');
+					$repartitionQuery = $this->Repartitions->query();
+					
+					foreach ($listeFinale as $value) {
+						$repartitionQuery->update()
+						->set(['numero_poule'=>-1,'position_poule'=>-1])
+						->where(['competition_id'=>$competitionSelected->id,'licencie_id'=>$value]);
+					}	
+					$repartitionQuery->execute();
+					
+					//Mise à jour de la table resultat_poules
+					$resultatPoulesModel=$this->loadModel('ResultatPoules');
+					$resultatQuery = $resultatPoulesModel->query();
+					$iPoule=1;
+					$iClassement=0;
+					
+					foreach ($listeFinale as $value) {
+						if($iClassement==2) {
+							$iPoule++;
+							$iClassement=1;
+						} else {
+							$iClassement++;
+						}
+						
+						$resultatQuery->insert(['numero_poule','classement','licencie_id','competition_id'])
+						->values(['numero_poule'=>$iPoule,'classement'=>$iClassement,'licencie_id'=>$value,'competition_id'=>$competitionSelected->id]);
+					
+					}
+					$resultatQuery->execute();
 				}
+				//Enregistrement
+				$tirage = $this->Tirages->newEntity();
+				$tirage->type = $type;
+				$tirage->competition_id=$competitionSelected->id;
+					
+				if ($this->Tirages->save($tirage)) {
+					$this->Flash->success(__('Le tirage a été effectué.'));
+					return $this->redirect(['action' => 'resume']);
+				} else {
+					$this->Flash->error(__('Erreur lors du tirage au sort.'));
+				}
+					
 			} else {
 				$this->Flash->error(__('Erreur : merci d\'effectuer la répartition.'));
 				return $this->redirect(['action' => 'index']);
@@ -333,12 +399,21 @@ class TiragesController extends AppController
     	//Recuperartion des licencies
     	$this->loadModel('Repartitions');
     	$repartitions = $this->Repartitions->find('all')->contain(['Licencies'])->where(['competition_id' => $competitionSelected->id])->order(['Licencies.nom'=>'asc']);
-    	$repartitionListe = ["-1"=>"Tête de série"];
-    	foreach ($repartitions as $value):
-    	array_push($repartitionListe,[$value->licencie_id => $value->licency->prenom." ".$value->licency->nom]);
-    	endforeach;
+//     	$repartitionListe = ["-1"=>"Tête de série"];
+//     	foreach ($repartitions as $value):
+//     	array_push($repartitionListe,[$value->licencie_id => $value->licency->prenom." ".$value->licency->nom]);
+//     	endforeach;
     	
-    	//debug($repartitionListe);die();
+    	//Constituion des listes tete de serie
+    	//On recupere les licencies retenus
+    	$licSelected=[];
+    	foreach ($repartitions as $value):
+    		array_push($licSelected,$value->licencie_id);
+    	endforeach; 
+    	if(count($licSelected)>0) {
+    		$this->loadModel('Licencies');
+    		$repartitionListe=$this->Licencies->find('list')->where(['Licencies.id in ' => $licSelected])->order(['Licencies.display_name'=>'asc']);
+    	} else $repartitionListe = null;
     	//Historique de tirage
         $tirages = $this->Tirages->find('all')->where(['competition_id' => $competitionSelected->id]);
 
