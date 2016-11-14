@@ -94,7 +94,7 @@ else $uc =null;
 	    		</div>
 			<?php } else {?>
 			
-	    		<div class="col-lg-20 col-top">
+	    		<div class="col-lg-24 col-top">
 	    			<?= $this->Flash->render() ?>
 	    			<?= $this->fetch('content') ?>
 	    		</div>

@@ -134,7 +134,7 @@ class ResultatPoulesController extends AppController
     			$resultat.=Tableau24::dessineTableau('12','10');
     			break;
     		case 32:
-    			$resultat.=Tableau32::dessineTableau('6','20');
+    			$resultat.=Tableau32::dessineTableau('8','20');
     			break;
     	}
     	
