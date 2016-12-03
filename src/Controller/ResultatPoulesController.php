@@ -11,6 +11,7 @@ use Lib\Tableau24;
 use Lib\Tableau32;
 use Lib\Tableau36;
 use Lib\Tableau48;
+use Lib\Tableau64;
 /**
  * ResultatPoules Controller
  *
@@ -143,6 +144,9 @@ class ResultatPoulesController extends AppController
     			break;
     		case 48:
     			$resultat.=Tableau48::dessineTableau('6','10');
+    			break;
+    		case 64:
+    			$resultat.=Tableau64::dessineTableau('6','10');
     			break;
     	}
     	
