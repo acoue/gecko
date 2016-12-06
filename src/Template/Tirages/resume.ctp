@@ -32,7 +32,7 @@
 						echo "<table cellpadding='0' cellspacing='0' class='table table-bordered' >";
 						echo "<tr><td align='center'><b>Poule ".$poule."</b></td></tr>";
 					} 
-					echo "<tr><td align='center'>".$value['licency']['nom']."</td></tr>";
+					echo "<tr><td align='center'>".$value['licency']['prenom']." ".$value['licency']['nom']."</td></tr>";
 					$pouleTmp=$poule;
 				}
 				echo "</table></div>&nbsp;&nbsp;&nbsp;&nbsp;";

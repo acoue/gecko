@@ -36,7 +36,7 @@ class FonctionTirage {
 		$placement=0;
 		
 		for($i=0; $i< $tailleListeFinale;$i++) {
-			if($placement > $tailleListeFinale) {
+			if($placement >= $tailleListeFinale) {
 				if( $pos < $tailleListeFinale) $pos++;
 				else $pos=0;
 				$placement=$pos;
@@ -58,18 +58,40 @@ class FonctionTirage {
 		$placement=0;
 		
 		for($i=0; $i< $tailleListeFinale;$i++) {
-			if($placement > $tailleListeFinale) {
+			if($placement >= $tailleListeFinale) {
 				if( $pos < $tailleListeFinale) $pos++;
 				else $pos=0;
 				$placement=$pos;
 			} 
 			if($final[$placement]=="#") {
-				$final[$placement] = $CompSansTete[$i];
+				$final[$placement] = $competiteurs[$i];
 			} 
 			$placement += $poule;	
 		}
 		return $final;		
 	}
+	
+// 	function repartitionClubTableau($competiteurs) {
+// 		$final=[];
+// 		while(count($competiteurs) > count($final)) array_push($final,"#");
+	
+// 		$tailleListeFinale = count($final);
+// 		$pos=0;
+// 		$placement=0;
+	
+// 		for($i=0; $i< $tailleListeFinale;$i++) {
+// 			if($placement > $tailleListeFinale) {
+// 				if( $pos < $tailleListeFinale) $pos++;
+// 				else $pos=0;
+// 				$placement=$pos;
+// 			}
+// 			if($final[$placement]=="#") {
+// 				$final[$placement] = $competiteurs[$i];
+// 			}
+// 			$placement += 2;
+// 		}
+// 		return $final;
+// 	}
 	
 	function repartitionTeteTableau($competiteurs,$tete1,$tete2,$tete3,$tete4) {
 		$final=[];

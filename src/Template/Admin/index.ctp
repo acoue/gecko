@@ -3,7 +3,11 @@
 	<div class="container">
 		<div class="table-responsive">
 	    	<table class="table" width="60%">
-			    <tbody>
+			    <tbody>	
+			        <tr>
+			            <td>Journal</td>
+			            <td><?= $this->Html->link('Historique', ['controller'=>'Historiques', 'action' => 'index'],['class' => 'btn btn-default']) ?></td>
+			        </tr>
 			        <tr>
 			            <td width='70%'>Administration des Utilisateurs</td>
 			            <td width='30%'><?= $this->Html->link('Utilisateurs', ['controller'=>'users', 'action' => 'index'],['class' => 'btn btn-default']) ?></td>

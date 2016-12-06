@@ -141,7 +141,7 @@ class TiragesController extends AppController
 							$compTmp = $query->select([
 														'club' => 'Clubs.id',
 														'count' => $query->func()->count('Licencies.id')])
-											 ->where(['licencies.id in ' => $competiteurs])
+											 ->where(['Licencies.id in ' => $competiteurs])
 											 ->group('Clubs.id')
 											 ->order('count DESC');
 							
@@ -149,7 +149,7 @@ class TiragesController extends AppController
 								$resComp = $compByClubModel->find('All')
 														   ->contain(['Clubs'])
 														   ->select('Licencies.id')
-														   ->where(['Clubs.id' => $key->club,'licencies.id in ' => $competiteurs])->toArray();
+														   ->where(['Clubs.id' => $key->club,'Licencies.id in ' => $competiteurs])->toArray();
 								foreach ($resComp as $resTmp) : 
 									array_push($compByClub,$resTmp['id']);			
 								endforeach;				
@@ -177,19 +177,19 @@ class TiragesController extends AppController
 							$compTmp = $query->select([
 									'club' => 'Clubs.id',
 									'count' => $query->func()->count('Licencies.id')])
-									->where(['licencies.id in ' => $competiteurs])
+									->where(['Licencies.id in ' => $competiteurs])
 									->group('Clubs.id')
 									->order('count DESC');
 								
 							foreach ($compTmp as $key):
-							$resComp = $compByClubModel->find('All')
-							->contain(['Clubs'])
-							->select('Licencies.id')
-							->where(['Clubs.id' => $key->club,'licencies.id in ' => $competiteurs])->toArray();
-							foreach ($resComp as $resTmp) :
-							array_push($compByClub,$resTmp['id']);
-							endforeach;
-							endforeach;
+								$resComp = $compByClubModel->find('All')
+									->contain(['Clubs'])
+									->select('Licencies.id')
+									->where(['Clubs.id' => $key->club,'Licencies.id in ' => $competiteurs])->toArray();
+								foreach ($resComp as $resTmp) :
+									array_push($compByClub,$resTmp['id']);
+									endforeach;
+								endforeach;
 							//Tirage pour club
 							$listeFinale=FonctionTirage::repartitionClubAvecTete($compByClub,$listeFinaleTmp,$poule);
 						}
@@ -307,10 +307,10 @@ class TiragesController extends AppController
 						
 					
 				} else {
-					
-					//Tirage tableau
-					
 					//****************
+					//Tirage tableau
+					//****************
+					
 					//Pas d'ecart club et pas d'ecart tete de serie
 					if($club == "N" && $tete == "N") {
 						// Recuperation des competiteurs
@@ -334,17 +334,76 @@ class TiragesController extends AppController
 						//on fait un tirage simple
 						$listeFinale=FonctionTirage::repartitionAleatoire($result,0,$listeFinaleTmp);
 					}
+					//****************
+					//Ecart club et pas d'ecart tete de serie
+					if($club == "O" && $tete == "N") {
 					
+						//Liste triée par club
+						shuffle($competiteurs);
+						$compByClub=[];
+						$compByClubModel = $this->loadModel('Licencies');
+						$query = $compByClubModel->find()->contain(['Clubs']);
+						
+						//Liste des club avec le nombre de licenciés par club
+						$compTmp = $query->select([
+								'club' => 'Clubs.id',
+								'count' => $query->func()->count('Licencies.id')])
+									->where(['Licencies.id in ' => $competiteurs])
+									->group('Clubs.id')
+									->order('count DESC');
+						//On classes les membres des clubs les plus nombreaux en tete de liste		
+						foreach ($compTmp as $key):
+							$resComp = $compByClubModel->find('All')
+								->contain(['Clubs'])
+								->select('Licencies.id')
+								->where(['Clubs.id' => $key->club,'Licencies.id in ' => $competiteurs])->toArray();
+							foreach ($resComp as $resTmp) :
+								array_push($compByClub,$resTmp['id']);
+							endforeach;
+						endforeach;
+							
+						//debug($compByClub);
+						$listeFinale=FonctionTirage::repartitionClub($compByClub,2);
+						
+						debug($listeFinale); die();
+					}
 					
-					
-					
-					
-					
-					
-					
-					
-					
-					
+					//****************
+					//Ecart club et ecart tete de serie
+					if($club == "O" && $tete == "O") {
+
+						//Recuperation des identifiants licenciés des tetes
+						($data['tete1'] > -1) ? $tete1 = $data['tete1']:$tete1=null;
+						($data['tete2'] > -1) ? $tete2 = $data['tete2']:$tete2=null;
+						($data['tete3'] > -1) ? $tete3 = $data['tete3']:$tete3=null;
+						($data['tete4'] > -1) ? $tete4 = $data['tete4']:$tete4=null;
+						//Tirage des tetes
+						$listeFinaleTmp=FonctionTirage::repartitionTeteTableau($competiteurs,$tete1,$tete2,$tete3,$tete4);
+						//Tirage des autres
+							
+						shuffle($competiteurs);
+						$compByClub=[];
+						$compByClubModel = $this->loadModel('Licencies');
+						$query = $compByClubModel->find()->contain(['Clubs']);
+						$compTmp = $query->select([
+								'club' => 'Clubs.id',
+								'count' => $query->func()->count('Licencies.id')])
+								->where(['Licencies.id in ' => $competiteurs])
+								->group('Clubs.id')
+								->order('count DESC');
+						
+						foreach ($compTmp as $key):
+							$resComp = $compByClubModel->find('All')
+								->contain(['Clubs'])
+								->select('Licencies.id')
+								->where(['Clubs.id' => $key->club,'Licencies.id in ' => $competiteurs])->toArray();
+							foreach ($resComp as $resTmp) :
+								array_push($compByClub,$resTmp['id']);
+							endforeach;
+						endforeach;
+						//Tirage pour club
+						$listeFinale=FonctionTirage::repartitionClubAvecTete($compByClub,$listeFinaleTmp,2);
+					}
 					
 					
 					//Mise a jour de la table Repartition
@@ -398,7 +457,7 @@ class TiragesController extends AppController
     	
     	//Recuperartion des licencies
     	$this->loadModel('Repartitions');
-    	$repartitions = $this->Repartitions->find('all')->contain(['Licencies'])->where(['competition_id' => $competitionSelected->id])->order(['Licencies.nom'=>'asc']);
+    	$repartitions = $this->Repartitions->find('all')->contain(['Licencies'=>['Clubs']])->where(['competition_id' => $competitionSelected->id])->order(['Licencies.nom'=>'asc']);
 //     	$repartitionListe = ["-1"=>"Tête de série"];
 //     	foreach ($repartitions as $value):
 //     	array_push($repartitionListe,[$value->licencie_id => $value->licency->prenom." ".$value->licency->nom]);

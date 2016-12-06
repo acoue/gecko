@@ -58,6 +58,7 @@ class ClubsController extends AppController
         if ($this->request->is('post')) {
             $club = $this->Clubs->patchEntity($club, $this->request->data);
             if ($this->Clubs->save($club)) {
+            	$this->Utilitaire->logInBdd("Ajout du club : ".$club->id." -> ".$club->name);
                 $this->Flash->success(__('Le club a été sauvegardé.'));
                 return $this->redirect(['action' => 'index']);
             } else {
@@ -85,6 +86,7 @@ class ClubsController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $club = $this->Clubs->patchEntity($club, $this->request->data);
             if ($this->Clubs->save($club)) {
+            	$this->Utilitaire->logInBdd("Ajout du club : ".$club->id." -> ".$club->name);
                 $this->Flash->success(__('Le club a été sauvegardé.'));
                 return $this->redirect(['action' => 'index']);
             } else {
@@ -108,8 +110,10 @@ class ClubsController extends AppController
     	if(! $this->Securite->isAdmin()) return $this->redirect(['controller'=>'pages', 'action'=>'permission']);
         $this->request->allowMethod(['post', 'delete']);
         $club = $this->Clubs->get($id);
+        $message ="Suppression du club : ".$club->id." -> ".$club->name;
         if ($this->Clubs->delete($club)) {
             $this->Flash->success(__('Le club a été supprimé.'));
+            	$this->Utilitaire->logInBdd($message);
         } else {
             $this->Flash->error(__('Le club n\'a pas été supprimé.'));
         }

@@ -39,6 +39,7 @@
                 	<label class="col-lg-8 control-label" for="description">Description</label>
                     <div class="col-lg-16"><?= $this->Form->input('description', ['label' => false,'id'=>'description',
 														   	'div' => false,'type' => 'textarea', 'escape' => false,
+                    										'required'=>'',
 															'class' => 'form-control', 'rows' => '5', 'cols' => '80']); ?>
                     </div>                          
 				</div><br />  

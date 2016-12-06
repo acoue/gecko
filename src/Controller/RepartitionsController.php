@@ -22,7 +22,7 @@ class RepartitionsController extends AppController
     	$this->loadModel('Competitions');
     	$competitionSelected = $this->Competitions->find('all')->where(['selected' => '1'])->first();
     	
-        $repartitions = $this->Repartitions->find('all')->contain(['Licencies'])->where(['competition_id' => $competitionSelected->id]);
+        $repartitions = $this->Repartitions->find('all')->contain(['Licencies'=>['Clubs']])->where(['competition_id' => $competitionSelected->id]);
         $this->set(compact('repartitions'));
         $this->set('_serialize', ['repartitions']);
     }

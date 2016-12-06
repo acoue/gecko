@@ -36,9 +36,7 @@ class CategoriesController extends AppController
     public function view($id = null)
     {
     	if(! $this->Securite->isAdmin()) return $this->redirect(['controller'=>'pages', 'action'=>'permission']);
-        $category = $this->Categories->get($id, [
-            'contain' => []
-        ]);
+        $category = $this->Categories->get($id);
 
         $this->set('category', $category);
         $this->set('_serialize', ['category']);
@@ -56,6 +54,7 @@ class CategoriesController extends AppController
         if ($this->request->is('post')) {
             $category = $this->Categories->patchEntity($category, $this->request->data);
             if ($this->Categories->save($category)) {
+            	$this->Utilitaire->logInBdd("Ajout de la catégorie : ".$category->id." -> ".$category->name);
                 $this->Flash->success(__('La catégorie a été sauvegardée.'));
                 return $this->redirect(['action' => 'index']);
             } else {
@@ -82,6 +81,7 @@ class CategoriesController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $category = $this->Categories->patchEntity($category, $this->request->data);
             if ($this->Categories->save($category)) {
+            	$this->Utilitaire->logInBdd("Modification de la catégorie : ".$category->id." -> ".$category->name);
                 $this->Flash->success(__('La catégorie a été sauvegardée.'));
                 return $this->redirect(['action' => 'index']);
             } else {
@@ -104,7 +104,9 @@ class CategoriesController extends AppController
     	if(! $this->Securite->isAdmin()) return $this->redirect(['controller'=>'pages', 'action'=>'permission']);
         $this->request->allowMethod(['post', 'delete']);
         $category = $this->Categories->get($id);
+        $message = "Suppression de la catégorie : ".$category->id." -> ".$category->name;
         if ($this->Categories->delete($category)) {
+        	$this->Utilitaire->logInBdd($message);
             $this->Flash->success(__('La catégorie a été supprimée.'));
         } else {
             $this->Flash->error(__('TLa catégorie n\'a pas été supprimée.'));

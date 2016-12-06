@@ -151,7 +151,7 @@
 			</div>
 			<div class="col-lg-2"></div>
 		</div>	
-		<h4>Licenciés sélectionnés</h4>
+		<h4>Licenciés sélectionnés :  <?= $repartitions->count() ?></h4>
 		<div class="row">
 			<div class="col-lg-2"></div>
 			<div class="col-lg-20"> 
@@ -160,6 +160,7 @@
 				        <tr>
 			                <th>Prénom</th>
 			                <th>Nom</th>
+			                <th>Club</th>
 				        </tr>
 				    </thead>
 				    <tbody> 
@@ -167,6 +168,7 @@
 			            <tr>
 			                <td><?= h($repartition->licency->prenom) ?></td>
 			                <td><?= h($repartition->licency->nom) ?></td>
+			                <td><?= h($repartition->licency->club->name) ?></td>
 			            </tr>
 			        <?php endforeach; ?>
 				    </tbody>

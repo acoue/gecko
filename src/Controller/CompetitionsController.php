@@ -72,7 +72,7 @@ class CompetitionsController extends AppController
         	$competition->type=$data['type'];
         	$competition->description=$desc;
         	$competition->selected=0;
-        	$competition->catagorie_id=$data['catagorie_id'];
+        	$competition->catagorie_id=$data['categorie_id'];
         	//Enregistrement
             //$competition = $this->Competitions->patchEntity($competition);
             if ($this->Competitions->save($competition)) {
