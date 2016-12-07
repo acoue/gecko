@@ -22,6 +22,7 @@ class UsersFixture extends TestFixture
         'password' => ['type' => 'string', 'length' => 100, 'null' => false, 'default' => null, 'collate' => 'utf8_general_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
         'nom' => ['type' => 'string', 'length' => 100, 'null' => false, 'default' => null, 'collate' => 'utf8_general_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
         'prenom' => ['type' => 'string', 'length' => 100, 'null' => false, 'default' => null, 'collate' => 'utf8_general_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
+        'email' => ['type' => 'string', 'length' => 255, 'null' => true, 'default' => null, 'collate' => 'utf8_general_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
         'active' => ['type' => 'integer', 'length' => 1, 'unsigned' => false, 'null' => false, 'default' => '0', 'comment' => '', 'precision' => null, 'autoIncrement' => null],
         'lastlogin' => ['type' => 'datetime', 'length' => null, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null],
         'profil_id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
@@ -54,11 +55,12 @@ class UsersFixture extends TestFixture
             'password' => 'Lorem ipsum dolor sit amet',
             'nom' => 'Lorem ipsum dolor sit amet',
             'prenom' => 'Lorem ipsum dolor sit amet',
+            'email' => 'Lorem ipsum dolor sit amet',
             'active' => 1,
-            'lastlogin' => '2016-10-12 20:14:50',
+            'lastlogin' => '2016-12-07 23:20:15',
             'profil_id' => 1,
-            'created' => '2016-10-12 20:14:50',
-            'modified' => '2016-10-12 20:14:50'
+            'created' => '2016-12-07 23:20:15',
+            'modified' => '2016-12-07 23:20:15'
         ],
     ];
 }

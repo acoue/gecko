@@ -9,9 +9,9 @@ use Cake\ORM\Entity;
  * @property int $id
  * @property string $prenom
  * @property string $nom
- * @property \Cake\I18n\Time $sexe
- * @property string $ddn
- * @property int $licence
+ * @property string $sexe
+ * @property \Cake\I18n\Time $ddn
+ * @property string $licence
  * @property string $grade
  * @property int $club_id
  * @property \Cake\I18n\Time $created

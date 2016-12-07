@@ -76,6 +76,7 @@ class CompetitionsController extends AppController
         	//Enregistrement
             //$competition = $this->Competitions->patchEntity($competition);
             if ($this->Competitions->save($competition)) {
+            	$this->Utilitaire->logInBdd("Ajout de la compétition : ".$competition->id." -> ".$competition->name);
                 $this->Flash->success(__('La competition a bien été sauvegardée.'));
                 return $this->redirect(['action' => 'index']);
             } else {
@@ -109,6 +110,7 @@ class CompetitionsController extends AppController
         	//debug($d);die();
             $competition = $this->Competitions->patchEntity($competition, $d);
             if ($this->Competitions->save($competition)) {
+            	$this->Utilitaire->logInBdd("Modification de la compétition : ".$competition->id." -> ".$competition->name);
                 $this->Flash->success(__('La competition a bien été sauvegardée.'));
                 return $this->redirect(['action' => 'index']);
             } else {
@@ -132,7 +134,9 @@ class CompetitionsController extends AppController
     	if(! $this->Securite->isAdmin()) return $this->redirect(['controller'=>'pages', 'action'=>'permission']);
         $this->request->allowMethod(['post', 'delete']);
         $competition = $this->Competitions->get($id);
+        $message="Suppression de la compétition : ".$competition->id." -> ".$competition->name;
         if ($this->Competitions->delete($competition)) {
+            $this->Utilitaire->logInBdd($message);
             $this->Flash->success(__('La competition a bien été supprimée.'));
         } else {
             $this->Flash->error(__('La competition ne peut être supprimée.'));
@@ -155,6 +159,7 @@ class CompetitionsController extends AppController
     	$competition = $this->Competitions->get($id);
     	$competition->selected=1;
     	if ($this->Competitions->save($competition)) {
+            $this->Utilitaire->logInBdd("Sélection de la compétition : ".$competition->id." -> ".$competition->name);
     		$this->Flash->success(__('La compétition a bien été sélectionnée.'));
     	} else {
     		$this->Flash->error(__('Erreur dans la sélection de la compétition.'));

@@ -14,7 +14,7 @@
             <td><?= h($licencie->nom) ?></td>
             <td><?= h($licencie->club->name) ?></td>
             <td class="actions">
-            <?= $this->html->link(__('Ajouter'), ['controller'=>'repartitions' ,'action' => 'add', $licencie->id])?>
+            <?= $this->Html->link(__('Ajouter'), ['controller'=>'repartitions' ,'action' => 'add', $licencie->id])?>
           	</td>
         </tr>
 

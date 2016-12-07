@@ -4,6 +4,7 @@
 		<div class="row">
 			<div class="col-lg-2"></div>
 			<div class="col-lg-20">
+			    <?= $this->Form->create($user, ['id'=>'formulaire']) ?>
 				<div class="row">
                 	<label class="col-md-8 control-label" for="nom">Nom</label>
                     <div class="col-md-12"><?= $this->Form->input('nom', ['label' => false,'id'=>'nom',
@@ -39,7 +40,19 @@
                     										'type' => 'texte', 'value'=>$user->username ,
 															'disabled' =>'disabled']); ?>
                     </div>                          
-				</div><br />   
+				</div><br />  
+			    <div class="row">
+			    	<label class="col-lg-8 control-label" for="email">Email</label>
+                    <div class="col-lg-12"><?= $this->Form->input('email', ['label' => false,'id'=>'email',
+														   	'div' => false,
+															'class' => 'form-control', 
+                    										'type' => 'text', 'value'=>$user->email,
+															'required' =>'']); ?>
+                    </div>                          
+				</div><br /> 
+							
+    			<?= $this->Form->button(__('Valider'),['class'=>'btn btn-default']) ?>
+			    <?= $this->Form->end() ?>
 			</div><br />						
 			<div class="col-lg-2"></div>
 		</div><br />

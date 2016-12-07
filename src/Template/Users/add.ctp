@@ -36,6 +36,15 @@
 															'required' =>'required']); ?>
                     </div>                          
 				</div><br />
+			    <div class="row">
+			    	<label class="col-lg-8 control-label" for="email">Email</label>
+                    <div class="col-lg-16"><?= $this->Form->input('email', ['label' => false,'id'=>'email',
+														   	'div' => false,
+															'class' => 'form-control', 
+                    										'type' => 'text', 'value'=>$user->email,
+															'required' =>'']); ?>
+                    </div>                          
+				</div><br />
 				<div class="row">
                 	<label class="col-lg-8 control-label" for="password">Mot de passe (minimun : 8 caractères)<span class="obligatoire"><sup> *</sup></span></label>
                     <div class="col-lg-16"><?= $this->Form->input('password', ['label' => false,'id'=>'password',

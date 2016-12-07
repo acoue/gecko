@@ -5,7 +5,7 @@
 		<div class="row">
 			<div class="col-lg-2"></div>
 			<div class="col-lg-20"> 
-							<?= $this->Form->create(NULL); ?>
+			<?= $this->Form->create(NULL); ?>
 				<div class="row">
                 	<label class="col-md-10 control-label" for="libelle">Entrez un libellé pour la recherche : </label>
                     <div class="col-md-10"><?= $this->Form->input('libelle', ['label' => false,'id'=>'libelle',

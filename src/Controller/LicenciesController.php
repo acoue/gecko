@@ -28,6 +28,17 @@ class LicenciesController extends AppController
         $this->set('_serialize', ['licencies']);
     }
 
+    public function liste()
+    {
+    	if(! $this->Securite->isAdmin()) return $this->redirect(['controller'=>'pages', 'action'=>'permission']);
+    	$this->paginate = [
+    			'contain' => ['Clubs']
+    	];
+    	$licencies = $this->paginate($this->Licencies);
+    
+    	$this->set(compact('licencies'));
+    	$this->set('_serialize', ['licencies']);
+    }
     /**
      * View method
      *
@@ -56,10 +67,13 @@ class LicenciesController extends AppController
     	if(! $this->Securite->isAdmin()) return $this->redirect(['controller'=>'pages', 'action'=>'permission']);
         $licency = $this->Licencies->newEntity();
         if ($this->request->is('post')) {
-            $licency = $this->Licencies->patchEntity($licency, $this->request->data);
+        	$data=$this->request->data;
+        	
+            $licency = $this->Licencies->patchEntity($licency, $data);
+            $licency->display_name = $data['prenom']." ".$data['nom'];
             if ($this->Licencies->save($licency)) {
                 $this->Flash->success(__('Le licencié a été sauvegardé.'));
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'liste']);
             } else {
                 $this->Flash->error(__('Le licencié n\'a pas été sauvegardé.'));
             }
@@ -83,10 +97,15 @@ class LicenciesController extends AppController
             'contain' => []
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $licency = $this->Licencies->patchEntity($licency, $this->request->data);
+        	$data=$this->request->data;
+        	
+            $licency = $this->Licencies->patchEntity($licency, $data);
+            $licency->display_name = $data['prenom']." ".$data['nom'];
+            
+            debug($licency);
             if ($this->Licencies->save($licency)) {
                 $this->Flash->success(__('Le licencié a été sauvegardé.'));
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'liste']);
             } else {
                 $this->Flash->error(__('Le licencié n\'a pas été sauvegardé.'));
             }

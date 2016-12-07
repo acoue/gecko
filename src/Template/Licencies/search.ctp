@@ -1,10 +1,4 @@
-<?php 
-$licencies->count();
-foreach ($licencies as $licencie): 
- echo $licencie->prenom."<br /> ";
-endforeach;
 
-?>
 <table cellpadding="0" cellspacing="0" class="table table-striped">
     <thead>
         <tr align='center'>
@@ -21,9 +15,9 @@ endforeach;
             <td><?= h($licencie->nom) ?></td>
             <td><?= h($licencie->club->name) ?></td>
             <td class="actions">
-            <?= $this->html->link(__('Editer'), ['action' => 'edit', $licencie->id])?>
+            <?= $this->Html->link(__('Editer'), ['action' => 'edit', $licencie->id])?>
             &nbsp;&nbsp;
-            <?= $this->html->link(__('Palmares'),['controller'=>'Palmares','action' => 'palmares', $licencie->id]) ?>
+            <?= $this->Html->link(__('Palmares'),['controller'=>'Palmares','action' => 'palmares', $licencie->id]) ?>
           	</td>
         </tr>
 

@@ -11,6 +11,7 @@ use Cake\ORM\Entity;
  * @property string $password
  * @property string $nom
  * @property string $prenom
+ * @property string $email
  * @property int $active
  * @property \Cake\I18n\Time $lastlogin
  * @property int $profil_id

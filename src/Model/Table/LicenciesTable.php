@@ -71,14 +71,12 @@ class LicenciesTable extends Table
             ->notEmpty('display_name');
         
         $validator
-            ->date('sexe')
             ->allowEmpty('sexe');
 
         $validator
             ->allowEmpty('ddn');
 
         $validator
-            ->integer('licence')
             ->allowEmpty('licence');
 
         $validator
