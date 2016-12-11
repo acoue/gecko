@@ -1,7 +1,7 @@
 <?php
 namespace Lib;
 
-use Cake\ORM\TableRegistry;
+//use Cake\ORM\TableRegistry;
 use \Lib\FonctionHas;
 
 class UserConnected {
@@ -12,6 +12,7 @@ class UserConnected {
 	private $lastLogin;
 	private $login;
 	private $profil;
+	private $club;
 	
 	public function __construct() {
     }
@@ -57,5 +58,11 @@ class UserConnected {
 	}
 	public function setProfil($profil) {
 		$this->profil = $profil;
+	}
+	public function getClub() {
+		return $this->club;
+	}
+	public function setClub($club) {
+		$this->club = $club;
 	}
 }

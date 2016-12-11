@@ -147,7 +147,7 @@ class CompetitionsController extends AppController
 
     public function select()
     {
-    	$competitions = $this->Competitions->find('all', array('contain' => 'Categories'));
+    	$competitions = $this->Competitions->find('all', array('contain' => 'Categories'))->where(['archive'=>0]);
     	$this->set(compact('competitions'));
     	$this->set('_serialize', ['competitions']);
     }   

@@ -53,11 +53,12 @@ else $uc =null;
 	            		
 	            	} else if($module == 4) {
 						echo "Administration";
+	            	} else if($module == 5) {
+						echo "Inscription";
 	            	} else echo "";
 	            }
 				?>
-	            
-	            
+	            </span>
 			</div>
 		</header><br />
 		<div class="container-fluid">
@@ -76,6 +77,7 @@ else $uc =null;
 	    					if($module == '1' ) echo $this->element('menuLicencie'); //Espagce licencié
 	    					else if ($module == '2') echo $this->element('menuCompetition'); //Espace competition	
 	    					else if ($module == '3') echo $this->element('menuPassage'); //Espace passage de grade
+	    					else if ($module == '5') echo $this->element('menuInscription'); //Espace inscription competition ou passage de grade
 	    					else echo $this->element('menu');
 	    					
 	    					if($uc->getProfil()=='admin') echo $this->element('menuAdmin'); //Menu administration
@@ -109,7 +111,10 @@ else $uc =null;
 	        	&copy; Anthony COUE</div>
 	        	<div class="col-lg-6 text-footer-left">
 	        	
-	        	
+	            <?php if($this->request->session()->check("UserConnected")) echo "Utilisateur connecté : ".$uc->getPrenom()." ".$uc->getNom()." - ".$uc->getClub()."<br /><span class='label label-success ng-scope'>".$uc->getProfil()."</span>";
+	        		else echo "Aucun utilisateur de connecté";
+	        				
+	        	?>
 	        	</div>
 	            <div class="col-lg-6 text-footer-right">Version 1.0<br />13/11/2016</div>                    
 	            <div class="col-lg-6 text-footer-right">Mentions légales</div>

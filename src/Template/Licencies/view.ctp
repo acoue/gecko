@@ -8,7 +8,7 @@
 			<?= $this->Html->link(__('Edition'), ['action' => 'edit', $licency->id],['class' => 'btn btn-default']) ?><br /><br />
 			<?= $this->Form->postLink(__('Supprimer'), ['action' => 'delete', $licency->id], ['class'=>'btn btn-warning','confirm' => __('Etes-vous sûr de vouloir supprimer le licencié {0} ?', $licency->prenom." ".$licency->nom)]) ?><br /><br/>
 			<?= $this->Html->link(__('Palmarès'), ['controller'=>'Palmares','action' => 'palmares',$licency->id],['class' => 'btn btn-success']) ?> <br /><br/>
-			<?= $this->Html->link(__('Retour'), ['action' => 'liste'],['class' => 'btn btn-info']) ?> 
+			<?= $this->Html->link(__('Retour'), ['action' => 'index'],['class' => 'btn btn-info']) ?> 
 			</div>
 			<div class="col-lg-15">
 				<div class="row">

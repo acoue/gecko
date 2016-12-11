@@ -38,6 +38,7 @@ interface ChronosInterface extends DateTimeInterface
     const YEARS_PER_CENTURY = 100;
     const YEARS_PER_DECADE = 10;
     const MONTHS_PER_YEAR = 12;
+    const MONTHS_PER_QUARTER = 3;
     const WEEKS_PER_YEAR = 52;
     const DAYS_PER_WEEK = 7;
     const HOURS_PER_DAY = 24;
@@ -126,7 +127,7 @@ interface ChronosInterface extends DateTimeInterface
      * @return static
      */
     public function setTimeFromTimeString($time);
-    
+
     /**
      * Set the instance's timestamp
      *
@@ -337,7 +338,7 @@ interface ChronosInterface extends DateTimeInterface
      * @return static
      */
     public function closest(ChronosInterface $dt1, ChronosInterface $dt2);
-    
+
     /**
      * Get the farthest date from the instance.
      *
@@ -346,7 +347,7 @@ interface ChronosInterface extends DateTimeInterface
      * @return static
      */
     public function farthest(ChronosInterface $dt1, ChronosInterface $dt2);
-    
+
     /**
      * Get the minimum instance between a given instance (default now) and the current instance.
      *

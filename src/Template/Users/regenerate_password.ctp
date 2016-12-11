@@ -14,7 +14,7 @@
 				<div class="row">
 					<div class="alert alert-info">
 						<b>Attention : Le mot de passe doit contenir au minimum 8 caractères.</b><br />
-						Pour vous indiquerons la compléxité de votre mot de passe :
+						
 						<ul>
 							<li>Si le mot de passe ne contient pas de lettres majuscules ou de chiffres, alors il est considéré comme de compléxité faible</li>
 							<li>Si le mot de passe contient une lettre majuscule ou un nombre alors il est considéré comme de compléxité moyenne</li>
@@ -33,9 +33,6 @@
                     											'data-validation'=>'length',
 																'data-validation-length'=>'min8',
 																'required' =>'required']); ?>
-                    </div>
-                    <div class="col-lg-3">
-                    	<div class="" id="messagePwd"></div>
                     </div>
 				</div><br />
 				<div class="" id="messagePwd"></div>

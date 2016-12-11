@@ -15,10 +15,12 @@ use Cake\ORM\Entity;
  * @property int $active
  * @property \Cake\I18n\Time $lastlogin
  * @property int $profil_id
+ * @property int $club_id
  * @property \Cake\I18n\Time $created
  * @property \Cake\I18n\Time $modified
  *
  * @property \App\Model\Entity\Profil $profil
+ * @property \App\Model\Entity\Historique[] $historiques
  */
 class User extends Entity
 {

@@ -1,3 +1,6 @@
+<?php
+use Lib\FonctionUtilitaire;
+?>
 <div class="blocblanc">
 	<h2>Administration</h2>
     <h3>Competition - Visualisation</h3>
@@ -26,7 +29,7 @@
 														   	'div' => false,
 															'class' => 'form-control', 
                     										'type' => 'text', 
-                    										'value' => h($competition->date_competition),
+                    										'value' => FonctionUtilitaire::dateFromMySQL($competition->date_competition),
 															'disabled' => 'disabled']); ?>
                     </div>                          
 				</div><br />  
@@ -60,10 +63,19 @@
                     </div>                          
 				</div><br />
 				<div class="row">
-                	<label class="col-lg-8 control-label" for="type">Type <span class="obligatoire"> *</span></label>
+                	<label class="col-lg-8 control-label" for="type">Type</label>
                 	<div class="col-lg-16"><?= $this->Form->input('type', ['label' => false,
                 											'options' => [0 => 'Individuelle', 1=>'Equipe'],
                 											'div' => false,'value'=>$competition->type,
+															'class' => 'form-control', 
+                    										'disabled' =>'disabled']) ?>    
+                	</div>                 
+				</div><br /> 
+				<div class="row">
+                	<label class="col-lg-8 control-label" for="archive">Archivée</label>
+                	<div class="col-lg-16"><?= $this->Form->input('archive', ['label' => false,
+                											'options' => [0 => 'Non', 1=>'Oui'],
+                											'div' => false,'value'=>$competition->archive,
 															'class' => 'form-control', 
                     										'disabled' =>'disabled']) ?>    
                 	</div>                 

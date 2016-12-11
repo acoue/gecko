@@ -50,6 +50,15 @@
 															'required' =>'']); ?>
                     </div>                          
 				</div><br /> 
+			    <div class="row">
+			    	<label class="col-lg-8 control-label" for="club_id">Club</label>
+                    <div class="col-lg-12"><?= $this->Form->input('club_id', ['label' => false,'id'=>'club_id',
+														   	'div' => false,
+															'class' => 'form-control', 
+                    										'options' => $clubs, 'value'=>$user->club_id,
+															'required' =>'required']); ?>
+                    </div>                          
+				</div><br />
 							
     			<?= $this->Form->button(__('Valider'),['class'=>'btn btn-default']) ?>
 			    <?= $this->Form->end() ?>

@@ -37,7 +37,7 @@ class UsersController extends AppController
 			$user = $this->Auth->identify();
 			if ($user) {	
 				//Mise a jour de la date de last login 
-				$modif_user = $this->Users->get($user['id'], ['contain' => ['Profils']]);
+				$modif_user = $this->Users->get($user['id'], ['contain' => ['Profils','Clubs']]);
 				//debug($modif_user); die();
 				
 				$modif_user->lastlogin = date('Y-m-d H:i:s');
@@ -53,6 +53,7 @@ class UsersController extends AppController
 				$userConnected->setLastlogin($modif_user->lastlogin);
 				$userConnected->setLogin($dataForm['username']);
 				$userConnected->setProfil($modif_user->profil->name);
+				$userConnected->setClub($modif_user->club->name);
 				
 				$session->write('UserConnected',$userConnected);
 				$session->write('Module',"-1");
@@ -83,7 +84,7 @@ class UsersController extends AppController
  	{
     	if(! $this->Securite->isAdmin()) return $this->redirect(['controller'=>'pages', 'action'=>'permission']);
  		$user = $this->Users->get($id, [
- 				'contain' => ['Profils']
+ 				'contain' => ['Profils', 'Clubs']
  				]);
  		$this->set(compact('user' ));
  		$this->set('_serialize', ['user']);
@@ -100,7 +101,7 @@ class UsersController extends AppController
  	{
     	if(! $this->Securite->isAdmin()) return $this->redirect(['controller'=>'pages', 'action'=>'permission']);
  		$user = $this->Users->get($id, [
- 				'contain' => ['Profils']
+ 				'contain' => ['Profils','Clubs']
  				]);
  		if ($this->request->is(['patch', 'post', 'put'])) {
  			$user = $this->Users->patchEntity($user, $this->request->data);
@@ -112,7 +113,8 @@ class UsersController extends AppController
  			}
  		}
  		$profils = $this->Users->Profils->find('list', ['limit' => 200]);
- 		$this->set(compact('user','profils'));
+ 		$clubs = $this->Users->Clubs->find('list');
+ 		$this->set(compact('user','profils','clubs'));
  		$this->set('_serialize', ['user']);
  	}
  	
@@ -131,8 +133,9 @@ class UsersController extends AppController
  			}
  			$this->Flash->error(__("Impossible d'ajouter l'utilisateur."));
  		}
+ 		$clubs = $this->Users->Clubs->find('list');
  		$profils = $this->Users->Profils->find('list', ['limit' => 200]);
- 		$this->set(compact('user','profils' ));
+ 		$this->set(compact('user','profils','clubs' ));
  	}
 
  	public function compte()
@@ -140,7 +143,7 @@ class UsersController extends AppController
  		$uc=$this->request->session()->read("UserConnected");
  		
  		
- 		$user = $this->Users->get($uc->getId(), ['contain' => ['Profils']] 	);
+ 		$user = $this->Users->get($uc->getId(), ['contain' => ['Profils','Clubs']] 	);
  		if ($this->request->is(['patch', 'post', 'put'])) {
  			$user = $this->Users->patchEntity($user, $this->request->data);
  			if ($this->Users->save($user)) {
@@ -150,7 +153,8 @@ class UsersController extends AppController
  				$this->Flash->error('Erreur lors de la sauvegarde de l\'utilisateur.');
  			}
  		}
- 		$this->set(compact('user'));
+ 		$clubs = $this->Users->Clubs->find('list');
+ 		$this->set(compact('user','clubs'));
  		$this->set('_serialize', ['user']);
  		
  	}

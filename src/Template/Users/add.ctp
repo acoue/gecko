@@ -73,6 +73,15 @@
                     										'options' => $profils, 
 															'required' =>'required']); ?>
                     </div>                          
+				</div><br />
+			    <div class="row">
+			    	<label class="col-lg-8 control-label" for="club_id">Club</label>
+                    <div class="col-lg-16"><?= $this->Form->input('club_id', ['label' => false,'id'=>'club_id',
+														   	'div' => false,
+															'class' => 'form-control', 
+                    										'options' => $clubs, 
+															'required' =>'required']); ?>
+                    </div>                          
 				</div><br /><br />
 							
     			<?= $this->Form->button(__('Valider'),['class'=>'btn btn-default']) ?>

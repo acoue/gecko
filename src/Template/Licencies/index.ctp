@@ -5,6 +5,11 @@
 		<div class="row">
 			<div class="col-lg-2"></div>
 			<div class="col-lg-20"> 
+			<p align="center">
+				<?= $this->Html->link(__('Créer un licencié'), ['action' => 'add'], ['class'=>'btn btn-default']) ?>&nbsp;&nbsp;
+				<?= $this->Html->link(__('Liste des licenciés'), ['action' => 'liste'], ['class'=>'btn btn-success']) ?>&nbsp;&nbsp;
+				<?= $this->Html->link(__('Retour'), ['controller'=>'admin', 'action' => 'index'],['class' => 'btn btn-info']) ?> 		
+			</p><br /><br />
 			<?= $this->Form->create(NULL); ?>
 				<div class="row">
                 	<label class="col-md-10 control-label" for="libelle">Entrez un libellé pour la recherche : </label>

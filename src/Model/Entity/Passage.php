@@ -10,6 +10,9 @@ use Cake\ORM\Entity;
  * @property string $name
  * @property \Cake\I18n\Time $date_passage
  * @property int $selected
+ * @property int $archive
+ * @property \Cake\I18n\Time $created
+ * @property \Cake\I18n\Time $modified
  *
  * @property \App\Model\Entity\Evalue[] $evalues
  * @property \App\Model\Entity\Juge[] $juges

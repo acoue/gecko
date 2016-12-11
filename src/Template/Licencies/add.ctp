@@ -5,7 +5,7 @@
 		<div class="row">
 			<div class="col-lg-2"></div>
 			<div class="col-lg-5">
-				<?= $this->Html->link(__('Retour'), ['action' => 'liste'],['class' => 'btn btn-info']) ?> 
+				<?= $this->Html->link(__('Retour'), ['action' => 'inex'],['class' => 'btn btn-info']) ?> 
 			</div>
 			<div class="col-lg-15"> 
 			    <?= $this->Form->create($licency, ['id'=>'formulaire']) ?>

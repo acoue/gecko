@@ -1,3 +1,6 @@
+<?php
+use Lib\FonctionUtilitaire;
+?>
 <div class="blocblanc">
 	<h2>Administration</h2>
     <h3>Passages de grades</h3>
@@ -11,6 +14,7 @@
 			                <th><?= $this->Paginator->sort('name','Libellé') ?></th>
 			                <th><?= $this->Paginator->sort('date_passage','Date') ?></th>
 			                <th><?= $this->Paginator->sort('selected','Selectionné ?') ?></th>
+			                <th><?= $this->Paginator->sort('archive','Archivée ?') ?></th>
 			                <th class="actions"><?= __('Actions') ?></th>
 				        </tr>
 				    </thead>
@@ -18,8 +22,9 @@
 				    <?php foreach ($passages as $passage): ?>
 				        <tr>
 			                <td><?= h($passage->name) ?></td>
-			                <td><?= h($passage->date_passage) ?></td>
+			                <td><?= FonctionUtilitaire::dateFromMySQL($passage->date_passage) ?></td>
 			                <td><?= h($passage->selected == 1) ? 'Oui' : 'Non' ?></td>
+			                <td><?= h($passage->archive == 0) ? "Non" : "Oui"; ?></td>
 			               <td class="actions">
 								<?= $this->Html->link(__('Voir'), ['action' => 'view', $passage->id]) ?>
 			                    <?= $this->Html->link(__('Editer'), ['action' => 'edit', $passage->id]) ?>

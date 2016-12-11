@@ -1,3 +1,6 @@
+<?php
+use Lib\FonctionUtilitaire;
+?>
 <div class="blocblanc">
 	<h2>Administration</h2>
     <h3>Competition</h3>
@@ -12,6 +15,7 @@
 			                <th><?= $this->Paginator->sort('date_competition','Date') ?></th>
 			                <th><?= $this->Paginator->sort('lieux','Lieux') ?></th>
 			                <th><?= $this->Paginator->sort('type','Type') ?></th>
+			                <th><?= $this->Paginator->sort('archive','Archivé ?') ?></th>
 			                <th class="actions"><?= __('Actions') ?></th>
 				        </tr>
 				    </thead>
@@ -19,9 +23,10 @@
 				    <?php foreach ($competitions as $competition): ?>
 				        <tr>
 			                <td><?= h($competition->name) ?></td>
-			                <td><?= h($competition->date_competition) ?></td>
+			                <td><?= FonctionUtilitaire::dateFromMySQL($competition->date_competition) ?></td>
 			                <td><?= h($competition->lieux) ?></td>
 			                <td><?= ($competition->type == 0) ? "Individuelle" : "Equipe"; ?></td>
+			                <td><?= ($competition->archive == 0) ? "Non" : "Oui"; ?></td>
 			               <td class="actions">
 								<?= $this->Html->link(__('Voir'), ['action' => 'view', $competition->id]) ?>
 			                    <?= $this->Html->link(__('Editer'), ['action' => 'edit', $competition->id]) ?>

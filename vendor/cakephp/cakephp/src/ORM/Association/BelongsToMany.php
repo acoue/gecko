@@ -241,6 +241,7 @@ class BelongsToMany extends Association
             $target->hasMany($junctionAlias, [
                 'targetTable' => $junction,
                 'foreignKey' => $this->targetForeignKey(),
+                'strategy' => $this->_strategy,
             ]);
         }
         if (!$target->association($sAlias)) {
@@ -251,6 +252,7 @@ class BelongsToMany extends Association
                 'targetForeignKey' => $this->foreignKey(),
                 'through' => $junction,
                 'conditions' => $this->conditions(),
+                'strategy' => $this->_strategy,
             ]);
         }
     }
@@ -276,6 +278,7 @@ class BelongsToMany extends Association
             $source->hasMany($junctionAlias, [
                 'targetTable' => $junction,
                 'foreignKey' => $this->foreignKey(),
+                'strategy' => $this->_strategy,
             ]);
         }
     }
@@ -815,7 +818,7 @@ class BelongsToMany extends Association
             return true;
         }
 
-        $storage = new SplObjectStorage;
+        $storage = new SplObjectStorage();
         foreach ($targetEntities as $e) {
             $storage->attach($e);
         }
@@ -1282,7 +1285,11 @@ class BelongsToMany extends Association
         $query
             ->eagerLoader()
             ->addToJoinsMap($tempName, $assoc, false, $this->_junctionProperty);
-        $assoc->attachTo($query, ['aliasPath' => $assoc->alias(), 'includeFields' => false]);
+        $assoc->attachTo($query, [
+            'aliasPath' => $assoc->alias(),
+            'includeFields' => false,
+            'propertyPath' => $this->_junctionProperty
+        ]);
 
         return $query;
     }

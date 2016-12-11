@@ -26,10 +26,18 @@
 														   	'div' => false,
 															'class' => 'form-control', 
                     										'type' => 'text', 
-                    										'value' => h($passage->date_passage),
+                    										'value' => FonctionUtilitaire::dateFromMySQL($passage->date_passage),
 															'required' =>'required']); ?>
                     </div>                          
-				</div><br />  
+				</div><br />  	
+				<div class="row">
+                	<label class="col-lg-8 control-label" for="archive">Archivé</label>
+                	<div class="col-lg-16"><?= $this->Form->input('archive', ['label' => false,
+                											'options' => [0 => 'Non', 1=>'Oui'],
+                											'div' => false,'value'=>$passage->archive,
+															'class' => 'form-control']) ?>    
+                	</div>                 
+				</div><br /> 	
 				<div class="row">
 					<?= $this->Form->button('Valider', ['type' => 'submit','class' => 'btn btn-default']) ?>
 					<?= $this->Form->end() ?>

@@ -137,7 +137,7 @@ class PassagesController extends AppController
 
     public function select()
     {
-    	$passages = $this->Passages->find('all');
+    	$passages = $this->Passages->find('all')->where(['archive'=>0]);
     	$this->set(compact('passages'));
     	$this->set('_serialize', ['passages']);
     }

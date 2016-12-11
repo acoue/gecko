@@ -8,16 +8,15 @@
  *
  * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://cakephp.org CakePHP(tm) Project
- * @since         DebugKit 0.1
+ * @since         0.1
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 namespace DebugKit\View\Helper;
 
-use Cake\Cache\Cache;
-use Cake\Datasource\ConnectionManager;
-use Cake\Event\Event;
+use ArrayAccess;
 use Cake\View\Helper;
-use DebugKit\DebugKitDebugger;
+use Closure;
+use Iterator;
 
 /**
  * Provides Base methods for content specific debug toolbar helpers.

@@ -30,7 +30,7 @@
 			        </tr>	
 			        <tr>
 			            <td>Administration des Licenciés</td>
-			            <td><?= $this->Html->link('Licenciés', ['controller'=>'Licencies', 'action' => 'liste'],['class' => 'btn btn-default']) ?></td>
+			            <td><?= $this->Html->link('Licenciés', ['controller'=>'Licencies', 'action' => 'index'],['class' => 'btn btn-default']) ?></td>
 			        </tr>
 			        <tr>
 			            <td>Administration des Catégories</td>

@@ -10,7 +10,10 @@ use Cake\Validation\Validator;
  * Users Model
  *
  * @property \Cake\ORM\Association\BelongsTo $Profils
+ * @property \Cake\ORM\Association\BelongsTo $Clubs
  * @property \Cake\ORM\Association\HasMany $Historiques
+ * @property \Cake\ORM\Association\HasMany $InscriptionCompetitions
+ * @property \Cake\ORM\Association\HasMany $InscriptionPassages
  *
  * @method \App\Model\Entity\User get($primaryKey, $options = [])
  * @method \App\Model\Entity\User newEntity($data = null, array $options = [])
@@ -45,7 +48,17 @@ class UsersTable extends Table
             'foreignKey' => 'profil_id',
             'joinType' => 'INNER'
         ]);
+        $this->belongsTo('Clubs', [
+            'foreignKey' => 'club_id',
+            'joinType' => 'INNER'
+        ]);
         $this->hasMany('Historiques', [
+            'foreignKey' => 'user_id'
+        ]);
+        $this->hasMany('InscriptionCompetitions', [
+            'foreignKey' => 'user_id'
+        ]);
+        $this->hasMany('InscriptionPassages', [
             'foreignKey' => 'user_id'
         ]);
     }
@@ -107,6 +120,7 @@ class UsersTable extends Table
         $rules->add($rules->isUnique(['username']));
         $rules->add($rules->isUnique(['email']));
         $rules->add($rules->existsIn(['profil_id'], 'Profils'));
+        $rules->add($rules->existsIn(['club_id'], 'Clubs'));
 
         return $rules;
     }

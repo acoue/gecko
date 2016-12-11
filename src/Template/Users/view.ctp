@@ -65,6 +65,15 @@
                     </div>                          
 				</div><br /><br />
 			    <div class="row">
+			    	<label class="col-lg-8 control-label" for="pclub_id">Club</label>
+                    <div class="col-lg-16"><?= $this->Form->input('club_id', ['label' => false,'id'=>'club_id',
+														   	'div' => false,
+															'class' => 'form-control', 
+                    										'type' => 'text','value' => $user->club->name, 
+															'disabled' =>'disabled']); ?>
+                    </div>                          
+				</div><br /><br />
+			    <div class="row">
 			    	<label class="col-lg-8 control-label" for="lastlogin">Dernière connexion</label>
                     <div class="col-lg-16"><?= $this->Form->input('lastlogin', ['label' => false,'id'=>'lastlogin',
 														   	'div' => false,

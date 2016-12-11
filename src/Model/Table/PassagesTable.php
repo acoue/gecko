@@ -10,7 +10,9 @@ use Cake\Validation\Validator;
  * Passages Model
  *
  * @property \Cake\ORM\Association\HasMany $Evalues
+ * @property \Cake\ORM\Association\HasMany $InscriptionPassages
  * @property \Cake\ORM\Association\HasMany $Juges
+ * @property \Cake\ORM\Association\HasMany $Notes
  *
  * @method \App\Model\Entity\Passage get($primaryKey, $options = [])
  * @method \App\Model\Entity\Passage newEntity($data = null, array $options = [])
@@ -19,6 +21,8 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\Passage patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\Passage[] patchEntities($entities, array $data, array $options = [])
  * @method \App\Model\Entity\Passage findOrCreate($search, callable $callback = null)
+ *
+ * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */
 class PassagesTable extends Table
 {
@@ -37,10 +41,18 @@ class PassagesTable extends Table
         $this->displayField('name');
         $this->primaryKey('id');
 
+        $this->addBehavior('Timestamp');
+
         $this->hasMany('Evalues', [
             'foreignKey' => 'passage_id'
         ]);
+        $this->hasMany('InscriptionPassages', [
+            'foreignKey' => 'passage_id'
+        ]);
         $this->hasMany('Juges', [
+            'foreignKey' => 'passage_id'
+        ]);
+        $this->hasMany('Notes', [
             'foreignKey' => 'passage_id'
         ]);
     }
@@ -70,6 +82,11 @@ class PassagesTable extends Table
             ->integer('selected')
             ->requirePresence('selected', 'create')
             ->notEmpty('selected');
+
+        $validator
+            ->integer('archive')
+            ->requirePresence('archive', 'create')
+            ->notEmpty('archive');
 
         return $validator;
     }

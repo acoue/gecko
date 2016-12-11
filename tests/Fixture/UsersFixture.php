@@ -26,14 +26,17 @@ class UsersFixture extends TestFixture
         'active' => ['type' => 'integer', 'length' => 1, 'unsigned' => false, 'null' => false, 'default' => '0', 'comment' => '', 'precision' => null, 'autoIncrement' => null],
         'lastlogin' => ['type' => 'datetime', 'length' => null, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null],
         'profil_id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
+        'club_id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
         'created' => ['type' => 'datetime', 'length' => null, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null],
         'modified' => ['type' => 'datetime', 'length' => null, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null],
         '_indexes' => [
             'profil_user_fk_idx' => ['type' => 'index', 'columns' => ['profil_id'], 'length' => []],
+            'user_club_fk_idx' => ['type' => 'index', 'columns' => ['club_id'], 'length' => []],
         ],
         '_constraints' => [
             'primary' => ['type' => 'primary', 'columns' => ['id'], 'length' => []],
             'username' => ['type' => 'unique', 'columns' => ['username'], 'length' => []],
+            'club_user_fk' => ['type' => 'foreign', 'columns' => ['club_id'], 'references' => ['clubs', 'id'], 'update' => 'cascade', 'delete' => 'cascade', 'length' => []],
             'profil_user_fk' => ['type' => 'foreign', 'columns' => ['profil_id'], 'references' => ['profils', 'id'], 'update' => 'cascade', 'delete' => 'cascade', 'length' => []],
         ],
         '_options' => [
@@ -57,10 +60,11 @@ class UsersFixture extends TestFixture
             'prenom' => 'Lorem ipsum dolor sit amet',
             'email' => 'Lorem ipsum dolor sit amet',
             'active' => 1,
-            'lastlogin' => '2016-12-07 23:20:15',
+            'lastlogin' => '2016-12-11 13:59:04',
             'profil_id' => 1,
-            'created' => '2016-12-07 23:20:15',
-            'modified' => '2016-12-07 23:20:15'
+            'club_id' => 1,
+            'created' => '2016-12-11 13:59:04',
+            'modified' => '2016-12-11 13:59:04'
         ],
     ];
 }

@@ -1,3 +1,6 @@
+<?php
+use Lib\FonctionUtilitaire;
+?>
 <div class="blocblanc">
 	<h2>Administration</h2>
     <h3>Passage de grade - Visualisation</h3>
@@ -26,10 +29,19 @@
 														   	'div' => false,
 															'class' => 'form-control', 
                     										'type' => 'text', 
-                    										'value' => h($passage->date_passage),
+                    										'value' => FonctionUtilitaire::dateFromMySQL($passage->date_passage),
 															'disabled' => 'disabled']); ?>
                     </div>                          
-				</div><br /> 
+				</div><br /> 	
+				<div class="row">
+                	<label class="col-lg-8 control-label" for="archive">Archivé</label>
+                	<div class="col-lg-16"><?= $this->Form->input('archive', ['label' => false,
+                											'options' => [0 => 'Non', 1=>'Oui'],
+                											'div' => false,'value'=>$passage->archive,
+															'disabled' => 'disabled',
+															'class' => 'form-control']) ?>    
+                	</div>                 
+				</div><br /> 	
 				<div class="related">
 			        <h4><?= __('Evalués') ?></h4>
 			        <?php if (!empty($passage->evalues)): ?>

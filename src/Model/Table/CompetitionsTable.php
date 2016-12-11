@@ -1,7 +1,6 @@
 <?php
 namespace App\Model\Table;
 
-use App\Model\Entity\Competition;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
@@ -11,6 +10,21 @@ use Cake\Validation\Validator;
  * Competitions Model
  *
  * @property \Cake\ORM\Association\BelongsTo $Categories
+ * @property \Cake\ORM\Association\HasMany $CombatPoules
+ * @property \Cake\ORM\Association\HasMany $InscriptionCompetitions
+ * @property \Cake\ORM\Association\HasMany $Repartitions
+ * @property \Cake\ORM\Association\HasMany $ResultatPoules
+ * @property \Cake\ORM\Association\HasMany $Tirages
+ *
+ * @method \App\Model\Entity\Competition get($primaryKey, $options = [])
+ * @method \App\Model\Entity\Competition newEntity($data = null, array $options = [])
+ * @method \App\Model\Entity\Competition[] newEntities(array $data, array $options = [])
+ * @method \App\Model\Entity\Competition|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\Competition patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\Competition[] patchEntities($entities, array $data, array $options = [])
+ * @method \App\Model\Entity\Competition findOrCreate($search, callable $callback = null)
+ *
+ * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */
 class CompetitionsTable extends Table
 {
@@ -34,6 +48,21 @@ class CompetitionsTable extends Table
         $this->belongsTo('Categories', [
             'foreignKey' => 'catagorie_id',
             'joinType' => 'INNER'
+        ]);
+        $this->hasMany('CombatPoules', [
+            'foreignKey' => 'competition_id'
+        ]);
+        $this->hasMany('InscriptionCompetitions', [
+            'foreignKey' => 'competition_id'
+        ]);
+        $this->hasMany('Repartitions', [
+            'foreignKey' => 'competition_id'
+        ]);
+        $this->hasMany('ResultatPoules', [
+            'foreignKey' => 'competition_id'
+        ]);
+        $this->hasMany('Tirages', [
+            'foreignKey' => 'competition_id'
         ]);
     }
 
@@ -62,11 +91,10 @@ class CompetitionsTable extends Table
             ->allowEmpty('lieux');
 
         $validator
-            ->requirePresence('description', 'create')
-            ->notEmpty('description');
+            ->allowEmpty('description');
 
         $validator
-            ->date('type')
+            ->integer('type')
             ->requirePresence('type', 'create')
             ->notEmpty('type');
 
@@ -74,6 +102,11 @@ class CompetitionsTable extends Table
             ->integer('selected')
             ->requirePresence('selected', 'create')
             ->notEmpty('selected');
+
+        $validator
+            ->integer('archive')
+            ->requirePresence('archive', 'create')
+            ->notEmpty('archive');
 
         return $validator;
     }
@@ -88,6 +121,7 @@ class CompetitionsTable extends Table
     public function buildRules(RulesChecker $rules)
     {
         $rules->add($rules->existsIn(['catagorie_id'], 'Categories'));
+
         return $rules;
     }
 }

@@ -36,7 +36,7 @@
 				<br />
 				<p align="center">
 					<?= $this->Html->link(__('Créer un licencié'), ['action' => 'add'], ['class'=>'btn btn-default']) ?><br /><br />
-					<?= $this->Html->link(__('Retour'), ['controller'=>'admin', 'action' => 'index'],['class' => 'btn btn-info']) ?> 
+					<?= $this->Html->link(__('Retour'), ['controller'=>'Licencies', 'action' => 'index'],['class' => 'btn btn-info']) ?> 
 					
 				</p>
 				<div class="paginator">

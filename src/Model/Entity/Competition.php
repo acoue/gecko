@@ -4,7 +4,7 @@ namespace App\Model\Entity;
 use Cake\ORM\Entity;
 
 /**
- * Competition Entity.
+ * Competition Entity
  *
  * @property int $id
  * @property string $name
@@ -13,9 +13,11 @@ use Cake\ORM\Entity;
  * @property string $description
  * @property int $type
  * @property int $selected
+ * @property int $archive
  * @property \Cake\I18n\Time $created
  * @property \Cake\I18n\Time $modified
  * @property int $catagorie_id
+ *
  * @property \App\Model\Entity\Category $category
  */
 class Competition extends Entity
@@ -32,6 +34,6 @@ class Competition extends Entity
      */
     protected $_accessible = [
         '*' => true,
-        'id' => false,
+        'id' => false
     ];
 }

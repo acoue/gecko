@@ -234,6 +234,7 @@ class MigrationDiffTask extends SimpleMigrationTask
             // changes in columns meta-data
             foreach ($currentColumns as $columnName) {
                 $column = $currentSchema->column($columnName);
+                unset($column['collate']);
                 $oldColumn = $this->dumpSchema[$table]->column($columnName);
 
                 if (in_array($columnName, $oldColumns) &&
@@ -469,7 +470,7 @@ class MigrationDiffTask extends SimpleMigrationTask
 
         $collection = ConnectionManager::get($this->connection)->schemaCollection();
         foreach ($this->tables as $table) {
-            if (strpos($table, 'phinx') === 0) {
+            if (preg_match("/^.*phinxlog$/", $table) === 1) {
                 continue;
             }
 

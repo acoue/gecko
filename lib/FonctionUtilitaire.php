@@ -21,7 +21,17 @@ class FonctionUtilitaire {
 		$date = date( 'Y-m-d', strtotime($date) );
 		return $date;
 	}
-	 
+	
+
+	public static function dateFromMySQL($date){
+		$date = date( 'd/m/Y', strtotime($date) );
+		return $date;
+	}
+	public static function dateTimeFromMySQL($date){
+		$date = date( 'd/m/Y H:i:s', strtotime($date) );
+		return $date;
+	} 
+	
 	public static function replaceCaractereSpeciaux($chaine) {
 		$caractereSpeciaux = ['á','à','â','ã','ä','å','æ','Á','À','Â','Ã','Ä','Å','Æ','é','è','ê','ë','É','È','Ê','Ë',
 				'Í','Ì','Î','Ï','Í','í','ì','î','ï','ó','ò','ô','õ','º','ö','ð','ø','Ó','Ò','Ô','Õ','Ö','Ø',

@@ -19,6 +19,8 @@ use Cake\Network\Exception\NotFoundException;
 
 /**
  * Provides access to panel data.
+ *
+ * @property \DebugKit\Model\Table\PanelsTable $Panels
  */
 class PanelsController extends Controller
 {
@@ -93,6 +95,8 @@ class PanelsController extends Controller
         $panel = $this->Panels->get($id);
 
         $this->set('panel', $panel);
-        $this->set(unserialize($panel->content));
+        // @codingStandardsIgnoreStart
+        $this->set(@unserialize($panel->content));
+        // @codingStandardsIgnoreEnd
     }
 }

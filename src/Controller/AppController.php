@@ -77,7 +77,7 @@ class AppController extends Controller
 	        $this->loadModel('Passages');
 	        $passageSelected = $this->Passages->find('all')->where(['selected' => '1'])->first();
     		$this->set('passageSelected', $passageSelected);
-        }
+        } 
         //debug($competition->category->name);die();
     	//Envoi des objet retuor à la page
     	$this->set('_serialize', ['competitionSelected']);
