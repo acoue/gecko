@@ -1,22 +1,22 @@
 <?php
 namespace App\Test\TestCase\Model\Table;
 
-use App\Model\Table\PassagesTable;
+use App\Model\Table\GradesTable;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
 /**
- * App\Model\Table\PassagesTable Test Case
+ * App\Model\Table\GradesTable Test Case
  */
-class PassagesTableTest extends TestCase
+class GradesTableTest extends TestCase
 {
 
     /**
      * Test subject
      *
-     * @var \App\Model\Table\PassagesTable
+     * @var \App\Model\Table\GradesTable
      */
-    public $Passages;
+    public $Grades;
 
     /**
      * Fixtures
@@ -24,25 +24,10 @@ class PassagesTableTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'app.passages',
-        'app.evalues',
+        'app.grades',
         'app.licencies',
         'app.clubs',
-        'app.regions',
-        'app.inscription_passages',
-        'app.users',
-        'app.profils',
-        'app.historiques',
-        'app.inscription_competitions',
-        'app.competitions',
-        'app.categories',
-        'app.combat_poules',
-        'app.repartitions',
-        'app.resultat_poules',
-        'app.tirages',
-        'app.juges',
-        'app.jures',
-        'app.notes'
+        'app.regions'
     ];
 
     /**
@@ -53,8 +38,8 @@ class PassagesTableTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $config = TableRegistry::exists('Passages') ? [] : ['className' => 'App\Model\Table\PassagesTable'];
-        $this->Passages = TableRegistry::get('Passages', $config);
+        $config = TableRegistry::exists('Grades') ? [] : ['className' => 'App\Model\Table\GradesTable'];
+        $this->Grades = TableRegistry::get('Grades', $config);
     }
 
     /**
@@ -64,7 +49,7 @@ class PassagesTableTest extends TestCase
      */
     public function tearDown()
     {
-        unset($this->Passages);
+        unset($this->Grades);
 
         parent::tearDown();
     }

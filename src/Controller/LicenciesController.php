@@ -78,8 +78,9 @@ class LicenciesController extends AppController
                 $this->Flash->error(__('Le licencié n\'a pas été sauvegardé.'));
             }
         }
-        $clubs = $this->Licencies->Clubs->find('list', ['limit' => 200]);
-        $this->set(compact('licency', 'clubs'));
+        $clubs = $this->Licencies->Clubs->find('list');
+        $grades = $this->Licencies->Grades->find('list');
+        $this->set(compact('licency', 'clubs','grades'));
         $this->set('_serialize', ['licency']);
     }
 
@@ -110,8 +111,9 @@ class LicenciesController extends AppController
                 $this->Flash->error(__('Le licencié n\'a pas été sauvegardé.'));
             }
         }
-        $clubs = $this->Licencies->Clubs->find('list', ['limit' => 200]);
-        $this->set(compact('licency', 'clubs'));
+        $clubs = $this->Licencies->Clubs->find('list');
+        $grades = $this->Licencies->Grades->find('list');
+        $this->set(compact('licency', 'clubs','grades'));
         $this->set('_serialize', ['licency']);
     }
 

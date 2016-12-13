@@ -1,22 +1,22 @@
 <?php
 namespace App\Test\TestCase\Model\Table;
 
-use App\Model\Table\PalmaresTable;
+use App\Model\Table\ResultatCompetitionsTable;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
 /**
- * App\Model\Table\PalmaresTable Test Case
+ * App\Model\Table\ResultatCompetitionsTable Test Case
  */
-class PalmaresTableTest extends TestCase
+class ResultatCompetitionsTableTest extends TestCase
 {
 
     /**
      * Test subject
      *
-     * @var \App\Model\Table\PalmaresTable
+     * @var \App\Model\Table\ResultatCompetitionsTable
      */
-    public $Palmares;
+    public $ResultatCompetitions;
 
     /**
      * Fixtures
@@ -24,11 +24,28 @@ class PalmaresTableTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'app.palmares',
+        'app.resultat_competitions',
+        'app.competitions',
+        'app.categories',
+        'app.regions',
+        'app.clubs',
         'app.licencies',
         'app.grades',
-        'app.clubs',
-        'app.regions'
+        'app.combat_poules',
+        'app.inscription_competitions',
+        'app.users',
+        'app.profils',
+        'app.historiques',
+        'app.inscription_passages',
+        'app.passages',
+        'app.evalues',
+        'app.juges',
+        'app.jures',
+        'app.notes',
+        'app.repartitions',
+        'app.resultat_poules',
+        'app.tirages',
+        'app.resultats'
     ];
 
     /**
@@ -39,8 +56,8 @@ class PalmaresTableTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $config = TableRegistry::exists('Palmares') ? [] : ['className' => 'App\Model\Table\PalmaresTable'];
-        $this->Palmares = TableRegistry::get('Palmares', $config);
+        $config = TableRegistry::exists('ResultatCompetitions') ? [] : ['className' => 'App\Model\Table\ResultatCompetitionsTable'];
+        $this->ResultatCompetitions = TableRegistry::get('ResultatCompetitions', $config);
     }
 
     /**
@@ -50,7 +67,7 @@ class PalmaresTableTest extends TestCase
      */
     public function tearDown()
     {
-        unset($this->Palmares);
+        unset($this->ResultatCompetitions);
 
         parent::tearDown();
     }

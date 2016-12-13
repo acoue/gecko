@@ -39,7 +39,7 @@ class CompetitionsController extends AppController
     {
     	if(! $this->Securite->isAdmin()) return $this->redirect(['controller'=>'pages', 'action'=>'permission']);
         $competition = $this->Competitions->get($id, [
-            'contain' => ['Categories']
+            'contain' => ['Categories','Regions']
         ]);
 
         $this->set('competition', $competition);
@@ -84,7 +84,8 @@ class CompetitionsController extends AppController
             }
         }
         $categories = $this->Competitions->Categories->find('list', ['limit' => 200]);
-        $this->set(compact('competition', 'categories'));
+        $regions = $this->Competitions->Regions->find('list');
+        $this->set(compact('competition', 'categories','regions'));
         $this->set('_serialize', ['competition']);
     }
 
@@ -99,7 +100,7 @@ class CompetitionsController extends AppController
     {
     	if(! $this->Securite->isAdmin()) return $this->redirect(['controller'=>'pages', 'action'=>'permission']);
         $competition = $this->Competitions->get($id, [
-            'contain' => ['Categories']
+            'contain' => ['Categories','Regions']
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
         	
@@ -118,7 +119,8 @@ class CompetitionsController extends AppController
             }
         }
         $categories = $this->Competitions->Categories->find('list', ['limit' => 200]);
-        $this->set(compact('competition', 'categories'));
+        $regions = $this->Competitions->Regions->find('list');
+        $this->set(compact('competition', 'categories','regions'));
         $this->set('_serialize', ['competition']);
     }
 

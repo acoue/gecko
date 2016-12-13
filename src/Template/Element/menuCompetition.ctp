@@ -7,5 +7,6 @@
 	echo $this->Html->link('Poule - Résultats', ['controller'=>'ResultatPoules', 'action' => 'index'],['class' => 'btn btn-primary'])."<br /><br />";
 	//echo $this->Html->link('Poule - Résultats complets', ['controller'=>'', 'action' => ''],['class' => 'btn btn-primary'])."<br /><br />";
 	echo $this->Html->link('Générer les tableaux', ['controller'=>'ResultatPoules', 'action' => 'makeTableau'],['class' => 'btn btn-primary'])."<br /><br />";
+	echo $this->Html->link('Saisir les résultats', ['controller'=>'ResultatCompetitions', 'action' => 'index'],['class' => 'btn btn-primary'])."<br /><br />";
 	
 ?>        

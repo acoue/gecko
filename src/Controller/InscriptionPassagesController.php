@@ -43,6 +43,11 @@ class InscriptionPassagesController extends AppController
     	$user = $this->request->session()->read("UserConnected");
     	$club=$user->getClub();
     	
+    	$this->loadModel('Clubs');
+    	$query = $this->Clubs->find('all')->where(['name'=>$club])->first();
+    	$region[0] = $query->region_id;
+    	$region[1] = -1;
+    	
         $inscriptionPassage = $this->InscriptionPassages->newEntity();
         if ($this->request->is('post')) {
             $inscriptionPassage = $this->InscriptionPassages->patchEntity($inscriptionPassage, $this->request->data);
@@ -56,9 +61,10 @@ class InscriptionPassagesController extends AppController
         }
         if($user->getProfil()=='admin') $licencies = $this->InscriptionPassages->Licencies->find('list');
         else $licencies = $this->InscriptionPassages->Licencies->find('list')->where(["club_id"=>$club]);
-        
-        
-        $passages = $this->InscriptionPassages->Passages->find('list', ['limit' => 200]);
+
+        //Si admin on recupere toutes les competitions sinon juste celles de la region du user
+        if($this->Securite->isAdmin()) $passages = $this->InscriptionPassages->Passages->find('list')->where(['archive'=>0]);
+        else $passages = $this->InscriptionPassages->Passages->find('list')->where(['archive'=>0,'region_id in '=> $region]);
         
         $this->set(compact('inscriptionPassage', 'passages', 'licencies', 'user'));
         $this->set('_serialize', ['inscriptionPassage']);

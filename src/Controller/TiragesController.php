@@ -439,7 +439,7 @@ class TiragesController extends AppController
 				}
 				//Enregistrement
 				$tirage = $this->Tirages->newEntity();
-				$tirage->type = $type;
+				$tirage->type = $type. " | Nombre compétiteurs : ".$nblicencies;
 				$tirage->competition_id=$competitionSelected->id;
 					
 				if ($this->Tirages->save($tirage)) {

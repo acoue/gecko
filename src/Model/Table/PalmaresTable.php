@@ -9,6 +9,7 @@ use Cake\Validation\Validator;
 /**
  * Palmares Model
  *
+ * @property \Cake\ORM\Association\BelongsTo $Resultats
  * @property \Cake\ORM\Association\BelongsTo $Licencies
  *
  * @method \App\Model\Entity\Palmare get($primaryKey, $options = [])
@@ -36,6 +37,10 @@ class PalmaresTable extends Table
         $this->displayField('id');
         $this->primaryKey('id');
 
+        $this->belongsTo('Resultats', [
+            'foreignKey' => 'resultat_id',
+            'joinType' => 'INNER'
+        ]);
         $this->belongsTo('Licencies', [
             'foreignKey' => 'licencie_id',
             'joinType' => 'INNER'
@@ -52,7 +57,8 @@ class PalmaresTable extends Table
     {
         $validator
             ->integer('id')
-            ->allowEmpty('id', 'create');
+            ->allowEmpty('id', 'create')
+            ->add('id', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
 
         $validator
             ->requirePresence('competition', 'create')
@@ -65,10 +71,6 @@ class PalmaresTable extends Table
             ->date('date_competition')
             ->requirePresence('date_competition', 'create')
             ->notEmpty('date_competition');
-
-        $validator
-            ->requirePresence('resultat', 'create')
-            ->notEmpty('resultat');
 
         $validator
             ->allowEmpty('commentaire');
@@ -85,6 +87,8 @@ class PalmaresTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
+        $rules->add($rules->isUnique(['id']));
+        $rules->add($rules->existsIn(['resultat_id'], 'Resultats'));
         $rules->add($rules->existsIn(['licencie_id'], 'Licencies'));
 
         return $rules;

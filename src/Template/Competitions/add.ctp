@@ -51,6 +51,15 @@
 															'class' => 'form-control', 
                     										'required' =>'required']) ?>    
                 	</div>                 
+				</div><br />   
+				<div class="row">
+                	<label class="col-lg-8 control-label" for="region_id">Régions</label>
+                	<div class="col-lg-16"><?= $this->Form->input('region_id', ['label' => false,
+                											'options' => $regions,
+                											'div' => false,
+															'class' => 'form-control', 
+                    										'required' =>'required']) ?>    
+                	</div>                 
 				</div><br />  
 				<div class="row">
                 	<label class="col-lg-8 control-label" for="type">Type <span class="obligatoire"> *</span></label>

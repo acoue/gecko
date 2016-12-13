@@ -19,7 +19,7 @@ class PalmaresController extends AppController
     public function index()
     {
         $this->paginate = [
-            'contain' => ['Licencies'=>['Clubs']]
+            'contain' => ['Licencies'=>['Clubs'],'Resultats']
         ];
         $palmares = $this->paginate($this->Palmares);
 
@@ -32,7 +32,7 @@ class PalmaresController extends AppController
     public function palmares($id)
     {
     	//Palmares
-    	$palmares=$this->Palmares->find()->where(['licencie_id'=>$id]);
+    	$palmares=$this->Palmares->find()->contain(['Licencies'=>['Clubs'],'Resultats'])->where(['licencie_id'=>$id]);
     	
     	//Licencie
     	$licencieModel=$this->loadModel('Licencies');
@@ -73,8 +73,10 @@ class PalmaresController extends AppController
         //Licencie
         $licencieModel=$this->loadModel('Licencies');
         $licencie=$licencieModel->find()->contain(['Clubs'])->where(['Licencies.id'=>$licencie_id])->first();
-         
-        $this->set(compact('palmare','licencie'));
+
+        $resultats = $this->Palmares->Resultats->find('list');
+        
+        $this->set(compact('palmare','licencie','resultats'));
         $this->set('_serialize', ['palmare']);
     }
 
@@ -101,8 +103,9 @@ class PalmaresController extends AppController
         //Licencie
         $licencieModel=$this->loadModel('Licencies');
         $licencie=$licencieModel->find()->contain(['Clubs'])->where(['Licencies.id'=>$palmare->licencie_id])->first();
-         
-        $this->set(compact('palmare', 'licencie'));
+
+        $resultats = $this->Palmares->Resultats->find('list');
+        $this->set(compact('palmare', 'licencie','resultats'));
         $this->set('_serialize', ['palmare']);
     }
 

@@ -40,7 +40,11 @@ class InscriptionCompetitionsController extends AppController
     	//Recuperation du club du user connecte
     	$user = $this->request->session()->read("UserConnected");
     	$club=$user->getClub();
-    	
+    	//Region du user connecté
+    	$this->loadModel('Clubs');
+    	$query = $this->Clubs->find('all')->where(['name'=>$club])->first();
+    	$region[0] = $query->region_id;
+    	$region[1] = -1;
     	
         $inscriptionCompetition = $this->InscriptionCompetitions->newEntity();
         if ($this->request->is('post')) {
@@ -53,7 +57,11 @@ class InscriptionCompetitionsController extends AppController
                 $this->Flash->error(__('Erreur lors de l\'inscription à la compétition.'));
             }
         }
-        $competitions = $this->InscriptionCompetitions->Competitions->find('list', ['limit' => 200])->where(['archive'=>0]);
+        //Si admin on recupere toutes les competitions sinon juste celles de la region du user
+        if($this->Securite->isAdmin()) $competitions = $this->InscriptionCompetitions->Competitions->find('list', ['limit' => 200])->where(['archive'=>0]);
+        else $competitions = $this->InscriptionCompetitions->Competitions->find('list', ['limit' => 200])->where(['archive'=>0,'region_id in '=> $region]);
+        
+        
         if($user->getProfil()=='admin') $licencies = $this->InscriptionCompetitions->Licencies->find('list');
         else $licencies = $this->InscriptionCompetitions->Licencies->find('list')->where(["club_id"=>$club]);
 

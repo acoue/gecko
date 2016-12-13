@@ -75,8 +75,8 @@
                     <div class="col-md-14"><?= $this->Form->input('grade', ['label' => false,'id'=>'grade',
 														   	'div' => false,
 															'class' => 'form-control', 
-                    										'type' => 'text', 
-                    										'value' => h($licency->grade)]); ?>
+                    										'options' => $grades, 
+                    										'value' => h($licency->grade_id)]); ?>
                     </div>                          
 				</div><br />
 				<div class="row">

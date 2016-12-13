@@ -10,6 +10,7 @@ use Cake\Validation\Validator;
  * Competitions Model
  *
  * @property \Cake\ORM\Association\BelongsTo $Categories
+ * @property \Cake\ORM\Association\BelongsTo $Regions
  * @property \Cake\ORM\Association\HasMany $CombatPoules
  * @property \Cake\ORM\Association\HasMany $InscriptionCompetitions
  * @property \Cake\ORM\Association\HasMany $Repartitions
@@ -46,7 +47,11 @@ class CompetitionsTable extends Table
         $this->addBehavior('Timestamp');
 
         $this->belongsTo('Categories', [
-            'foreignKey' => 'catagorie_id',
+            'foreignKey' => 'categorie_id',
+            'joinType' => 'INNER'
+        ]);
+        $this->belongsTo('Regions', [
+            'foreignKey' => 'region_id',
             'joinType' => 'INNER'
         ]);
         $this->hasMany('CombatPoules', [
@@ -120,7 +125,8 @@ class CompetitionsTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->existsIn(['catagorie_id'], 'Categories'));
+        $rules->add($rules->existsIn(['categorie_id'], 'Categories'));
+        $rules->add($rules->existsIn(['region_id'], 'Regions'));
 
         return $rules;
     }

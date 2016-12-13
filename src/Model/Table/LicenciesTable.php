@@ -9,6 +9,7 @@ use Cake\Validation\Validator;
 /**
  * Licencies Model
  *
+ * @property \Cake\ORM\Association\BelongsTo $Grades
  * @property \Cake\ORM\Association\BelongsTo $Clubs
  *
  * @method \App\Model\Entity\Licency get($primaryKey, $options = [])
@@ -40,6 +41,10 @@ class LicenciesTable extends Table
 
         $this->addBehavior('Timestamp');
 
+        $this->belongsTo('Grades', [
+            'foreignKey' => 'grade_id',
+            'joinType' => 'INNER'
+        ]);
         $this->belongsTo('Clubs', [
             'foreignKey' => 'club_id',
             'joinType' => 'INNER'
@@ -67,20 +72,18 @@ class LicenciesTable extends Table
             ->notEmpty('nom');
 
         $validator
-            ->requirePresence('display_name', 'create')
-            ->notEmpty('display_name');
-        
-        $validator
             ->allowEmpty('sexe');
 
         $validator
+            ->date('ddn')
             ->allowEmpty('ddn');
 
         $validator
             ->allowEmpty('licence');
 
         $validator
-            ->allowEmpty('grade');
+            ->requirePresence('display_name', 'create')
+            ->notEmpty('display_name');
 
         return $validator;
     }
@@ -94,6 +97,7 @@ class LicenciesTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
+        $rules->add($rules->existsIn(['grade_id'], 'Grades'));
         $rules->add($rules->existsIn(['club_id'], 'Clubs'));
 
         return $rules;

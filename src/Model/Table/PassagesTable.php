@@ -9,6 +9,7 @@ use Cake\Validation\Validator;
 /**
  * Passages Model
  *
+ * @property \Cake\ORM\Association\BelongsTo $Regions
  * @property \Cake\ORM\Association\HasMany $Evalues
  * @property \Cake\ORM\Association\HasMany $InscriptionPassages
  * @property \Cake\ORM\Association\HasMany $Juges
@@ -43,6 +44,10 @@ class PassagesTable extends Table
 
         $this->addBehavior('Timestamp');
 
+        $this->belongsTo('Regions', [
+            'foreignKey' => 'region_id',
+            'joinType' => 'INNER'
+        ]);
         $this->hasMany('Evalues', [
             'foreignKey' => 'passage_id'
         ]);
@@ -89,5 +94,19 @@ class PassagesTable extends Table
             ->notEmpty('archive');
 
         return $validator;
+    }
+
+    /**
+     * Returns a rules checker object that will be used for validating
+     * application integrity.
+     *
+     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
+     * @return \Cake\ORM\RulesChecker
+     */
+    public function buildRules(RulesChecker $rules)
+    {
+        $rules->add($rules->existsIn(['region_id'], 'Regions'));
+
+        return $rules;
     }
 }

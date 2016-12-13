@@ -11,11 +11,14 @@ use Cake\ORM\Entity;
  * @property \Cake\I18n\Time $date_passage
  * @property int $selected
  * @property int $archive
+ * @property int $region_id
  * @property \Cake\I18n\Time $created
  * @property \Cake\I18n\Time $modified
  *
  * @property \App\Model\Entity\Evalue[] $evalues
+ * @property \App\Model\Entity\InscriptionPassage[] $inscription_passages
  * @property \App\Model\Entity\Juge[] $juges
+ * @property \App\Model\Entity\Note[] $notes
  */
 class Passage extends Entity
 {

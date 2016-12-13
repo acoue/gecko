@@ -21,7 +21,7 @@
 			                <td><?= h($palmare->competition) ?></td>
 			                <td><?= h($palmare->lieux) ?></td>
 			                <td><?= h($palmare->date_competition) ?></td>
-			                <td><?= h($palmare->resultat) ?></td>
+			                <td><?= h($palmare->resultat->name) ?></td>
 			                <td class="actions">
 			                    <?= $this->Html->link(__('Editer'), ['action' => 'edit', $palmare->id]) ?>
 			                    <?= $this->Form->postLink(__('Supprimer'), ['action' => 'delete', $palmare->id], ['confirm' => __('Confirmation de la suppression ?')]) ?>

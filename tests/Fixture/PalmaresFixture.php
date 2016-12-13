@@ -21,15 +21,18 @@ class PalmaresFixture extends TestFixture
         'competition' => ['type' => 'string', 'length' => 255, 'null' => false, 'default' => null, 'collate' => 'utf8_general_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
         'lieux' => ['type' => 'string', 'length' => 255, 'null' => true, 'default' => null, 'collate' => 'utf8_general_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
         'date_competition' => ['type' => 'date', 'length' => null, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null],
-        'resultat' => ['type' => 'string', 'length' => 255, 'null' => false, 'default' => null, 'collate' => 'utf8_general_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
+        'resultat_id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
         'commentaire' => ['type' => 'text', 'length' => null, 'null' => true, 'default' => null, 'collate' => 'utf8_general_ci', 'comment' => '', 'precision' => null],
         'licencie_id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
         '_indexes' => [
             'palmares_licencie_fk_idx' => ['type' => 'index', 'columns' => ['licencie_id'], 'length' => []],
+            'resultat_palmares_fk' => ['type' => 'index', 'columns' => ['resultat_id'], 'length' => []],
         ],
         '_constraints' => [
             'primary' => ['type' => 'primary', 'columns' => ['id'], 'length' => []],
+            'resultat_palmares_fk_idx' => ['type' => 'unique', 'columns' => ['id'], 'length' => []],
             'palmares_licencie_fk' => ['type' => 'foreign', 'columns' => ['licencie_id'], 'references' => ['licencies', 'id'], 'update' => 'cascade', 'delete' => 'cascade', 'length' => []],
+            'resultat_palmares_fk' => ['type' => 'foreign', 'columns' => ['resultat_id'], 'references' => ['resultats', 'id'], 'update' => 'cascade', 'delete' => 'cascade', 'length' => []],
         ],
         '_options' => [
             'engine' => 'InnoDB',
@@ -48,8 +51,8 @@ class PalmaresFixture extends TestFixture
             'id' => 1,
             'competition' => 'Lorem ipsum dolor sit amet',
             'lieux' => 'Lorem ipsum dolor sit amet',
-            'date_competition' => '2016-09-29',
-            'resultat' => 'Lorem ipsum dolor sit amet',
+            'date_competition' => '2016-12-13',
+            'resultat_id' => 1,
             'commentaire' => 'Lorem ipsum dolor sit amet, aliquet feugiat. Convallis morbi fringilla gravida, phasellus feugiat dapibus velit nunc, pulvinar eget sollicitudin venenatis cum nullam, vivamus ut a sed, mollitia lectus. Nulla vestibulum massa neque ut et, id hendrerit sit, feugiat in taciti enim proin nibh, tempor dignissim, rhoncus duis vestibulum nunc mattis convallis.',
             'licencie_id' => 1
         ],

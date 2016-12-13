@@ -16,9 +16,16 @@ use Cake\ORM\Entity;
  * @property int $archive
  * @property \Cake\I18n\Time $created
  * @property \Cake\I18n\Time $modified
- * @property int $catagorie_id
+ * @property int $categorie_id
+ * @property int $region_id
  *
  * @property \App\Model\Entity\Category $category
+ * @property \App\Model\Entity\Region $region
+ * @property \App\Model\Entity\CombatPoule[] $combat_poules
+ * @property \App\Model\Entity\InscriptionCompetition[] $inscription_competitions
+ * @property \App\Model\Entity\Repartition[] $repartitions
+ * @property \App\Model\Entity\ResultatPoule[] $resultat_poules
+ * @property \App\Model\Entity\Tirage[] $tirages
  */
 class Competition extends Entity
 {

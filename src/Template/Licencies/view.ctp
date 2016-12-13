@@ -78,7 +78,7 @@
 															'class' => 'form-control', 
                     										'type' => 'text', 
 															'disabled' => 'disabled',
-                    										'value' => h($licency->grade)]); ?>
+                    										'value' => h($licency->grade->name)]); ?>
                     </div>                          
 				</div><br />
 			</div>						

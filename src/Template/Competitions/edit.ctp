@@ -54,17 +54,26 @@ use Lib\FonctionUtilitaire;
 				</div><br />
 				<div class="row">
                 	<label class="col-md-8 control-label" for="catagorie_id">Catégorie <span class="obligatoire"><sup> *</sup></span></label>
-                    <div class="col-md-14"><?= $this->Form->input('catagorie_id', ['label' => false,'id'=>'catagorie_id',
+                    <div class="col-md-12"><?= $this->Form->input('catagorie_id', ['label' => false,'id'=>'catagorie_id',
 														   	'div' => false,
 															'class' => 'form-control', 
                     										'options'=>$categories, 
                     										'value' => h($competition->catagorie_id),
 															'required' =>'required']); ?>
                     </div>                          
-				</div><br /> 
+				</div><br />
+				<div class="row">
+                	<label class="col-lg-8 control-label" for="region_id">Régions</label>
+                	<div class="col-lg-12"><?= $this->Form->input('region_id', ['label' => false,
+                											'options' => $regions,'value'=>h($competition->region_id),
+                											'div' => false,
+															'class' => 'form-control', 
+                    										'required' =>'required']) ?>    
+                	</div>                 
+				</div><br />   
 				<div class="row">
                 	<label class="col-lg-8 control-label" for="type">Type <span class="obligatoire"> *</span></label>
-                	<div class="col-lg-16"><?= $this->Form->input('type', ['label' => false,
+                	<div class="col-lg-12"><?= $this->Form->input('type', ['label' => false,
                 											'options' => [0 => 'Individuelle', 1=>'Equipe'],
                 											'div' => false,'value'=>$competition->type,
 															'class' => 'form-control', 
@@ -73,7 +82,7 @@ use Lib\FonctionUtilitaire;
 				</div><br /> 
 				<div class="row">
                 	<label class="col-lg-8 control-label" for="archive">Archivée</label>
-                	<div class="col-lg-16"><?= $this->Form->input('archive', ['label' => false,
+                	<div class="col-lg-10"><?= $this->Form->input('archive', ['label' => false,
                 											'options' => [0 => 'Non', 1=>'Oui'],
                 											'div' => false,'value'=>$competition->archive,
 															'class' => 'form-control']) ?>    

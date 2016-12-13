@@ -10,7 +10,7 @@ use Cake\ORM\Entity;
  * @property string $competition
  * @property string $lieux
  * @property \Cake\I18n\Time $date_competition
- * @property string $resultat
+ * @property int $resultat_id
  * @property string $commentaire
  * @property int $licencie_id
  *

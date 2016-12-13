@@ -41,7 +41,7 @@
                     <div class="col-lg-16"><?= $this->Form->input('resultat', ['label' => false,'id'=>'resultat',
 														   	'div' => false,
 															'class' => 'form-control', 
-                    										'type' => 'text', 
+                    										'options' => $resultats, 
 															'required' =>'required']); ?>
                     </div>                          
 				</div><br /> 
