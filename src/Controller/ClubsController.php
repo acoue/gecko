@@ -65,7 +65,7 @@ class ClubsController extends AppController
                 $this->Flash->error(__('Le club n\'a pas été sauvegardé.'));
             }
         }
-        $regions = $this->Clubs->Regions->find('list', ['limit' => 200]);
+        $regions = $this->Clubs->Regions->find('list');
         $this->set(compact('club', 'regions'));
         $this->set('_serialize', ['club']);
     }

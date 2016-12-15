@@ -21,11 +21,14 @@ class InscriptionCompetitionsController extends AppController
     	//Recuperation du club du user connecte
     	$user = $this->request->session()->read("UserConnected");
     	
-    	$this->paginate = ['contain' => ['Competitions', 'Licencies']];
-        
-		if($user->getProfil() == 'admin') $inscriptionCompetitions = $this->paginate($this->InscriptionCompetitions);
-    	else $inscriptionCompetitions = $this->paginate($this->InscriptionCompetitions)->where(['user_id'=>$user->getId()]);
-        
+    	if($user->getProfil() == 'admin') {
+    		$inscriptionCompetitions= $this->InscriptionCompetitions->find('all')
+    		->contain(['Competitions', 'Licencies','Users']);
+    	}else {
+    		$inscriptionCompetitions= $this->InscriptionCompetitions->find('all')
+    		->contain(['Competitions', 'Licencies','Users'])->where(['user_id'=>$user->getId()]);
+    	}
+    	
     	$this->set(compact('inscriptionCompetitions'));
         $this->set('_serialize', ['inscriptionCompetitions']);
     }

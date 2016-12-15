@@ -32,7 +32,7 @@
                     <div class="col-lg-16"><?= $this->Form->input('grade', ['label' => false,'id'=>'grade',
 														   	'div' => false,
 															'class' => 'form-control', 
-                    										'type' => 'text']); ?>
+                    										'options' => $grades]); ?>
                     </div>                          
 				</div><br />  
 				<div class="row">

@@ -19,14 +19,16 @@ class InscriptionPassagesController extends AppController
     public function index()
     {
     	//Recuperation du club du user connecte
-    	$user = $this->request->session()->read("UserConnected");
-    	
-        $this->paginate = [
-            'contain' => ['Passages', 'Licencies']
-        ];
-        if($user->getProfil() == 'admin') $inscriptionPassages = $this->paginate($this->InscriptionPassages);
-        else $inscriptionPassages = $this->paginate($this->InscriptionPassages)->where(['user_id'=>$user->getId()]);
+    	$user = $this->request->session()->read("UserConnected");    	
 
+    	if($user->getProfil() == 'admin') {
+    		$inscriptionPassages= $this->InscriptionPassages->find('all')
+    		->contain(['Passages', 'Licencies','Users']);
+    	}else {
+    		$inscriptionPassages= $this->InscriptionPassages->find('all')
+    		->contain(['Passages', 'Licencies','Users'])->where(['user_id'=>$user->getId()]);
+    	}
+    	
         $this->set(compact('inscriptionPassages'));
         $this->set('_serialize', ['inscriptionPassages']);
     }

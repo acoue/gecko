@@ -10,7 +10,7 @@
 				        <tr>
 			                <th><?= $this->Paginator->sort('nom','Nom') ?></th>
 			                <th><?= $this->Paginator->sort('prenom','Prénom') ?></th>
-                			<th><?= $this->Paginator->sort('grade') ?></th>
+                			<th><?= $this->Paginator->sort('grade_id') ?></th>
                 			<th><?= $this->Paginator->sort('actif') ?></th>
 			                <th class="actions"><?= __('Actions') ?></th>
 				        </tr>
@@ -20,7 +20,7 @@
 				        <tr>
 			                <td><?= h($jury->nom) ?></td>
 			                <td><?= h($jury->prenom) ?></td>
-			                <td><?= $jury->grade ?></td>
+			                <td><?= $jury->grade->name ?></td>
 			                <td><?= ($jury->actif = 1) ? 'Oui':'Non' ?></td>
 			                <td class="actions">
 			                    <?= $this->Html->link(__('Voir'), ['action' => 'view', $jury->id]) ?>

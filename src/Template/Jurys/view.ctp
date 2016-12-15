@@ -33,7 +33,7 @@
                 	<label class="col-lg-8 control-label" for="grade">Grade</label>
                     <div class="col-lg-16"><?= $this->Form->input('grade', ['label' => false,'id'=>'grade',
 														   	'div' => false,
-															'class' => 'form-control', 'value'=>$jury->grade,
+															'class' => 'form-control', 'value'=>$jury->grade->name,
                     										'type' => 'text','disabled'=>'disabled']); ?>
                     </div>                          
 				</div><br />  

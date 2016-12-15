@@ -9,9 +9,10 @@ use Cake\ORM\Entity;
  * @property int $id
  * @property string $nom
  * @property string $prenom
- * @property string $grade
+ * @property int $grade_id
  * @property int $actif
  *
+ * @property \App\Model\Entity\Grade $grade
  * @property \App\Model\Entity\Juge[] $juges
  */
 class Jury extends Entity

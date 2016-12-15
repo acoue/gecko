@@ -85,7 +85,7 @@ else $uc =null;
 	    					//Menu mon compte
 	    					echo $this->Html->link('Mon compte', ['controller'=>'Users', 'action' => 'compte'],['class' => 'btn btn-warning'])."<br /><br />";
 	    					echo $this->Html->link('Déconnexion', ['controller'=>'Users', 'action' => 'logout'],['class' => 'btn btn-danger'])."<br /><br />";
-	    					
+	    					//debug( $uc);
 	   					?>
 	    				</div>
 	    			</div>

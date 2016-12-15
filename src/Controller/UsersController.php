@@ -163,10 +163,10 @@ class UsersController extends AppController
 		$uc=$this->request->session()->read("UserConnected");
 			
 		$user = $this->Users->get($uc->getId());
-		
+		//debug($user);die();
 		if(!$user) {
 			$this->redirect('/');
-			die();
+			//die();
 		} else {
 			$d = $this->request->data;
 			//debug($d);die();
@@ -178,7 +178,7 @@ class UsersController extends AppController
 						$modif_user->password = $d['pass1'];
 						if($usersTable->save($modif_user)){
 							$this->Flash->success('Modification du mot de passe effectuée.');
-							return $this->redirect(['action' => 'compte/'.$id]);
+							return $this->redirect(['action' => 'compte/'.$user->id]);
 						} else {
 							$this->Flash->error('Impossible de sauvegarder.');
 						}

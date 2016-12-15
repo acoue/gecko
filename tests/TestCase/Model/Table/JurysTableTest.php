@@ -25,12 +25,25 @@ class JurysTableTest extends TestCase
      */
     public $fixtures = [
         'app.jurys',
-        'app.juges',
-        'app.passages',
-        'app.evalues',
+        'app.grades',
         'app.licencies',
         'app.clubs',
         'app.regions',
+        'app.juges',
+        'app.passages',
+        'app.evalues',
+        'app.inscription_passages',
+        'app.users',
+        'app.profils',
+        'app.historiques',
+        'app.inscription_competitions',
+        'app.competitions',
+        'app.categories',
+        'app.combat_poules',
+        'app.repartitions',
+        'app.resultat_poules',
+        'app.tirages',
+        'app.notes',
         'app.jures'
     ];
 
@@ -74,6 +87,16 @@ class JurysTableTest extends TestCase
      * @return void
      */
     public function testValidationDefault()
+    {
+        $this->markTestIncomplete('Not implemented yet.');
+    }
+
+    /**
+     * Test buildRules method
+     *
+     * @return void
+     */
+    public function testBuildRules()
     {
         $this->markTestIncomplete('Not implemented yet.');
     }

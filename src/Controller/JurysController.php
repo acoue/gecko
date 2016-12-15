@@ -19,7 +19,10 @@ class JurysController extends AppController
     public function index()
     {
     	if(! $this->Securite->isAdmin()) return $this->redirect(['controller'=>'pages', 'action'=>'permission']);
-        $jurys = $this->paginate($this->Jurys);
+    	$this->paginate = [
+    			'contain' => ['Grades']
+    	];
+    	$jurys = $this->paginate($this->Jurys);
 
         $this->set(compact('jurys'));
         $this->set('_serialize', ['jurys']);
@@ -36,7 +39,7 @@ class JurysController extends AppController
     {
     	if(! $this->Securite->isAdmin()) return $this->redirect(['controller'=>'pages', 'action'=>'permission']);
         $jury = $this->Jurys->get($id, [
-            'contain' => ['Juges']
+            'contain' => ['Juges','Grades']
         ]);
 
         $this->set('jury', $jury);
@@ -62,7 +65,8 @@ class JurysController extends AppController
                 $this->Flash->error(__('Erreur dans la création du jury.'));
             }
         }
-        $this->set(compact('jury'));
+        $grades = $this->Jurys->Grades->find('list');
+        $this->set(compact('jury','grades'));
         $this->set('_serialize', ['jury']);
     }
 
@@ -77,7 +81,7 @@ class JurysController extends AppController
     {
     	if(! $this->Securite->isAdmin()) return $this->redirect(['controller'=>'pages', 'action'=>'permission']);
         $jury = $this->Jurys->get($id, [
-            'contain' => []
+            'contain' => ['Grades']
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $jury = $this->Jurys->patchEntity($jury, $this->request->data);
@@ -89,7 +93,8 @@ class JurysController extends AppController
                 $this->Flash->error(__('Erreur dans la sauvegarde du jury.'));
             }
         }
-        $this->set(compact('jury'));
+        $grades = $this->Jurys->Grades->find('list');
+        $this->set(compact('jury','grades'));
         $this->set('_serialize', ['jury']);
     }
 

@@ -9,6 +9,7 @@ use Cake\Validation\Validator;
 /**
  * Jurys Model
  *
+ * @property \Cake\ORM\Association\BelongsTo $Grades
  * @property \Cake\ORM\Association\HasMany $Juges
  *
  * @method \App\Model\Entity\Jury get($primaryKey, $options = [])
@@ -36,6 +37,10 @@ class JurysTable extends Table
         $this->displayField('id');
         $this->primaryKey('id');
 
+        $this->belongsTo('Grades', [
+            'foreignKey' => 'grade_id',
+            'joinType' => 'INNER'
+        ]);
         $this->hasMany('Juges', [
             'foreignKey' => 'jury_id'
         ]);
@@ -62,14 +67,24 @@ class JurysTable extends Table
             ->notEmpty('prenom');
 
         $validator
-            ->requirePresence('grade', 'create')
-            ->notEmpty('grade');
-
-        $validator
             ->integer('actif')
             ->requirePresence('actif', 'create')
             ->notEmpty('actif');
 
         return $validator;
+    }
+
+    /**
+     * Returns a rules checker object that will be used for validating
+     * application integrity.
+     *
+     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
+     * @return \Cake\ORM\RulesChecker
+     */
+    public function buildRules(RulesChecker $rules)
+    {
+        $rules->add($rules->existsIn(['grade_id'], 'Grades'));
+
+        return $rules;
     }
 }
