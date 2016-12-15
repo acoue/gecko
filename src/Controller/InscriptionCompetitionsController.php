@@ -51,9 +51,11 @@ class InscriptionCompetitionsController extends AppController
     	
         $inscriptionCompetition = $this->InscriptionCompetitions->newEntity();
         if ($this->request->is('post')) {
+        	//debug($this->request->data);die();
             $inscriptionCompetition = $this->InscriptionCompetitions->patchEntity($inscriptionCompetition, $this->request->data);
             if ($this->InscriptionCompetitions->save($inscriptionCompetition)) {
                 $this->Flash->success(__('L\'inscription à la compétition a bien été enregistrée.'));
+            	$this->Utilitaire->logInBdd("Inscription de ".$inscriptionCompetition->licencie_id." pour la compétition ".$inscriptionCompetition->competition_id);
 
                 return $this->redirect(['action' => 'index']);
             } else {
@@ -82,11 +84,15 @@ class InscriptionCompetitionsController extends AppController
     public function delete($id = null)
     {
         $this->request->allowMethod(['post', 'delete']);
-        $inscriptionCompetition = $this->InscriptionCompetitions->get($id);
+        $inscriptionCompetition = $this->InscriptionCompetitions->get($id, [
+            'contain' => ['Competitions', 'Licencies']
+        ]);
+        $message="Supression de l'inscription de ".$inscriptionCompetition->licency->display_name." de la compétition ".$inscriptionCompetition->competition->name;
         if ($this->InscriptionCompetitions->delete($inscriptionCompetition)) {
-            $this->Flash->success(__('The inscription competition has been deleted.'));
+        	$this->Utilitaire->logInBdd($message);
+            $this->Flash->success(__('L\'inscription à la compétition a été supprimée.'));
         } else {
-            $this->Flash->error(__('The inscription competition could not be deleted. Please, try again.'));
+            $this->Flash->error(__('Erreur lors de la suppression de l\'inscription à la compétition.'));
         }
 
         return $this->redirect(['action' => 'index']);

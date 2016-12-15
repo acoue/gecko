@@ -55,7 +55,8 @@ class InscriptionPassagesController extends AppController
             $inscriptionPassage = $this->InscriptionPassages->patchEntity($inscriptionPassage, $this->request->data);
             if ($this->InscriptionPassages->save($inscriptionPassage)) {
                 $this->Flash->success(__('L\'inscription au passage de grade a bien été enregistrée.'));
-
+                $this->Utilitaire->logInBdd("Inscription de ".$inscriptionPassage->licencie_id." au ppassage de grade ".$inscriptionPassage->passage_id);
+                
                 return $this->redirect(['action' => 'index']);
             } else {
                 $this->Flash->error(__('Erreur lors de l\'inscription au passage de grade.'));
@@ -82,11 +83,15 @@ class InscriptionPassagesController extends AppController
     public function delete($id = null)
     {
         $this->request->allowMethod(['post', 'delete']);
-        $inscriptionPassage = $this->InscriptionPassages->get($id);
-        if ($this->InscriptionPassages->delete($inscriptionPassage)) {
-            $this->Flash->success(__('The inscription passage has been deleted.'));
+        $inscriptionPassage = $this->InscriptionPassages->get($id, [
+            'contain' => ['Paassages', 'Licencies']
+        ]);
+        $message="Supression de l'inscription de ".$inscriptionPassage->licency->display_name." du passage de grade ".$inscriptionPassage->passage->name;
+         if ($this->InscriptionPassages->delete($inscriptionPassage)) {
+        	$this->Utilitaire->logInBdd($message);
+            $this->Flash->success(__('Suppression de l\'inscription au passage de grade.'));
         } else {
-            $this->Flash->error(__('The inscription passage could not be deleted. Please, try again.'));
+            $this->Flash->error(__('Erreur lors de la suppression de l\'inscription au passage de grade.'));
         }
 
         return $this->redirect(['action' => 'index']);
