@@ -19,7 +19,10 @@ class PassagesController extends AppController
     public function index()
     {
     	if(! $this->Securite->isAdmin()) return $this->redirect(['controller'=>'pages', 'action'=>'permission']);
-        $passages = $this->paginate($this->Passages);
+    	$this->paginate = [
+    			'contain' => ['Disciplines']
+    	];
+    	$passages = $this->paginate($this->Passages);
 
         $this->set(compact('passages'));
         $this->set('_serialize', ['passages']);
@@ -40,7 +43,7 @@ class PassagesController extends AppController
     {
     	if(! $this->Securite->isAdmin()) return $this->redirect(['controller'=>'pages', 'action'=>'permission']);
         $passage = $this->Passages->get($id, [
-            'contain' => ['Evalues', 'Juges']
+            'contain' => ['Evalues'=>['Licencies'], 'Juges'=>['Jurys'],'Disciplines']
         ]);
 
         $this->set('passage', $passage);
@@ -75,7 +78,8 @@ class PassagesController extends AppController
                 $this->Flash->error(__('Erreur dans la création du passage.'));
             }
         }
-        $this->set(compact('passage'));
+        $disciplines = $this->Passages->Disciplines->find('list');
+        $this->set(compact('passage','disciplines'));
         $this->set('_serialize', ['passage']);
     }
 
@@ -89,7 +93,10 @@ class PassagesController extends AppController
     public function edit($id = null)
     {
     	if(! $this->Securite->isAdmin()) return $this->redirect(['controller'=>'pages', 'action'=>'permission']);
-        $passage = $this->Passages->get($id);
+        $passage = $this->Passages->get($id,[
+            'contain' => ['Disciplines']
+        ]);
+        
         if ($this->request->is(['patch', 'post', 'put'])) {
 
         	$data = $this->request->data;
@@ -109,7 +116,8 @@ class PassagesController extends AppController
                 $this->Flash->error(__('Erreur dans la sauvegarde du passage.'));
             }
         }
-        $this->set(compact('passage'));
+        $disciplines = $this->Passages->Disciplines->find('list');
+        $this->set(compact('passage','disciplines'));
         $this->set('_serialize', ['passage']);
     }
 
@@ -137,7 +145,7 @@ class PassagesController extends AppController
 
     public function select()
     {
-    	$passages = $this->Passages->find('all')->where(['archive'=>0]);
+    	$passages = $this->Passages->find('all')->contain('Disciplines')->where(['archive'=>0]);
     	$this->set(compact('passages'));
     	$this->set('_serialize', ['passages']);
     }

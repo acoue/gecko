@@ -8,25 +8,26 @@
 				<table cellpadding="0" cellspacing="0" class="table table-striped">
 				    <thead>
 				        <tr align='center'>
+			                <th align='center'>Discipline</th>
 			                <th align='center'>Libellé</th>
 			                <th>Date</th>
-			                <th>Sélectionnée ?</th>
-			                <th></th>
+			                <th>Selectionné ?</th>
                 		</tr>
 				    </thead>
 				    <tbody> 
 				    <?php foreach ($passages as $passage): ?>
 				        <tr>
+			                <td><?= $passage->discipline->name ?></td>
 			                <td><?= $passage->name ?></td>
 			                <td><?= $passage->date_passage ?></td>
-			                <td><?= $passage->selected == 1 ? 'Oui' : 'Non' ?></td>
-			                <td><?php if($passage->selected == 0) echo $this->Html->link('Sélectionner', ['controller'=>'passages', 'action' => 'choisir/'.$passage->id],['class' => 'btn btn-primary']) ?></td>
+			                <td><?= $passage->selected == 1 ? '<span class="badge badge-success">Oui</span>' : $this->Html->link('Sélectionner', ['controller'=>'Passages', 'action' => 'choisir/'.$passage->id],['class' => 'btn btn-primary']) ?></td>
+				        
 				        </tr>
 				    <?php endforeach; ?>
 				    </tbody>
-				    <br /><br />
 				   </table><?= $this->Html->link(__('Retour'), ['action' => 'index'],['class' => 'btn btn-info']) ?> 
 			
+				    <br /><br />
 				</div>						
 			<div class="col-lg-2"></div>
 		</div>

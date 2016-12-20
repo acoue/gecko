@@ -29,6 +29,7 @@ class CompetitionsTableTest extends TestCase
         'app.regions',
         'app.clubs',
         'app.licencies',
+        'app.grades',
         'app.combat_poules',
         'app.inscription_competitions',
         'app.users',

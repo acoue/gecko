@@ -9,6 +9,14 @@
 			</div>
 			<div class="col-lg-15"> 
 			    <?= $this->Form->create($competition, ['id'=>'formulaire']) ?>
+				<div class="row">
+                	<label class="col-md-8 control-label" for="discipline_id">Discipline</label>
+                    <div class="col-md-12"><?= $this->Form->input('discipline_id', ['label' => false,'id'=>'discipline_id',
+														   	'div' => false,
+															'class' => 'form-control', 
+                    										'options' => $disciplines]); ?>
+                    </div>                          
+				</div><br />
 			    <div class="row">
                 	<label class="col-lg-8 control-label" for="name">Libellé <span class="obligatoire"><sup> *</sup></span></label>
                     <div class="col-lg-16"><?= $this->Form->input('name', ['label' => false,'id'=>'name',

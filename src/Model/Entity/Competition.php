@@ -14,10 +14,11 @@ use Cake\ORM\Entity;
  * @property int $type
  * @property int $selected
  * @property int $archive
- * @property \Cake\I18n\Time $created
- * @property \Cake\I18n\Time $modified
  * @property int $categorie_id
  * @property int $region_id
+ * @property int $discipline_id
+ * @property \Cake\I18n\Time $created
+ * @property \Cake\I18n\Time $modified
  *
  * @property \App\Model\Entity\Category $category
  * @property \App\Model\Entity\Region $region

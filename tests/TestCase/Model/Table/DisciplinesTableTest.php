@@ -1,22 +1,22 @@
 <?php
 namespace App\Test\TestCase\Model\Table;
 
-use App\Model\Table\JugesTable;
+use App\Model\Table\DisciplinesTable;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
 /**
- * App\Model\Table\JugesTable Test Case
+ * App\Model\Table\DisciplinesTable Test Case
  */
-class JugesTableTest extends TestCase
+class DisciplinesTableTest extends TestCase
 {
 
     /**
      * Test subject
      *
-     * @var \App\Model\Table\JugesTable
+     * @var \App\Model\Table\DisciplinesTable
      */
-    public $Juges;
+    public $Disciplines;
 
     /**
      * Fixtures
@@ -24,29 +24,7 @@ class JugesTableTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'app.juges',
-        'app.passages',
-        'app.regions',
-        'app.clubs',
-        'app.licencies',
-        'app.grades',
-        'app.disciplines',
-        'app.evalues',
-        'app.inscription_passages',
-        'app.users',
-        'app.profils',
-        'app.historiques',
-        'app.inscription_competitions',
-        'app.competitions',
-        'app.categories',
-        'app.combat_poules',
-        'app.repartitions',
-        'app.resultat_competitions',
-        'app.resultats',
-        'app.resultat_poules',
-        'app.tirages',
-        'app.notes',
-        'app.jures'
+        'app.disciplines'
     ];
 
     /**
@@ -57,8 +35,8 @@ class JugesTableTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $config = TableRegistry::exists('Juges') ? [] : ['className' => 'App\Model\Table\JugesTable'];
-        $this->Juges = TableRegistry::get('Juges', $config);
+        $config = TableRegistry::exists('Disciplines') ? [] : ['className' => 'App\Model\Table\DisciplinesTable'];
+        $this->Disciplines = TableRegistry::get('Disciplines', $config);
     }
 
     /**
@@ -68,7 +46,7 @@ class JugesTableTest extends TestCase
      */
     public function tearDown()
     {
-        unset($this->Juges);
+        unset($this->Disciplines);
 
         parent::tearDown();
     }

@@ -70,12 +70,12 @@ class AppController extends Controller
         if($module==2) {
 	        //Message
 	        $this->loadModel('Competitions');
-	        $competitionSelected = $this->Competitions->find('all')->contain('Categories')->where(['selected' => '1'])->first();
+	        $competitionSelected = $this->Competitions->find('all')->contain(['Categories','Disciplines'])->where(['selected' => '1'])->first();
     		$this->set('competitionSelected', $competitionSelected);
         } else if($module==3) {
 	        //Message
 	        $this->loadModel('Passages');
-	        $passageSelected = $this->Passages->find('all')->where(['selected' => '1'])->first();
+	        $passageSelected = $this->Passages->find('all')->contain(['Disciplines'])->where(['selected' => '1'])->first();
     		$this->set('passageSelected', $passageSelected);
         } 
         //debug($competition->category->name);die();

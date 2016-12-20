@@ -10,6 +10,7 @@ use Cake\Validation\Validator;
  * Passages Model
  *
  * @property \Cake\ORM\Association\BelongsTo $Regions
+ * @property \Cake\ORM\Association\BelongsTo $Disciplines
  * @property \Cake\ORM\Association\HasMany $Evalues
  * @property \Cake\ORM\Association\HasMany $InscriptionPassages
  * @property \Cake\ORM\Association\HasMany $Juges
@@ -46,6 +47,10 @@ class PassagesTable extends Table
 
         $this->belongsTo('Regions', [
             'foreignKey' => 'region_id',
+            'joinType' => 'INNER'
+        ]);
+        $this->belongsTo('Disciplines', [
+            'foreignKey' => 'discipline_id',
             'joinType' => 'INNER'
         ]);
         $this->hasMany('Evalues', [
@@ -106,6 +111,7 @@ class PassagesTable extends Table
     public function buildRules(RulesChecker $rules)
     {
         $rules->add($rules->existsIn(['region_id'], 'Regions'));
+        $rules->add($rules->existsIn(['discipline_id'], 'Disciplines'));
 
         return $rules;
     }

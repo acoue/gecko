@@ -14,6 +14,16 @@ use Lib\FonctionUtilitaire;
 			</div>
 			<div class="col-lg-15">
 				<div class="row">
+                	<label class="col-md-8 control-label" for="discipline_id">Discipline</label>
+                    <div class="col-md-12"><?= $this->Form->input('discipline_id', ['label' => false,'id'=>'discipline_id',
+														   	'div' => false,
+															'class' => 'form-control', 
+                    										'type' => 'text', 
+                    										'value' => $passage->discipline->name,
+															'disabled' => 'disabled']); ?>
+                    </div>                          
+				</div><br />
+				<div class="row">
                 	<label class="col-md-8 control-label" for="name">Libellé</label>
                     <div class="col-md-14"><?= $this->Form->input('name', ['label' => false,'id'=>'name',
 														   	'div' => false,
@@ -47,16 +57,16 @@ use Lib\FonctionUtilitaire;
 			        <?php if (!empty($passage->evalues)): ?>
 			        <table cellpadding="0" cellspacing="0">
 			            <tr>
-			                <th scope="col"><?= __('Licencie Id') ?></th>
+			                <th scope="col"><?= __('Licencié') ?></th>
 			                <th scope="col"><?= __('Grade Actuel') ?></th>
-			                <th scope="col"><?= __('Grade Presente') ?></th>
+			                <th scope="col"><?= __('Grade Presenté') ?></th>
 			                <th scope="col"><?= __('Resultat Passage') ?></th>
 			                <th scope="col"><?= __('Resultat Technique') ?></th>
 			                <th scope="col"><?= __('Resultat Kata') ?></th>
 			            </tr>
 			            <?php foreach ($passage->evalues as $evalues): ?>
 			            <tr>
-			                <td><?= h($evalues->licencie_id) ?></td>
+			                <td><?= h($evalues->licency->display_name) ?></td>
 			                <td><?= h($evalues->grade_actuel) ?></td>
 			                <td><?= h($evalues->grade_presente) ?></td>
 			                <td><?= h($evalues->resultat_passage) ?></td>
@@ -72,11 +82,11 @@ use Lib\FonctionUtilitaire;
 			        <?php if (!empty($passage->juges)): ?>
 			        <table cellpadding="0" cellspacing="0">
 			            <tr>
-			                <th scope="col"><?= __('Jury Id') ?></th>
+			                <th scope="col">Nom</th>
 			            </tr>
 			            <?php foreach ($passage->juges as $juges): ?>
 			            <tr>
-			                <td><?= h($juges->jury_id) ?></td>
+			                <td><?= $juges->jury->prenom ." ".$juges->jury->nom ?></td>
 			            </tr>
 			            <?php endforeach; ?>
 			        </table>

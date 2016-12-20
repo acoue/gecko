@@ -23,7 +23,7 @@
                 	<label class="col-lg-8 control-label" for="lieux">Lieux <span class="obligatoire"><sup> *</sup></span></label>
                     <div class="col-lg-16"><?= $this->Form->input('lieux', ['label' => false,'id'=>'lieux',
 														   	'div' => false,
-															'class' => 'form-control', 'value'=>$palmare->lieux
+															'class' => 'form-control', 'value'=>$palmare->lieux,
                     										'type' => 'text', 
 															'required' =>'required']); ?>
                     </div>                          

@@ -1,24 +1,24 @@
 <div class="blocGris">
-	<h2>Administration des paramètres</h2>
+	<h2>Administration</h2>
 	<div class="container">
 		<div class="table-responsive">
 	    	<table class="table" width="60%">
 			    <tbody>	
 			        <tr>
-			            <td>Journal</td>
-			            <td><?= $this->Html->link('Historique', ['controller'=>'Historiques', 'action' => 'index'],['class' => 'btn btn-default']) ?></td>
+			            <td width='70%'>Voir le journal</td>
+			            <td width='30%'><?= $this->Html->link('Historique', ['controller'=>'Historiques', 'action' => 'index'],['class' => 'btn btn-default']) ?></td>
 			        </tr>
 			        <tr>
-			            <td width='70%'>Administration des Utilisateurs</td>
-			            <td width='30%'><?= $this->Html->link('Utilisateurs', ['controller'=>'users', 'action' => 'index'],['class' => 'btn btn-default']) ?></td>
+			            <td >Administration des Utilisateurs</td>
+			            <td ><?= $this->Html->link('Utilisateurs', ['controller'=>'users', 'action' => 'index'],['class' => 'btn btn-default']) ?></td>
 			        </tr>
 			        <tr>
-			            <td width='70%'>Administration des Compétitions</td>
-			            <td width='30%'><?= $this->Html->link('Compétitions', ['controller'=>'competitions', 'action' => 'index'],['class' => 'btn btn-default']) ?></td>
+			            <td >Administration des Compétitions</td>
+			            <td><?= $this->Html->link('Compétitions', ['controller'=>'competitions', 'action' => 'index'],['class' => 'btn btn-default']) ?></td>
 			        </tr>
 			        <tr>
-			            <td width='70%'>Administration des Passages de grades</td>
-			            <td width='30%'><?= $this->Html->link('Passages', ['controller'=>'passages', 'action' => 'index'],['class' => 'btn btn-default']) ?></td>
+			            <td>Administration des Passages de grades</td>
+			            <td><?= $this->Html->link('Passages', ['controller'=>'passages', 'action' => 'index'],['class' => 'btn btn-default']) ?></td>
 			        </tr>
 			        <tr>
 			            <td>Administration des Régions</td>
@@ -39,10 +39,6 @@
 			        <tr>
 			            <td>Administration des Jurys de passages de grades</td>
 			            <td><?= $this->Html->link('Jurys', ['controller'=>'Jurys', 'action' => 'index'],['class' => 'btn btn-default']) ?></td>
-			        </tr>
-			        <tr>
-			            <td width='70%'>Administration des Palmarès</td>
-			            <td width='30%'><?= $this->Html->link('Palmarès', ['controller'=>'palmares', 'action' => 'index'],['class' => 'btn btn-default']) ?></td>
 			        </tr>
 			    </tbody>
 		    </table>

@@ -25,10 +25,11 @@ class PassagesTableTest extends TestCase
      */
     public $fixtures = [
         'app.passages',
-        'app.evalues',
-        'app.licencies',
-        'app.clubs',
         'app.regions',
+        'app.clubs',
+        'app.licencies',
+        'app.grades',
+        'app.evalues',
         'app.inscription_passages',
         'app.users',
         'app.profils',
@@ -36,8 +37,11 @@ class PassagesTableTest extends TestCase
         'app.inscription_competitions',
         'app.competitions',
         'app.categories',
+        'app.disciplines',
         'app.combat_poules',
         'app.repartitions',
+        'app.resultat_competitions',
+        'app.resultats',
         'app.resultat_poules',
         'app.tirages',
         'app.juges',
@@ -85,6 +89,16 @@ class PassagesTableTest extends TestCase
      * @return void
      */
     public function testValidationDefault()
+    {
+        $this->markTestIncomplete('Not implemented yet.');
+    }
+
+    /**
+     * Test buildRules method
+     *
+     * @return void
+     */
+    public function testBuildRules()
     {
         $this->markTestIncomplete('Not implemented yet.');
     }

@@ -11,6 +11,7 @@ use Lib\FonctionUtilitaire;
 				<table cellpadding="0" cellspacing="0" class="table table-striped">
 				    <thead>
 				        <tr>
+			                <th><?= $this->Paginator->sort('discipline_id','Discipline') ?></th>
 			                <th><?= $this->Paginator->sort('name','Libellé') ?></th>
 			                <th><?= $this->Paginator->sort('date_passage','Date') ?></th>
 			                <th><?= $this->Paginator->sort('selected','Selectionné ?') ?></th>
@@ -21,6 +22,7 @@ use Lib\FonctionUtilitaire;
 				    <tbody> 
 				    <?php foreach ($passages as $passage): ?>
 				        <tr>
+			                <td><?= h($passage->discipline->name) ?></td>
 			                <td><?= h($passage->name) ?></td>
 			                <td><?= FonctionUtilitaire::dateFromMySQL($passage->date_passage) ?></td>
 			                <td><?= h($passage->selected == 1) ? 'Oui' : 'Non' ?></td>

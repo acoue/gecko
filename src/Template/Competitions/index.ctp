@@ -11,6 +11,7 @@ use Lib\FonctionUtilitaire;
 				<table cellpadding="0" cellspacing="0" class="table table-striped">
 				    <thead>
 				        <tr>
+			                <th><?= $this->Paginator->sort('discipline_id','Discipline') ?></th>
 			                <th><?= $this->Paginator->sort('name','Libellé') ?></th>
 			                <th><?= $this->Paginator->sort('date_competition','Date') ?></th>
 			                <th><?= $this->Paginator->sort('lieux','Lieux') ?></th>
@@ -22,6 +23,7 @@ use Lib\FonctionUtilitaire;
 				    <tbody> 
 				    <?php foreach ($competitions as $competition): ?>
 				        <tr>
+			                <td><?= h($competition->discipline->name) ?></td>
 			                <td><?= h($competition->name) ?></td>
 			                <td><?= FonctionUtilitaire::dateFromMySQL($competition->date_competition) ?></td>
 			                <td><?= h($competition->lieux) ?></td>

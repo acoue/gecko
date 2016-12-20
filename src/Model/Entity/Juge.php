@@ -8,7 +8,7 @@ use Cake\ORM\Entity;
  *
  * @property int $id
  * @property int $passage_id
- * @property int $jure_id
+ * @property int $jury_id
  * @property \Cake\I18n\Time $created
  * @property \Cake\I18n\Time $modified
  *

@@ -11,9 +11,11 @@ use Cake\Validation\Validator;
  *
  * @property \Cake\ORM\Association\BelongsTo $Categories
  * @property \Cake\ORM\Association\BelongsTo $Regions
+ * @property \Cake\ORM\Association\BelongsTo $Disciplines
  * @property \Cake\ORM\Association\HasMany $CombatPoules
  * @property \Cake\ORM\Association\HasMany $InscriptionCompetitions
  * @property \Cake\ORM\Association\HasMany $Repartitions
+ * @property \Cake\ORM\Association\HasMany $ResultatCompetitions
  * @property \Cake\ORM\Association\HasMany $ResultatPoules
  * @property \Cake\ORM\Association\HasMany $Tirages
  *
@@ -54,6 +56,10 @@ class CompetitionsTable extends Table
             'foreignKey' => 'region_id',
             'joinType' => 'INNER'
         ]);
+        $this->belongsTo('Disciplines', [
+            'foreignKey' => 'discipline_id',
+            'joinType' => 'INNER'
+        ]);
         $this->hasMany('CombatPoules', [
             'foreignKey' => 'competition_id'
         ]);
@@ -61,6 +67,9 @@ class CompetitionsTable extends Table
             'foreignKey' => 'competition_id'
         ]);
         $this->hasMany('Repartitions', [
+            'foreignKey' => 'competition_id'
+        ]);
+        $this->hasMany('ResultatCompetitions', [
             'foreignKey' => 'competition_id'
         ]);
         $this->hasMany('ResultatPoules', [
@@ -127,6 +136,7 @@ class CompetitionsTable extends Table
     {
         $rules->add($rules->existsIn(['categorie_id'], 'Categories'));
         $rules->add($rules->existsIn(['region_id'], 'Regions'));
+        $rules->add($rules->existsIn(['discipline_id'], 'Disciplines'));
 
         return $rules;
     }

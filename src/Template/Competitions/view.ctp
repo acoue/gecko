@@ -14,6 +14,16 @@ use Lib\FonctionUtilitaire;
 			</div>
 			<div class="col-lg-15">
 				<div class="row">
+                	<label class="col-md-8 control-label" for="discipline_id">Discipline</label>
+                    <div class="col-md-12"><?= $this->Form->input('discipline_id', ['label' => false,'id'=>'discipline_id',
+														   	'div' => false,
+															'class' => 'form-control', 
+                    										'type' => 'text', 
+                    										'value' => $competition->discipline->name,
+															'disabled' => 'disabled']); ?>
+                    </div>                          
+				</div><br />
+				<div class="row">
                 	<label class="col-md-8 control-label" for="name">Libellé</label>
                     <div class="col-md-14"><?= $this->Form->input('name', ['label' => false,'id'=>'name',
 														   	'div' => false,

@@ -10,7 +10,8 @@ use Cake\Validation\Validator;
  * Juges Model
  *
  * @property \Cake\ORM\Association\BelongsTo $Passages
- * @property \Cake\ORM\Association\BelongsTo $Jures
+ * @property \Cake\ORM\Association\BelongsTo $Jurys
+ * @property \Cake\ORM\Association\HasMany $Notes
  *
  * @method \App\Model\Entity\Juge get($primaryKey, $options = [])
  * @method \App\Model\Entity\Juge newEntity($data = null, array $options = [])
@@ -45,9 +46,12 @@ class JugesTable extends Table
             'foreignKey' => 'passage_id',
             'joinType' => 'INNER'
         ]);
-        $this->belongsTo('Jures', [
-            'foreignKey' => 'jure_id',
+        $this->belongsTo('Jurys', [
+            'foreignKey' => 'jury_id',
             'joinType' => 'INNER'
+        ]);
+        $this->hasMany('Notes', [
+            'foreignKey' => 'juge_id'
         ]);
     }
 
@@ -75,8 +79,8 @@ class JugesTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
+        $rules->add($rules->existsIn(['jury_id'], 'Jurys'));
         $rules->add($rules->existsIn(['passage_id'], 'Passages'));
-        $rules->add($rules->existsIn(['jure_id'], 'Jures'));
 
         return $rules;
     }

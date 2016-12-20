@@ -20,7 +20,7 @@ class CompetitionsController extends AppController
     {
     	if(! $this->Securite->isAdmin()) return $this->redirect(['controller'=>'pages', 'action'=>'permission']);
         $this->paginate = [
-            'contain' => ['Categories']
+            'contain' => ['Categories','Disciplines']
         ];
         $competitions = $this->paginate($this->Competitions);
 
@@ -39,7 +39,7 @@ class CompetitionsController extends AppController
     {
     	if(! $this->Securite->isAdmin()) return $this->redirect(['controller'=>'pages', 'action'=>'permission']);
         $competition = $this->Competitions->get($id, [
-            'contain' => ['Categories','Regions']
+            'contain' => ['Categories','Regions','Disciplines']
         ]);
 
         $this->set('competition', $competition);
@@ -73,6 +73,7 @@ class CompetitionsController extends AppController
         	$competition->description=$desc;
         	$competition->selected=0;
         	$competition->catagorie_id=$data['categorie_id'];
+        	$competition->discipline_id=data['discipline_id'];
         	//Enregistrement
             //$competition = $this->Competitions->patchEntity($competition);
             if ($this->Competitions->save($competition)) {
@@ -85,7 +86,8 @@ class CompetitionsController extends AppController
         }
         $categories = $this->Competitions->Categories->find('list', ['limit' => 200]);
         $regions = $this->Competitions->Regions->find('list');
-        $this->set(compact('competition', 'categories','regions'));
+        $disciplines = $this->Competitions->Disciplines->find('list');
+        $this->set(compact('competition', 'categories','regions','disciplines'));
         $this->set('_serialize', ['competition']);
     }
 
@@ -100,7 +102,7 @@ class CompetitionsController extends AppController
     {
     	if(! $this->Securite->isAdmin()) return $this->redirect(['controller'=>'pages', 'action'=>'permission']);
         $competition = $this->Competitions->get($id, [
-            'contain' => ['Categories','Regions']
+            'contain' => ['Categories','Regions','Disciplines']
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
         	
@@ -120,7 +122,8 @@ class CompetitionsController extends AppController
         }
         $categories = $this->Competitions->Categories->find('list', ['limit' => 200]);
         $regions = $this->Competitions->Regions->find('list');
-        $this->set(compact('competition', 'categories','regions'));
+        $disciplines = $this->Competitions->Disciplines->find('list');
+        $this->set(compact('competition', 'categories','regions','disciplines'));
         $this->set('_serialize', ['competition']);
     }
 
@@ -149,7 +152,7 @@ class CompetitionsController extends AppController
 
     public function select()
     {
-    	$competitions = $this->Competitions->find('all', array('contain' => 'Categories'))->where(['archive'=>0]);
+    	$competitions = $this->Competitions->find('all', array('contain' => ['Categories','Disciplines']))->where(['archive'=>0]);
     	$this->set(compact('competitions'));
     	$this->set('_serialize', ['competitions']);
     }   
