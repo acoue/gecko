@@ -31,6 +31,7 @@ class JurysTableTest extends TestCase
         'app.regions',
         'app.juges',
         'app.passages',
+        'app.disciplines',
         'app.evalues',
         'app.inscription_passages',
         'app.users',
@@ -41,10 +42,11 @@ class JurysTableTest extends TestCase
         'app.categories',
         'app.combat_poules',
         'app.repartitions',
+        'app.resultat_competitions',
+        'app.resultats',
         'app.resultat_poules',
         'app.tirages',
-        'app.notes',
-        'app.jures'
+        'app.notes'
     ];
 
     /**

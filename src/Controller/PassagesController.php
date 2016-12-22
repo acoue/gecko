@@ -30,7 +30,29 @@ class PassagesController extends AppController
 
     public function gestion()
     {
+    	//Passages selectionne
+    	$passage = $this->Passages->find('all')->where(['selected'=>1])->first();
     	
+    	//Listes de juges
+    	$this->loadModel('Juges');
+    	$juges = $this->Juges->find()->contain(['Jurys'=>['Grades']])->where(['passage_id'=>$passage->id]);
+    	//Liste des inscris
+    	$this->loadModel('Evalues');
+		$evalues = $this->Evalues->find()->contain(['Licencies','Grades'])->where(['passage_id'=>$passage->id]);
+    	//Liste des notes
+    	//$this->loadModel('Notes');
+		//$notes = $this->Notes->find()->contain(['Licencies','Juges'])->where(['passage_id'=>$passage->id]);
+    	//Listes des grades
+		$this->loadModel('Grades');
+		$grades = $this->Grades->find()->order('id asc');
+		$tabGrades=[];
+		foreach ($grades as $grade) {
+			$tabGrades[$grade->id]=$grade->name;
+		}
+		//Liste de notes
+		$this->loadModel('Notes');
+		$notes=$this->Notes->find()->contain(['Juges'=>['Jurys'],'Licencies'])->where(['Notes.passage_id'=>$passage->id]);
+    	$this->set(compact('juges','passage','evalues','tabGrades','notes'));
     }
     /**
      * View method

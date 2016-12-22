@@ -20,7 +20,7 @@ class JurysController extends AppController
     {
     	if(! $this->Securite->isAdmin()) return $this->redirect(['controller'=>'pages', 'action'=>'permission']);
     	$this->paginate = [
-    			'contain' => ['Grades']
+    			'contain' => ['Grades','Disciplines']
     	];
     	$jurys = $this->paginate($this->Jurys);
 
@@ -39,7 +39,7 @@ class JurysController extends AppController
     {
     	if(! $this->Securite->isAdmin()) return $this->redirect(['controller'=>'pages', 'action'=>'permission']);
         $jury = $this->Jurys->get($id, [
-            'contain' => ['Juges','Grades']
+            'contain' => ['Juges','Grades','Disciplines']
         ]);
 
         $this->set('jury', $jury);
@@ -56,6 +56,7 @@ class JurysController extends AppController
     	if(! $this->Securite->isAdmin()) return $this->redirect(['controller'=>'pages', 'action'=>'permission']);
         $jury = $this->Jurys->newEntity();
         if ($this->request->is('post')) {
+        	//debug($this->request->data);die();
             $jury = $this->Jurys->patchEntity($jury, $this->request->data);
             if ($this->Jurys->save($jury)) {
                 $this->Flash->success(__('Le Jury a été créé.'));
@@ -66,7 +67,8 @@ class JurysController extends AppController
             }
         }
         $grades = $this->Jurys->Grades->find('list');
-        $this->set(compact('jury','grades'));
+        $disciplines = $this->Jurys->Disciplines->find('list');
+        $this->set(compact('jury','grades','disciplines'));
         $this->set('_serialize', ['jury']);
     }
 
@@ -81,7 +83,7 @@ class JurysController extends AppController
     {
     	if(! $this->Securite->isAdmin()) return $this->redirect(['controller'=>'pages', 'action'=>'permission']);
         $jury = $this->Jurys->get($id, [
-            'contain' => ['Grades']
+            'contain' => ['Grades','Disciplines']
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $jury = $this->Jurys->patchEntity($jury, $this->request->data);
@@ -94,7 +96,8 @@ class JurysController extends AppController
             }
         }
         $grades = $this->Jurys->Grades->find('list');
-        $this->set(compact('jury','grades'));
+        $disciplines = $this->Jurys->Disciplines->find('list');
+        $this->set(compact('jury','grades','disciplines'));
         $this->set('_serialize', ['jury']);
     }
 

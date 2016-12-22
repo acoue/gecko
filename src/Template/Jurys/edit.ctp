@@ -10,6 +10,15 @@
 			</div>
 			<div class="col-lg-15"> 
 			    <?= $this->Form->create($jury, ['id'=>'formulaire']) ?>
+				<div class="row">
+                	<label class="col-md-8 control-label" for="discipline_id">Discipline</label>
+                    <div class="col-md-12"><?= $this->Form->input('discipline_id', ['label' => false,'id'=>'discipline_id',
+														   	'div' => false,
+															'class' => 'form-control', 
+                    										'options' => $disciplines, 
+                    										'value' => $jury->discipline_id]); ?>
+                    </div>                          
+				</div><br />
 			    <div class="row">
                 	<label class="col-lg-8 control-label" for="nom">Nom <span class="obligatoire"><sup> *</sup></span></label>
                     <div class="col-lg-16"><?= $this->Form->input('nom', ['label' => false,'id'=>'nom',
@@ -29,10 +38,10 @@
                     </div>                          
 				</div><br />   
 			    <div class="row">
-                	<label class="col-lg-8 control-label" for="grade">Grade</label>
-                    <div class="col-lg-16"><?= $this->Form->input('grade', ['label' => false,'id'=>'grade',
+                	<label class="col-lg-8 control-label" for="grade_id">Grade</label>
+                    <div class="col-lg-16"><?= $this->Form->input('grade_id', ['label' => false,'id'=>'grade_id',
 														   	'div' => false,
-															'class' => 'form-control', 'value' => h($jury->grade->id),
+															'class' => 'form-control', 'value' => h($jury->grade_id),
                     										'options' => $grades]); ?>
                     </div>                          
 				</div><br />  

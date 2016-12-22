@@ -8,6 +8,7 @@
 				<table cellpadding="0" cellspacing="0" class="table table-striped">
 				    <thead>
 				        <tr>
+			                <th><?= $this->Paginator->sort('discipline_id','Discipline') ?></th>
 			                <th><?= $this->Paginator->sort('nom','Nom') ?></th>
 			                <th><?= $this->Paginator->sort('prenom','Prénom') ?></th>
                 			<th><?= $this->Paginator->sort('grade_id') ?></th>
@@ -18,6 +19,7 @@
 				    <tbody> 
 				    <?php foreach ($jurys as $jury): ?>
 				        <tr>
+			                <td><?= h($jury->discipline->name) ?></td>
 			                <td><?= h($jury->nom) ?></td>
 			                <td><?= h($jury->prenom) ?></td>
 			                <td><?= $jury->grade->name ?></td>

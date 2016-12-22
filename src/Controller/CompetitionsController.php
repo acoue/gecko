@@ -101,9 +101,11 @@ class CompetitionsController extends AppController
     public function edit($id = null)
     {
     	if(! $this->Securite->isAdmin()) return $this->redirect(['controller'=>'pages', 'action'=>'permission']);
+        
         $competition = $this->Competitions->get($id, [
             'contain' => ['Categories','Regions','Disciplines']
         ]);
+        
         if ($this->request->is(['patch', 'post', 'put'])) {
         	
         	$d=$this->request->data;

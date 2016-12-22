@@ -11,6 +11,16 @@
 			
 				</div>
 			<div class="col-lg-15"> 
+				<div class="row">
+                	<label class="col-md-8 control-label" for="discipline_id">Discipline</label>
+                    <div class="col-md-12"><?= $this->Form->input('discipline_id', ['label' => false,'id'=>'discipline_id',
+														   	'div' => false,
+															'class' => 'form-control', 
+                    										'type' => 'text', 
+                    										'value' => $jury->discipline->name,
+															'disabled' => 'disabled']); ?>
+                    </div>                          
+				</div><br />
 			    <div class="row">
                 	<label class="col-lg-8 control-label" for="nom">Nom</label>
                     <div class="col-lg-16"><?= $this->Form->input('nom', ['label' => false,'id'=>'nom',

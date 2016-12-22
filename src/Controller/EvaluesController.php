@@ -10,89 +10,57 @@ use App\Controller\AppController;
  */
 class EvaluesController extends AppController
 {
+	public function index()
+	{
+		if(! $this->Securite->isAdmin()) return $this->redirect(['controller'=>'pages', 'action'=>'permission']);
+		
+	}
+   
 
-    /**
-     * Index method
-     *
-     * @return \Cake\Network\Response|null
-     */
-    public function index()
-    {
-        $this->paginate = [
-            'contain' => ['Passages', 'Licencies']
-        ];
-        $evalues = $this->paginate($this->Evalues);
-
-        $this->set(compact('evalues'));
-        $this->set('_serialize', ['evalues']);
-    }
-
-    /**
-     * View method
-     *
-     * @param string|null $id Evalue id.
-     * @return \Cake\Network\Response|null
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
-    public function view($id = null)
-    {
-        $evalue = $this->Evalues->get($id, [
-            'contain' => ['Passages', 'Licencies']
-        ]);
-
-        $this->set('evalue', $evalue);
-        $this->set('_serialize', ['evalue']);
-    }
-
+	public function search() {
+		if ($this->request->is(['ajax'])) {
+			$libelle = $this->request->data['libelle'];
+	
+			$this->loadModel('Licencies');
+			$lic = $this->Licencies->find('all')
+			->contain(['Clubs'])
+			->limit(20)
+			->where(['prenom like '=>'%'.$libelle.'%'])
+			->orWhere(['nom like '=>'%'.$libelle.'%']);
+	
+			$this->set('licencies', $lic);
+	
+			//% or name like %% or description like %%
+		}
+	}
     /**
      * Add method
      *
      * @return \Cake\Network\Response|void Redirects on successful add, renders view otherwise.
      */
-    public function add()
+    public function add($idLicencie)
     {
+    	//Passages selectionne
+    	$passage = $this->Passages->find('all')->where(['selected'=>1])->first();
+    	 
         $evalue = $this->Evalues->newEntity();
         if ($this->request->is('post')) {
+        	
             $evalue = $this->Evalues->patchEntity($evalue, $this->request->data);
             if ($this->Evalues->save($evalue)) {
                 $this->Flash->success(__('The evalue has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+                
             } else {
                 $this->Flash->error(__('The evalue could not be saved. Please, try again.'));
             }
+            return $this->redirect(['controller'=>'Passages','action' => 'gestion']);
         }
-        $passages = $this->Evalues->Passages->find('list', ['limit' => 200]);
-        $licencies = $this->Evalues->Licencies->find('list', ['limit' => 200]);
-        $this->set(compact('evalue', 'passages', 'licencies'));
-        $this->set('_serialize', ['evalue']);
-    }
-
-    /**
-     * Edit method
-     *
-     * @param string|null $id Evalue id.
-     * @return \Cake\Network\Response|void Redirects on successful edit, renders view otherwise.
-     * @throws \Cake\Network\Exception\NotFoundException When record not found.
-     */
-    public function edit($id = null)
-    {
-        $evalue = $this->Evalues->get($id, [
-            'contain' => []
-        ]);
-        if ($this->request->is(['patch', 'post', 'put'])) {
-            $evalue = $this->Evalues->patchEntity($evalue, $this->request->data);
-            if ($this->Evalues->save($evalue)) {
-                $this->Flash->success(__('The evalue has been saved.'));
-
-                return $this->redirect(['action' => 'index']);
-            } else {
-                $this->Flash->error(__('The evalue could not be saved. Please, try again.'));
-            }
-        }
-        $passages = $this->Evalues->Passages->find('list', ['limit' => 200]);
-        $licencies = $this->Evalues->Licencies->find('list', ['limit' => 200]);
-        $this->set(compact('evalue', 'passages', 'licencies'));
+        $this->loadModel('Licencies');
+        $licencie = $this->Licencies->find()->where(['id'=>$idLicencie])->first();
+        $grades = $this->Evalues->Grades->find('list');
+               
+        $this->set(compact('evalue', 'passage', 'licencie','grades'));
         $this->set('_serialize', ['evalue']);
     }
 
@@ -114,5 +82,15 @@ class EvaluesController extends AppController
         }
 
         return $this->redirect(['action' => 'index']);
+    }
+    
+    public function note() {
+    	if ($this->request->is('post')) {
+    		 
+    		debug($this->request->data);
+    		die();
+    		
+    		return $this->redirect(['controller'=>'Passages','action' => 'gestion']);
+    	}
     }
 }

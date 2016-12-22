@@ -10,6 +10,7 @@ use Cake\Validation\Validator;
  * Jurys Model
  *
  * @property \Cake\ORM\Association\BelongsTo $Grades
+ * @property \Cake\ORM\Association\BelongsTo $Disciplines
  * @property \Cake\ORM\Association\HasMany $Juges
  *
  * @method \App\Model\Entity\Jury get($primaryKey, $options = [])
@@ -34,11 +35,15 @@ class JurysTable extends Table
         parent::initialize($config);
 
         $this->table('jurys');
-        $this->displayField('id');
+        $this->displayField(['prenom','nom']);
         $this->primaryKey('id');
 
         $this->belongsTo('Grades', [
             'foreignKey' => 'grade_id',
+            'joinType' => 'INNER'
+        ]);
+        $this->belongsTo('Disciplines', [
+            'foreignKey' => 'discipline_id',
             'joinType' => 'INNER'
         ]);
         $this->hasMany('Juges', [
@@ -84,6 +89,7 @@ class JurysTable extends Table
     public function buildRules(RulesChecker $rules)
     {
         $rules->add($rules->existsIn(['grade_id'], 'Grades'));
+        $rules->add($rules->existsIn(['discipline_id'], 'Disciplines'));
 
         return $rules;
     }

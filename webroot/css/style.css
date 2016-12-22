@@ -175,6 +175,10 @@ body, html{height:100%;}
 
 /*Cellule des poules */
 /* Taille */
+.tabResultat {
+	text-align: left;
+	font-size: 80%;
+}
 .tablePolice { font-size: 50%; }
 
 .tabPolice8{
@@ -202,7 +206,7 @@ body, html{height:100%;}
 }
 
 .cellule35{	
-	height:35px;
+	height:35px;tabResultat
 }
 
 .cellule40{	

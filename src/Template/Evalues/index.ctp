@@ -1,59 +1,52 @@
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('New Evalue'), ['action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Passages'), ['controller' => 'Passages', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Passage'), ['controller' => 'Passages', 'action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Licencies'), ['controller' => 'Licencies', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Licency'), ['controller' => 'Licencies', 'action' => 'add']) ?></li>
-    </ul>
-</nav>
-<div class="evalues index large-9 medium-8 columns content">
-    <h3><?= __('Evalues') ?></h3>
-    <table cellpadding="0" cellspacing="0">
-        <thead>
-            <tr>
-                <th scope="col"><?= $this->Paginator->sort('id') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('passage_id') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('licencie_id') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('grade_actuel') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('grade_presente') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('resultat_passage') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('resultat_technique') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('resultat_kata') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('created') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('modified') ?></th>
-                <th scope="col" class="actions"><?= __('Actions') ?></th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($evalues as $evalue): ?>
-            <tr>
-                <td><?= $this->Number->format($evalue->id) ?></td>
-                <td><?= $evalue->has('passage') ? $this->Html->link($evalue->passage->name, ['controller' => 'Passages', 'action' => 'view', $evalue->passage->id]) : '' ?></td>
-                <td><?= $evalue->has('licency') ? $this->Html->link($evalue->licency->id, ['controller' => 'Licencies', 'action' => 'view', $evalue->licency->id]) : '' ?></td>
-                <td><?= $this->Number->format($evalue->grade_actuel) ?></td>
-                <td><?= $this->Number->format($evalue->grade_presente) ?></td>
-                <td><?= $this->Number->format($evalue->resultat_passage) ?></td>
-                <td><?= $this->Number->format($evalue->resultat_technique) ?></td>
-                <td><?= $this->Number->format($evalue->resultat_kata) ?></td>
-                <td><?= h($evalue->created) ?></td>
-                <td><?= h($evalue->modified) ?></td>
-                <td class="actions">
-                    <?= $this->Html->link(__('View'), ['action' => 'view', $evalue->id]) ?>
-                    <?= $this->Html->link(__('Edit'), ['action' => 'edit', $evalue->id]) ?>
-                    <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $evalue->id], ['confirm' => __('Are you sure you want to delete # {0}?', $evalue->id)]) ?>
-                </td>
-            </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
-    <div class="paginator">
-        <ul class="pagination">
-            <?= $this->Paginator->prev('< ' . __('previous')) ?>
-            <?= $this->Paginator->numbers() ?>
-            <?= $this->Paginator->next(__('next') . ' >') ?>
-        </ul>
-        <p><?= $this->Paginator->counter() ?></p>
-    </div>
+<div class="blocblanc">
+	<h2>Passage de grades</h2>
+    <h3>Ajout d'un licenciés</h3>
+	<div class="blocblancContent">
+		<div class="row">
+			<div class="col-lg-2"></div>
+			<div class="col-lg-20"> 
+			<p align="center">
+			<?= $this->Html->link(__('Retour'), ['controller'=>'Passages', 'action' => 'gestion'],['class' => 'btn btn-info']) ?> 		
+			</p><br /><br />
+			<?= $this->Form->create(NULL); ?>
+				<div class="row">
+                	<label class="col-md-10 control-label" for="libelle">Entrez un libellé pour la recherche : </label>
+                    <div class="col-md-10"><?= $this->Form->input('libelle', ['label' => false,'id'=>'libelle',
+														   	'div' => false,
+															'class' => 'form-control', 
+                    										'type' => 'text']); ?>
+                    </div> 
+                    <div class="col-md-3"></div>                         
+				</div><br />  
+			
+			<?= $this->Form->end() ?>
+				<div id="listeDiv"></div>
+				</div>						
+			<div class="col-lg-2"></div>
+		</div>
+	</div>
 </div>
+
+
+<?php $this->append('script');?>
+	<script>
+	$(function () {
+
+		$("#libelle").bind('input', function () {
+            $.ajax({
+                url: "<?= $this->Url->build(['controller'=>'Evalues','action'=>'search'])?>",
+                data: {
+                    libelle: $("#libelle").val()
+                },
+                length: 3,
+                dataType: 'html',
+                type: 'post',
+                success: function (html) {
+                    $("#listeDiv").html(html);
+                }
+            })
+        });
+		
+	});
+	</script>
+<?php $this->end();?>

@@ -1,22 +1,22 @@
 <?php
 namespace App\Test\TestCase\Model\Table;
 
-use App\Model\Table\EvaluesTable;
+use App\Model\Table\NotesTable;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
 /**
- * App\Model\Table\EvaluesTable Test Case
+ * App\Model\Table\NotesTable Test Case
  */
-class EvaluesTableTest extends TestCase
+class NotesTableTest extends TestCase
 {
 
     /**
      * Test subject
      *
-     * @var \App\Model\Table\EvaluesTable
+     * @var \App\Model\Table\NotesTable
      */
-    public $Evalues;
+    public $Notes;
 
     /**
      * Fixtures
@@ -24,13 +24,14 @@ class EvaluesTableTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'app.evalues',
+        'app.notes',
         'app.passages',
         'app.regions',
         'app.clubs',
         'app.licencies',
         'app.grades',
         'app.disciplines',
+        'app.evalues',
         'app.inscription_passages',
         'app.users',
         'app.profils',
@@ -45,8 +46,7 @@ class EvaluesTableTest extends TestCase
         'app.resultat_poules',
         'app.tirages',
         'app.juges',
-        'app.jurys',
-        'app.notes'
+        'app.jurys'
     ];
 
     /**
@@ -57,8 +57,8 @@ class EvaluesTableTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $config = TableRegistry::exists('Evalues') ? [] : ['className' => 'App\Model\Table\EvaluesTable'];
-        $this->Evalues = TableRegistry::get('Evalues', $config);
+        $config = TableRegistry::exists('Notes') ? [] : ['className' => 'App\Model\Table\NotesTable'];
+        $this->Notes = TableRegistry::get('Notes', $config);
     }
 
     /**
@@ -68,7 +68,7 @@ class EvaluesTableTest extends TestCase
      */
     public function tearDown()
     {
-        unset($this->Evalues);
+        unset($this->Notes);
 
         parent::tearDown();
     }

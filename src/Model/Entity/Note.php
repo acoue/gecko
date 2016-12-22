@@ -4,19 +4,24 @@ namespace App\Model\Entity;
 use Cake\ORM\Entity;
 
 /**
- * Jury Entity
+ * Note Entity
  *
  * @property int $id
- * @property string $nom
- * @property string $prenom
- * @property int $grade_id
- * @property int $actif
- * @property int $discipline_id
+ * @property int $passage_id
+ * @property int $licencie_id
+ * @property int $numero
+ * @property int $juge_id
+ * @property int $resultat_technique
+ * @property int $resultat_kata
+ * @property int $resultat_passage
+ * @property \Cake\I18n\Time $created
+ * @property \Cake\I18n\Time $modified
  *
- * @property \App\Model\Entity\Grade $grade
- * @property \App\Model\Entity\Juge[] $juges
+ * @property \App\Model\Entity\Passage $passage
+ * @property \App\Model\Entity\Licency $licency
+ * @property \App\Model\Entity\Juge $juge
  */
-class Jury extends Entity
+class Note extends Entity
 {
 
     /**

@@ -7,24 +7,23 @@ use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
 /**
- * Evalues Model
+ * Notes Model
  *
  * @property \Cake\ORM\Association\BelongsTo $Passages
  * @property \Cake\ORM\Association\BelongsTo $Licencies
- * @property \Cake\ORM\Association\BelongsTo $Grades
- * @property \Cake\ORM\Association\BelongsTo $Grades
+ * @property \Cake\ORM\Association\BelongsTo $Juges
  *
- * @method \App\Model\Entity\Evalue get($primaryKey, $options = [])
- * @method \App\Model\Entity\Evalue newEntity($data = null, array $options = [])
- * @method \App\Model\Entity\Evalue[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\Evalue|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\Evalue patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\Evalue[] patchEntities($entities, array $data, array $options = [])
- * @method \App\Model\Entity\Evalue findOrCreate($search, callable $callback = null)
+ * @method \App\Model\Entity\Note get($primaryKey, $options = [])
+ * @method \App\Model\Entity\Note newEntity($data = null, array $options = [])
+ * @method \App\Model\Entity\Note[] newEntities(array $data, array $options = [])
+ * @method \App\Model\Entity\Note|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\Note patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\Note[] patchEntities($entities, array $data, array $options = [])
+ * @method \App\Model\Entity\Note findOrCreate($search, callable $callback = null)
  *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */
-class EvaluesTable extends Table
+class NotesTable extends Table
 {
 
     /**
@@ -37,7 +36,7 @@ class EvaluesTable extends Table
     {
         parent::initialize($config);
 
-        $this->table('evalues');
+        $this->table('notes');
         $this->displayField('id');
         $this->primaryKey('id');
 
@@ -51,12 +50,8 @@ class EvaluesTable extends Table
             'foreignKey' => 'licencie_id',
             'joinType' => 'INNER'
         ]);
-        $this->belongsTo('Grades', [
-            'foreignKey' => 'grade_actuel_id',
-            'joinType' => 'INNER'
-        ]);
-        $this->belongsTo('Grades', [
-            'foreignKey' => 'grade_presente_id',
+        $this->belongsTo('Juges', [
+            'foreignKey' => 'juge_id',
             'joinType' => 'INNER'
         ]);
     }
@@ -78,8 +73,17 @@ class EvaluesTable extends Table
             ->allowEmpty('numero');
 
         $validator
+            ->integer('resultat_technique')
+            ->allowEmpty('resultat_technique');
+
+        $validator
+            ->integer('resultat_kata')
+            ->allowEmpty('resultat_kata');
+
+        $validator
             ->integer('resultat_passage')
-            ->allowEmpty('resultat_passage');
+            ->requirePresence('resultat_passage', 'create')
+            ->notEmpty('resultat_passage');
 
         return $validator;
     }
@@ -95,8 +99,7 @@ class EvaluesTable extends Table
     {
         $rules->add($rules->existsIn(['passage_id'], 'Passages'));
         $rules->add($rules->existsIn(['licencie_id'], 'Licencies'));
-        $rules->add($rules->existsIn(['grade_actuel_id'], 'Grades'));
-        $rules->add($rules->existsIn(['grade_presente_id'], 'Grades'));
+        $rules->add($rules->existsIn(['juge_id'], 'Juges'));
 
         return $rules;
     }
