@@ -86,9 +86,42 @@ class EvaluesController extends AppController
     
     public function note() {
     	if ($this->request->is('post')) {
-    		 
-    		debug($this->request->data);
+    		debug($this->request);
+    		$data = $this->request->data;
+    		
+    		debug($data);
     		die();
+    		//Mise à blanc des données dans la table notes pour le passage
+    		$this->loadModel('Notes');
+    		$noteDelete = $this->Notes->query();
+    		$noteDelete->delete()->where(['passage_id'=>$data['passage_id']])->execute();
+    		
+    		$noteInsert = $this->Notes->newEntity();
+    		foreach ($data as $note) {
+
+    			$noteInsert->passage_id = $data['passage_id'];
+    			
+    			if( $note != 'passage_id') {
+    				$noteExplode = explode($note,"#");
+    				
+    				if($noteExplode[0] == "T"){ //Note technique
+
+    					$noteInsert->licencie_id = 0 ;
+    					$noteInsert->resultat_technique = 0;
+    				} else { //note kata
+    				
+    				}
+    				
+    				
+    				
+    				
+	    			
+    			}
+    			
+    		}
+    		$noteUpdate->execute();
+    		
+    		
     		
     		return $this->redirect(['controller'=>'Passages','action' => 'gestion']);
     	}

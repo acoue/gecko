@@ -24,6 +24,11 @@ class UsersController extends AppController
 	
 	public function login()
 	{			
+		//Mise à jour du mot de passe #Utiliser quand pb : ici user n°1#
+		//$user = $this->Users->get(1);
+		//$user->password = "a";
+		//$this->Users->save($user);
+		
 		//Destruction de la session
 		$session = $this->request->session();
 		$session->destroy();

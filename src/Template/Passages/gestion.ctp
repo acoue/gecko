@@ -1,9 +1,13 @@
 <?php 
-debug($notes);die();
-$resultat = "<select id='@' name='@' class='form-control'>
-<option value=0>Non</option>
-<option value=1>Oui</option>
-</select>";
+//debug($notes->toArray());die();
+$listeDebut = "<select id='@' name='@' class='form-control'>";
+
+$listeOui="<option value=-1 >Indécis</option><option value=0 >Non</option><option value=1 selected='selected' >Oui</option>";
+$listeNon = "<option value=-1 >Indécis</option><option value=0 selected='selected' >Non</option><option value=1 >Oui</option>";
+$listeIndecis = "<option value=-1 selected='selected' >Indécis</option><option value=0 >Non</option><option value=1 >Oui</option>";
+ 
+$listeFin = "</select>";
+
 ?>
 <div class="blocblanc">
 	<h2>Administration</h2>
@@ -100,8 +104,8 @@ $resultat = "<select id='@' name='@' class='form-control'>
 				<h4>Résultats par membre du jury pour chaque postulant</h4>
 				<div class="row">
 					<div class="col-lg-24"> 
-			<?= $this->Form->create(NULL,['id'=>'formulaire','url'=>'/evalues/note']); ?>
-			<input type='hidden' id='passage_id' name='passage_id' value='<?= $passage->id ?>' />
+						<?= $this->Form->create(NULL,['id'=>'formulaire','url'=>'/evalues/note']); ?>
+						<input type='hidden' id='passage_id' name='passage_id' value='<?= $passage->id ?>' />
 						<table cellpadding="0" cellspacing="0" class="table tabResultat">		
 							<thead>
 								<tr>
@@ -115,23 +119,57 @@ $resultat = "<select id='@' name='@' class='form-control'>
 							</thead>				    
 						    <tbody> 
 						    
-						    <?php foreach ($evalues as $evalue): ?>
+						    <?php foreach ($evalues as $evalue): 
+
+						    $noteNonTechnique=0;
+						    $noteOuiTechnique=0;
+						    $noteNonKata=0;
+						    $noteOuiKata=0;
+						    ?>
 						        <tr>
 					                <td class='celluleGrise'><?= $evalue->numero ?></td>
 					                <?php 
 					                for($i=1; $i<=count($juges->toArray());$i++) {
-					                	$id=$evalue->id."#".$juges->toArray()[$i-1]['id'];
-					                	echo "<td>".str_replace('@', "T#".$id, $resultat)."</td>";
+										$idEvalue = $evalue->licency->id;
+										$idJuge = $juges->toArray()[$i-1]['id'];
+										$idListe=$idEvalue."#".$idJuge;	
+										
+					                	foreach($notes as $note) {
+											if($idEvalue == $note->licencie_id && $idJuge == $note->juge_id) {
+												if($note->resultat_technique == 0) {
+													echo "<td>".str_replace('@', "T#".$idListe,$listeDebut).$listeNon.$listeFin."</td>";
+													$noteOuiTechnique++;
+												} else if($note->resultat_technique == 1) {
+													echo "<td>".str_replace('@', "T#".$idListe,$listeDebut).$listeOui.$listeFin."</td>";
+													$noteNonTechnique++;
+												} else echo "<td>".str_replace('@', "T#".$idListe,$listeDebut).$listeIndecis.$listeFin."</td>";
+												
+											} else echo "<td>".str_replace('@', "T#".$idListe,$listeDebut).$listeIndecis.$listeFin."</td>";
+										}
 					                }
 					                ?>
-					                <td>N/O</td>					                
+					                <td><?php echo $noteOuiTechnique."<br />".$noteNonTechnique;?></td>					                
 					                <?php 
 					                for($i=1; $i<=count($juges->toArray());$i++) {
-					                	$id=$evalue->id."#".$juges->toArray()[$i-1]['id'];
-					                	echo "<td>".str_replace('@', "K#".$id, $resultat)."</td>";
+										$idEvalue = $evalue->licency->id;
+										$idJuge = $juges->toArray()[$i-1]['id'];
+										$idListe=$idEvalue."#".$idJuge;	
+										
+					                	foreach($notes as $note) {
+											if($idEvalue == $note->licencie_id && $idJuge == $note->juge_id) {
+												if($note->resultat_kata == 0) {
+													echo "<td>".str_replace('@', "K#".$idListe,$listeDebut).$listeNon.$listeFin."</td>";
+													$noteOuiKata++;
+												} else if($note->resultat_kata == 1) {
+													echo "<td>".str_replace('@', "K#".$idListe,$listeDebut).$listeOui.$listeFin."</td>";
+													$noteNonKata++;
+												} else echo "<td>".str_replace('@', "K#".$idListe,$listeDebut).$listeIndecis.$listeFin."</td>";
+												
+											} else echo "<td>".str_replace('@', "K#".$idListe,$listeDebut).$listeIndecis.$listeFin."</td>";
+										}
 					                }
 					                ?>
-					                <td>N/O</td>
+					                <td><?php echo $noteOuiKata."<br />".$noteNonKata;?></td>		
 					                <td>N/O</td>
 						        </tr>						
 						    <?php endforeach; ?>
