@@ -148,7 +148,7 @@ body, html{height:100%;}
 }
 
 .btn {
-  min-width: 200px;
+  min-width: 100px;
 }
 
 .obligatoire {

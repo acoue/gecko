@@ -69,10 +69,6 @@ class NotesTable extends Table
             ->allowEmpty('id', 'create');
 
         $validator
-            ->integer('numero')
-            ->allowEmpty('numero');
-
-        $validator
             ->integer('resultat_technique')
             ->allowEmpty('resultat_technique');
 

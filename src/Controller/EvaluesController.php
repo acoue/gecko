@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\ORM\TableRegistry;
 
 /**
  * Evalues Controller
@@ -86,42 +87,34 @@ class EvaluesController extends AppController
     
     public function note() {
     	if ($this->request->is('post')) {
-    		debug($this->request);
     		$data = $this->request->data;
     		
-    		debug($data);
-    		die();
-    		//Mise à blanc des données dans la table notes pour le passage
-    		$this->loadModel('Notes');
-    		$noteDelete = $this->Notes->query();
-    		$noteDelete->delete()->where(['passage_id'=>$data['passage_id']])->execute();
+    		$passageId = $data['passage_id'];
     		
-    		$noteInsert = $this->Notes->newEntity();
-    		foreach ($data as $note) {
-
-    			$noteInsert->passage_id = $data['passage_id'];
-    			
-    			if( $note != 'passage_id') {
-    				$noteExplode = explode($note,"#");
+    		$notes = TableRegistry::get('Notes');
+    		$noteUpdate = $notes->query();  		
+    		
+    		foreach ($data as $key => $note) {
+    			//debug("key : ".$key."->".$note);
+    			if( $key != 'passage_id') {
+    				$noteExplode = explode("#",$key);
     				
     				if($noteExplode[0] == "T"){ //Note technique
-
-    					$noteInsert->licencie_id = 0 ;
-    					$noteInsert->resultat_technique = 0;
-    				} else { //note kata
-    				
+	    				$noteUpdate->update()
+	    				->set(['resultat_technique' => $note])
+	    				->where(['passage_id' => $passageId,
+	    						 'juge_id'=>$noteExplode[2],
+	    						 'licencie_id' => $noteExplode[1]])->execute();
+    				} else if($noteExplode[0] == "K"){ //Note Kata
+	    				$noteUpdate->update()
+	    				->set(['resultat_kata' => $note])
+	    				->where(['passage_id' => $passageId,
+	    						 'juge_id'=>$noteExplode[2],
+	    						 'licencie_id' => $noteExplode[1]])->execute();
     				}
-    				
-    				
-    				
-    				
-	    			
     			}
-    			
+    			$noteUpdate = $notes->query();
     		}
-    		$noteUpdate->execute();
-    		
-    		
     		
     		return $this->redirect(['controller'=>'Passages','action' => 'gestion']);
     	}

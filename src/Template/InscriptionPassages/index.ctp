@@ -24,7 +24,7 @@ use Lib\FonctionUtilitaire;
 			                <td><?= $inscriptionPassage->passage->name ?></td>
 			                <td><?= $inscriptionPassage->licency->display_name ?></td>
 			                <td><?= FonctionUtilitaire::dateTimeFromMySQL($inscriptionPassage->created) ?></td>
-			                <td><?= $inscriptionPassage->user->prenom." ".$inscriptionCompetition->user->nom ?></td>
+			                <td><?= $inscriptionPassage->user->prenom." ".$inscriptionPassage->user->nom ?></td>
 			                <td class="actions">
 			                    <?= $this->Form->postLink(__('Delete'), ['action' => 'Supprimer', $inscriptionPassage->id], ['confirm' => __('Confirmation de la suppression ?')]) ?>
 			                </td>

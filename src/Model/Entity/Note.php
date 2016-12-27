@@ -9,7 +9,6 @@ use Cake\ORM\Entity;
  * @property int $id
  * @property int $passage_id
  * @property int $licencie_id
- * @property int $numero
  * @property int $juge_id
  * @property int $resultat_technique
  * @property int $resultat_kata

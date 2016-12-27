@@ -65,6 +65,7 @@ $listeFin = "</select>";
 						    <thead>
 						        <tr>
 					                <th>Licencié</th>
+					                <th>DDN</th>
 					                <th>Numéro</th>
 					                <th>Grade actuel</th>
 					                <th>Grade presenté</th>
@@ -75,6 +76,7 @@ $listeFin = "</select>";
 						    <?php foreach ($evalues as $evalue): ?>
 						        <tr>
 					                <td><?= $evalue->licency->display_name ?></td>
+					                <td><?= $evalue->licency->ddn ?></td>
 					                <td><?= $evalue->numero ?></td>
 					                <td><?= $tabGrades[$evalue->grade_actuel_id] ?></td>
 					                <td><?= $tabGrades[$evalue->grade_presente_id] ?></td>
@@ -114,7 +116,7 @@ $listeFin = "</select>";
 									<th class='celluleGrise'>Décision 1</th> 
 									<?php for($i=1; $i<=count($juges->toArray());$i++) echo "<th class='celluleGrise'>Jury n°".$i."</th>";;?>
 									<th class='celluleGrise'>Décision 2</th> 
-									<th class='celluleGrise'>Resultat</th> 
+									<th class='celluleGrise'>Résultat</th> 
 								</tr>
 							</thead>				    
 						    <tbody> 
@@ -125,11 +127,16 @@ $listeFin = "</select>";
 						    $noteOuiTechnique=0;
 						    $noteNonKata=0;
 						    $noteOuiKata=0;
+						    $nbJuges = count($juges->toArray());
+						    $noteMini = (int)($nbJuges/2)+1;
+						    $noteTechnique=0;
+						    $noteKata=0;
 						    ?>
 						        <tr>
 					                <td class='celluleGrise'><?= $evalue->numero ?></td>
 					                <?php 
-					                for($i=1; $i<=count($juges->toArray());$i++) {
+					                
+					                for($i=1; $i<=$nbJuges;$i++) {
 										$idEvalue = $evalue->licency->id;
 										$idJuge = $juges->toArray()[$i-1]['id'];
 										$idListe=$idEvalue."#".$idJuge;	
@@ -137,20 +144,26 @@ $listeFin = "</select>";
 					                	foreach($notes as $note) {
 											if($idEvalue == $note->licencie_id && $idJuge == $note->juge_id) {
 												if($note->resultat_technique == 0) {
-													echo "<td>".str_replace('@', "T#".$idListe,$listeDebut).$listeNon.$listeFin."</td>";
-													$noteOuiTechnique++;
-												} else if($note->resultat_technique == 1) {
-													echo "<td>".str_replace('@', "T#".$idListe,$listeDebut).$listeOui.$listeFin."</td>";
+													echo "<td class='alert-danger'>".str_replace('@', "T#".$idListe,$listeDebut).$listeNon.$listeFin."</td>";
 													$noteNonTechnique++;
-												} else echo "<td>".str_replace('@', "T#".$idListe,$listeDebut).$listeIndecis.$listeFin."</td>";
+												} else if($note->resultat_technique == 1) {
+													echo "<td class='alert-success'>".str_replace('@', "T#".$idListe,$listeDebut).$listeOui.$listeFin."</td>";
+													$noteOuiTechnique++;
+												} else echo "<td class='alert-warning'>".str_replace('@', "T#".$idListe,$listeDebut).$listeIndecis.$listeFin."</td>";
 												
-											} else echo "<td>".str_replace('@', "T#".$idListe,$listeDebut).$listeIndecis.$listeFin."</td>";
+											} 
 										}
 					                }
-					                ?>
-					                <td><?php echo $noteOuiTechnique."<br />".$noteNonTechnique;?></td>					                
-					                <?php 
-					                for($i=1; $i<=count($juges->toArray());$i++) {
+					                
+					                if($noteOuiTechnique >= $noteMini) {
+					                	echo "<td class='alert-success'>OK</td>";
+					                	$noteTechnique=1;
+					                } else {
+					                	echo "<td class='alert-danger'>KO</td>";
+					                	$noteTechnique=0;
+					                }
+					                
+					                for($i=1; $i<=$nbJuges;$i++) {
 										$idEvalue = $evalue->licency->id;
 										$idJuge = $juges->toArray()[$i-1]['id'];
 										$idListe=$idEvalue."#".$idJuge;	
@@ -158,19 +171,31 @@ $listeFin = "</select>";
 					                	foreach($notes as $note) {
 											if($idEvalue == $note->licencie_id && $idJuge == $note->juge_id) {
 												if($note->resultat_kata == 0) {
-													echo "<td>".str_replace('@', "K#".$idListe,$listeDebut).$listeNon.$listeFin."</td>";
-													$noteOuiKata++;
-												} else if($note->resultat_kata == 1) {
-													echo "<td>".str_replace('@', "K#".$idListe,$listeDebut).$listeOui.$listeFin."</td>";
+													echo "<td class='alert-danger'>".str_replace('@', "K#".$idListe,$listeDebut).$listeNon.$listeFin."</td>";
 													$noteNonKata++;
-												} else echo "<td>".str_replace('@', "K#".$idListe,$listeDebut).$listeIndecis.$listeFin."</td>";
+												} else if($note->resultat_kata == 1) {
+													echo "<td class='alert-success'>".str_replace('@', "K#".$idListe,$listeDebut).$listeOui.$listeFin."</td>";
+													$noteOuiKata++;
+												} else echo "<td class='alert-warning'>".str_replace('@', "K#".$idListe,$listeDebut).$listeIndecis.$listeFin."</td>";
 												
-											} else echo "<td>".str_replace('@', "K#".$idListe,$listeDebut).$listeIndecis.$listeFin."</td>";
+											}
 										}
 					                }
-					                ?>
-					                <td><?php echo $noteOuiKata."<br />".$noteNonKata;?></td>		
-					                <td>N/O</td>
+					                
+					                if($noteOuiKata >= $noteMini) {
+					                	echo "<td class='alert-success'>OK</td>";
+					                	$noteKata=1;
+					                } else {
+					                	echo "<td class='alert-danger'>KO</td>";
+					                	$noteKata=0;
+					                }
+					                
+					                if($noteKata + $noteTechnique == 2) {
+					                	echo "<td class='alert-success'><b>Reçu</b></td>";
+					                } else {
+					                	echo "<td class='alert-danger'><b>Non reçu</b></td>";
+					                }
+					                ?>	
 						        </tr>						
 						    <?php endforeach; ?>
 						    </tbody>

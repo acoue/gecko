@@ -1,4 +1,6 @@
-
+<?php
+use Lib\FonctionUtilitaire;
+?>
 <div class="blocblanc">
 	<h2>Tirage au sort</h2>
 	<div class="blocblancContent">
@@ -21,7 +23,7 @@
 			            <tr>
 			                <td><?= $this->Number->format($tirage->id) ?></td>
 			                <td><?= h($tirage->type) ?></td>
-			                <td><?= h($tirage->created) ?></td>
+			                <td><?= FonctionUtilitaire::dateFromMySQL($tirage->created) ?></td>
 			            </tr>
 			            <?php endforeach; ?>
 			        </tbody>

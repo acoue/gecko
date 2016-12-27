@@ -2,7 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
-
+use Cake\ORM\TableRegistry;
 /**
  * Passages Controller
  *
@@ -52,7 +52,39 @@ class PassagesController extends AppController
 		//Liste de notes
 		$this->loadModel('Notes');
 		$notes=$this->Notes->find()->contain(['Juges'=>['Jurys'],'Licencies'])->where(['Notes.passage_id'=>$passage->id]);
-    	$this->set(compact('juges','passage','evalues','tabGrades','notes'));
+    	
+		//creation des notes si non existante en base
+		if ($notes->count() == 0){
+
+			//$this->loadModel('Notes');
+			$noteInsert = TableRegistry::get('Notes');
+			$tabNotes=[];
+			$iCpt=0;
+			foreach ($juges as $valueJ) {
+				
+				foreach ($evalues as $valueE) {
+					$iCpt++;
+					$tabNotes[$iCpt]['passage_id'] = $passage->id;
+					$tabNotes[$iCpt]['licencie_id'] = $valueE->licency->id;
+					$tabNotes[$iCpt]['juge_id'] = $valueJ->id;
+					$tabNotes[$iCpt]['resultat_technique'] = 0;
+					$tabNotes[$iCpt]['resultat_kata'] = 0;
+					$tabNotes[$iCpt]['resultat_passage'] =0;
+				}
+			}
+			$entities = $noteInsert->newEntities($tabNotes);
+			$noteInsert->connection()->transactional(function () use ($noteInsert, $entities) {
+				foreach ($entities as $entity) {
+					$noteInsert->save($entity, ['atomic' => false]);
+				}
+			});
+			
+			$notes=$this->Notes->find()->contain(['Juges'=>['Jurys'],'Licencies'])->where(['Notes.passage_id'=>$passage->id]);
+		}
+		
+		$this->set(compact('juges','passage','evalues','tabGrades','notes'));
+    	
+    	
     }
     /**
      * View method
