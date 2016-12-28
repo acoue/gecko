@@ -11,6 +11,7 @@ use Lib\FonctionUtilitaire;
 				<table cellpadding="0" cellspacing="0" class="table table-striped">
 			        <thead>
 			            <tr>
+			                <th width='15%'>Discipline</th>
 			                <th width='20%'><?= $this->Paginator->sort('passage_id') ?></th>
 			                <th width='20%'><?= $this->Paginator->sort('licencie_id') ?></th>
 			                <th width='20%'><?= $this->Paginator->sort('created','Date') ?></th>
@@ -21,12 +22,13 @@ use Lib\FonctionUtilitaire;
 			        <tbody>
 			            <?php foreach ($inscriptionPassages as $inscriptionPassage): ?>
 			            <tr>
+			                <td><?= $inscriptionPassage->passage->discipline->name ?></td>
 			                <td><?= $inscriptionPassage->passage->name ?></td>
 			                <td><?= $inscriptionPassage->licency->display_name ?></td>
-			                <td><?= FonctionUtilitaire::dateTimeFromMySQL($inscriptionPassage->created) ?></td>
+			                <td><?= FonctionUtilitaire::dateFromMySQL($inscriptionPassage->created) ?></td>
 			                <td><?= $inscriptionPassage->user->prenom." ".$inscriptionPassage->user->nom ?></td>
 			                <td class="actions">
-			                    <?= $this->Form->postLink(__('Delete'), ['action' => 'Supprimer', $inscriptionPassage->id], ['confirm' => __('Confirmation de la suppression ?')]) ?>
+			                    <?= $this->Form->postLink(__('Supprimer'), ['action' => 'Supprimer', $inscriptionPassage->id], ['confirm' => __('Confirmation de la suppression ?')]) ?>
 			                </td>
 			            </tr>
 			            <?php endforeach; ?>

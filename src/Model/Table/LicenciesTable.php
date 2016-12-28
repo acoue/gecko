@@ -11,6 +11,7 @@ use Cake\Validation\Validator;
  *
  * @property \Cake\ORM\Association\BelongsTo $Grades
  * @property \Cake\ORM\Association\BelongsTo $Clubs
+ * @property \Cake\ORM\Association\BelongsTo $Disciplines
  *
  * @method \App\Model\Entity\Licency get($primaryKey, $options = [])
  * @method \App\Model\Entity\Licency newEntity($data = null, array $options = [])
@@ -47,6 +48,10 @@ class LicenciesTable extends Table
         ]);
         $this->belongsTo('Clubs', [
             'foreignKey' => 'club_id',
+            'joinType' => 'INNER'
+        ]);
+        $this->belongsTo('Disciplines', [
+            'foreignKey' => 'discipline_id',
             'joinType' => 'INNER'
         ]);
     }
@@ -99,6 +104,7 @@ class LicenciesTable extends Table
     {
         $rules->add($rules->existsIn(['grade_id'], 'Grades'));
         $rules->add($rules->existsIn(['club_id'], 'Clubs'));
+        $rules->add($rules->existsIn(['discipline_id'], 'Disciplines'));
 
         return $rules;
     }

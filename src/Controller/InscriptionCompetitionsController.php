@@ -23,10 +23,10 @@ class InscriptionCompetitionsController extends AppController
     	
     	if($user->getProfil() == 'admin') {
     		$inscriptionCompetitions= $this->InscriptionCompetitions->find('all')
-    		->contain(['Competitions', 'Licencies','Users']);
+    		->contain(['Competitions'=>['Disciplines'], 'Licencies','Users']);
     	}else {
     		$inscriptionCompetitions= $this->InscriptionCompetitions->find('all')
-    		->contain(['Competitions', 'Licencies','Users'])->where(['user_id'=>$user->getId()]);
+    		->contain(['Competitions'=>['Disciplines'], 'Licencies','Users'])->where(['user_id'=>$user->getId()]);
     	}
     	
     	$this->set(compact('inscriptionCompetitions'));

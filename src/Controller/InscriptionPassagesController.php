@@ -23,10 +23,10 @@ class InscriptionPassagesController extends AppController
 
     	if($user->getProfil() == 'admin') {
     		$inscriptionPassages= $this->InscriptionPassages->find('all')
-    		->contain(['Passages', 'Licencies','Users']);
+    		->contain(['Passages'=>['Disciplines'], 'Licencies','Users']);
     	}else {
     		$inscriptionPassages= $this->InscriptionPassages->find('all')
-    		->contain(['Passages', 'Licencies','Users'])->where(['user_id'=>$user->getId()]);
+    		->contain(['Passages'=>['Disciplines'], 'Licencies','Users'])->where(['user_id'=>$user->getId()]);
     	}
     	
         $this->set(compact('inscriptionPassages'));

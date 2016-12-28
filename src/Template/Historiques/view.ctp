@@ -1,3 +1,6 @@
+<?php 
+use \Lib\FonctionUtilitaire;
+?>
 <div class="blocblanc">
 	<h2>Administration</h2>
     <h3>Historiques</h3>
@@ -13,13 +16,13 @@
                     <div class="col-lg-14"><?= $this->Form->input('name', ['label' => false,'id'=>'name',
 														   	'div' => false,
 															'class' => 'form-control', 
-                    										'type' => 'text', 'value'=>$historique->created,
+                    										'type' => 'text', 'value'=>FonctionUtilitaire::dateTimeFromMySQL($historique->created),
 															'disabled' =>'disabled']); ?>
                     </div>                          
 				</div><br />
 			    <div class="row">
-                	<label class="col-lg-8 control-label" for="hasid">Utilisateur </label>
-                    <div class="col-lg-14"><?= $this->Form->input('hasid', ['label' => false,'id'=>'name',
+                	<label class="col-lg-8 control-label" for="name">Utilisateur </label>
+                    <div class="col-lg-14"><?= $this->Form->input('name', ['label' => false,'id'=>'name',
 														   	'div' => false,
 															'class' => 'form-control', 
                     										'type' => 'text', 'value'=>$historique->user->prenom." ".$historique->user->nom,

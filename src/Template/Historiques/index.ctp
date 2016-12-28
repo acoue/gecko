@@ -22,7 +22,7 @@ use \Lib\FonctionUtilitaire;
 				     <?php foreach ($historiques as $historique): ?>
 			            <tr>
 			                <td><?= $this->Number->format($historique->id) ?></td>
-			                <td><?= h($historique->created) ?></td>
+			                <td><?= FonctionUtilitaire::dateTimeFromMySQL($historique->created) ?></td>
 			                <td><?= $historique->has('user') ? $historique->user->prenom." ".$historique->user->nom : '' ?></td>
 			                <td><?= FonctionUtilitaire::resumeTexte(h($historique->libelle)) ?></td>
 			                <td class="actions">

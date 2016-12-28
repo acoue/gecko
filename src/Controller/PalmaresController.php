@@ -19,7 +19,7 @@ class PalmaresController extends AppController
     public function index()
     {
         $this->paginate = [
-            'contain' => ['Licencies'=>['Clubs'],'Resultats']
+            'contain' => ['Licencies'=>['Clubs','Disciplines'],'Resultats']
         ];
         $palmares = $this->paginate($this->Palmares);
 
@@ -32,7 +32,7 @@ class PalmaresController extends AppController
     public function palmares($id)
     {
     	//Palmares
-    	$palmares=$this->Palmares->find()->contain(['Licencies'=>['Clubs'],'Resultats'])->where(['licencie_id'=>$id]);
+    	$palmares=$this->Palmares->find()->contain(['Licencies'=>['Clubs','Disciplines'],'Resultats'])->where(['licencie_id'=>$id]);
     	
     	//Licencie
     	$licencieModel=$this->loadModel('Licencies');

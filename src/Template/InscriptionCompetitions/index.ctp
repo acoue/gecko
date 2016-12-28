@@ -11,8 +11,9 @@ use Lib\FonctionUtilitaire;
 				<table cellpadding="0" cellspacing="0" class="table table-striped">
 			        <thead>
 			            <tr>
-			                <th width='30%'><?= $this->Paginator->sort('competition_id') ?></th>
-			                <th width='30%'><?= $this->Paginator->sort('licencie_id') ?></th>
+			                <th width='15%'>Discipline</th>
+			                <th width='20%'><?= $this->Paginator->sort('competition_id') ?></th>
+			                <th width='20%'><?= $this->Paginator->sort('licencie_id') ?></th>
 			                <th width='20%'><?= $this->Paginator->sort('created','Date') ?></th>
 			                <th width='20%'><?= $this->Paginator->sort('user_id','Par') ?></th>
 			                <th class="actions"><?= __('Actions') ?></th>
@@ -21,12 +22,13 @@ use Lib\FonctionUtilitaire;
 			        <tbody>
 			            <?php foreach ($inscriptionCompetitions as $inscriptionCompetition): ?>
 			            <tr>
+			                <td><?= $inscriptionCompetition->competition->discipline->name ?></td>
 			                <td><?= $inscriptionCompetition->competition->name ?></td>
 			                <td><?= $inscriptionCompetition->licency->display_name ?></td>
-			                <td><?= FonctionUtilitaire::dateTimeFromMySQL($inscriptionCompetition->created) ?></td>
+			                <td><?= FonctionUtilitaire::dateFromMySQL($inscriptionCompetition->created) ?></td>
 			                <td><?= $inscriptionCompetition->user->prenom." ".$inscriptionCompetition->user->nom ?></td>
 			                <td class="actions">
-			                    <?= $this->Form->postLink(__('Delete'), ['action' => 'Supprimer', $inscriptionCompetition->id], ['confirm' => __('Confirmation de la suppression ?')]) ?>
+			                    <?= $this->Form->postLink(__('Supprimer'), ['action' => 'Supprimer', $inscriptionCompetition->id], ['confirm' => __('Confirmation de la suppression ?')]) ?>
 			                </td>
 			            </tr>
 			            <?php endforeach; ?>

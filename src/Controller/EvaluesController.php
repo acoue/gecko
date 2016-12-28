@@ -20,13 +20,16 @@ class EvaluesController extends AppController
 
 	public function search() {
 		if ($this->request->is(['ajax'])) {
+	
+			$passage = $this->Passages->find('all')->where(['selected'=>1])->first();
+			
 			$libelle = $this->request->data['libelle'];
 	
 			$this->loadModel('Licencies');
 			$lic = $this->Licencies->find('all')
 			->contain(['Clubs'])
 			->limit(20)
-			->where(['prenom like '=>'%'.$libelle.'%'])
+			->where(['discipline_id'=>$passage->discipline_id,'prenom like '=>'%'.$libelle.'%'])
 			->orWhere(['nom like '=>'%'.$libelle.'%']);
 	
 			$this->set('licencies', $lic);

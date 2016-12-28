@@ -25,6 +25,7 @@ class LicenciesTableTest extends TestCase
      */
     public $fixtures = [
         'app.licencies',
+        'app.grades',
         'app.clubs',
         'app.regions'
     ];
