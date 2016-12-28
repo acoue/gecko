@@ -1,3 +1,6 @@
+<?php 
+use \Lib\FonctionUtilitaire;
+?>
 <div class="blocblanc">
 	<h2>Administration</h2>
     <h3>Utilisateur : <?= $user->prenom." ".$user->nom ?></h3>
@@ -78,7 +81,7 @@
                     <div class="col-lg-16"><?= $this->Form->input('lastlogin', ['label' => false,'id'=>'lastlogin',
 														   	'div' => false,
 															'class' => 'form-control', 
-                    										'value' => $user->lastlogin, 
+                    										'value' => FonctionUtilitaire::dateTimeFromMySQL($user->lastlogin), 
 															'disabled' =>'disabled']); ?>
                     </div>                          
 				</div><br /><br />

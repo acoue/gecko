@@ -1,3 +1,6 @@
+<?php 
+use \Lib\FonctionUtilitaire;
+?>
 <div class="blocblanc">
 	<h2>Administration</h2>
     <h3>Utilisateur</h3>
@@ -21,7 +24,7 @@
 			                <td><?= $this->Number->format($user->id) ?></td>
 			                <td><?= $user->prenom." ".$user->nom ?></td>
 			                <td><?= ($user->active == 1) ? "Oui" : "Non"; ?></td>
-			                <td><?= h($user->lastlogin) ?></td>
+			                <td><?= FonctionUtilitaire::dateTimeFromMySQL($user->lastlogin) ?></td>
 			                <td class="actions">
 			                	<?= $this->Html->link('Voir', ['action' => 'view', $user->id]); ?>&nbsp;&nbsp;
 								<?= $this->Html->link('Editer', ['action' => 'edit', $user->id]); ?>&nbsp;&nbsp;    

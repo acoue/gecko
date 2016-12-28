@@ -34,7 +34,7 @@ class LicenciesController extends AppController
     	$this->paginate = [
     			'contain' => ['Clubs']
     	];
-    	$licencies = $this->paginate($this->Licencies);
+    	$licencies = $this->paginate($this->Licencies,['limit' => 50]);
     
     	$this->set(compact('licencies'));
     	$this->set('_serialize', ['licencies']);
