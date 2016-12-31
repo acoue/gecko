@@ -40,7 +40,7 @@ class FonctionUtilitaire {
 				'I','I','I','I','I','i','i','i','i','o','o','o','o','o','o','o','o','O','O','O','O','O','O',
 				'u','u','u','u','U','U','U','U','y','y','y','S','s','c','C','Dj','n','N','Y','Z','z','b','B','f','ss','Oe','oe'];
 
-		return str_replace($caractereSpeciaux ,              $caractere,         $chaine);
+		return str_replace($caractereSpeciaux , $caractere,$chaine);
 	}
 	 
 	public static function resumeTexte($texte) {

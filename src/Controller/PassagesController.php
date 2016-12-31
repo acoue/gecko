@@ -20,7 +20,7 @@ class PassagesController extends AppController
     {
     	if(! $this->Securite->isAdmin()) return $this->redirect(['controller'=>'pages', 'action'=>'permission']);
     	$this->paginate = [
-    			'contain' => ['Disciplines']
+    			'contain' => ['Disciplines','Regions']
     	];
     	$passages = $this->paginate($this->Passages);
 
@@ -97,7 +97,7 @@ class PassagesController extends AppController
     {
     	if(! $this->Securite->isAdmin()) return $this->redirect(['controller'=>'pages', 'action'=>'permission']);
         $passage = $this->Passages->get($id, [
-            'contain' => ['Evalues'=>['Licencies'], 'Juges'=>['Jurys'],'Disciplines']
+            'contain' => ['Evalues'=>['Licencies'], 'Juges'=>['Jurys'=>['Grades']],'Disciplines','Regions']
         ]);
 
         $this->set('passage', $passage);
@@ -133,7 +133,8 @@ class PassagesController extends AppController
             }
         }
         $disciplines = $this->Passages->Disciplines->find('list');
-        $this->set(compact('passage','disciplines'));
+        $regions = $this->Passages->Regions->find('list');
+        $this->set(compact('passage','disciplines','regions'));
         $this->set('_serialize', ['passage']);
     }
 
@@ -148,7 +149,7 @@ class PassagesController extends AppController
     {
     	if(! $this->Securite->isAdmin()) return $this->redirect(['controller'=>'pages', 'action'=>'permission']);
         $passage = $this->Passages->get($id,[
-            'contain' => ['Disciplines']
+            'contain' => ['Disciplines','Regions']
         ]);
         
         if ($this->request->is(['patch', 'post', 'put'])) {
@@ -170,8 +171,10 @@ class PassagesController extends AppController
                 $this->Flash->error(__('Erreur dans la sauvegarde du passage.'));
             }
         }
+
         $disciplines = $this->Passages->Disciplines->find('list');
-        $this->set(compact('passage','disciplines'));
+        $regions = $this->Passages->Regions->find('list');
+        $this->set(compact('passage','disciplines','regions'));
         $this->set('_serialize', ['passage']);
     }
 

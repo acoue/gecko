@@ -41,6 +41,15 @@ use Lib\FonctionUtilitaire;
                     										'value' => FonctionUtilitaire::dateFromMySQL($passage->date_passage),
 															'required' =>'required']); ?>
                     </div>                          
+				</div><br />  
+				<div class="row">
+                	<label class="col-lg-8 control-label" for="region_id">Régions</label>
+                	<div class="col-lg-12"><?= $this->Form->input('region_id', ['label' => false,
+                											'options' => $regions,'value'=>h($passage->region_id),
+                											'div' => false,
+															'class' => 'form-control', 
+                    										'required' =>'required']) ?>    
+                	</div>                 
 				</div><br />  	
 				<div class="row">
                 	<label class="col-lg-8 control-label" for="archive">Archivé</label>

@@ -23,10 +23,10 @@ class InscriptionCompetitionsController extends AppController
     	
     	if($user->getProfil() == 'admin') {
     		$inscriptionCompetitions= $this->InscriptionCompetitions->find('all')
-    		->contain(['Competitions'=>['Disciplines'], 'Licencies','Users']);
+    		->contain(['Competitions'=>['Disciplines','Categories'], 'Licencies','Users']);
     	}else {
     		$inscriptionCompetitions= $this->InscriptionCompetitions->find('all')
-    		->contain(['Competitions'=>['Disciplines'], 'Licencies','Users'])->where(['user_id'=>$user->getId()]);
+    		->contain(['Competitions'=>['Disciplines','Categories'], 'Licencies','Users'])->where(['user_id'=>$user->getId()]);
     	}
     	
     	$this->set(compact('inscriptionCompetitions'));
@@ -48,32 +48,37 @@ class InscriptionCompetitionsController extends AppController
     	$query = $this->Clubs->find('all')->where(['name'=>$club])->first();
     	$region[0] = $query->region_id;
     	$region[1] = -1;
-    	
-        $inscriptionCompetition = $this->InscriptionCompetitions->newEntity();
-        if ($this->request->is('post')) {
-        	//debug($this->request->data);die();
-            $inscriptionCompetition = $this->InscriptionCompetitions->patchEntity($inscriptionCompetition, $this->request->data);
-            if ($this->InscriptionCompetitions->save($inscriptionCompetition)) {
-                $this->Flash->success(__('L\'inscription à la compétition a bien été enregistrée.'));
-            	$this->Utilitaire->logInBdd("Inscription de ".$inscriptionCompetition->licencie_id." pour la compétition ".$inscriptionCompetition->competition_id);
-
-                return $this->redirect(['action' => 'index']);
-            } else {
-                $this->Flash->error(__('Erreur lors de l\'inscription à la compétition.'));
-            }
-        }
+        
         //Si admin on recupere toutes les competitions sinon juste celles de la region du user
         if($this->Securite->isAdmin()) $competitions = $this->InscriptionCompetitions->Competitions->find('list', ['limit' => 200])->where(['archive'=>0]);
         else $competitions = $this->InscriptionCompetitions->Competitions->find('list', ['limit' => 200])->where(['archive'=>0,'region_id in '=> $region]);
         
         
-        if($user->getProfil()=='admin') $licencies = $this->InscriptionCompetitions->Licencies->find('list');
-        else $licencies = $this->InscriptionCompetitions->Licencies->find('list')->where(["club_id"=>$club]);
-
-        $this->set(compact('inscriptionCompetition', 'competitions', 'licencies', 'user'));
+        $this->set(compact('inscriptionCompetition', 'competitions'));
         $this->set('_serialize', ['inscriptionCompetition']);
     }
     
+    public function ajoutInscription($competition,$licencie) {
+    	
+
+    		$user = $this->request->session()->read("UserConnected");
+    		
+    		$inscriptionCompetition = $this->InscriptionCompetitions->newEntity();
+    		$inscriptionCompetition->competition_id=$competition;
+    		$inscriptionCompetition->licencie_id=$licencie;
+    		$inscriptionCompetition->user_id=$user->getId();
+    		
+    		//debug($this->request->data);die();
+    			if ($this->InscriptionCompetitions->save($inscriptionCompetition)) {
+    			$this->Flash->success(__('L\'inscription à la compétition a bien été enregistrée.'));
+    			$this->Utilitaire->logInBdd("Inscription de ".$inscriptionCompetition->licencie_id." pour la compétition ".$inscriptionCompetition->competition_id);
+    	
+    			return $this->redirect(['action' => 'index']);
+    		} else {
+    			$this->Flash->error(__('Erreur lors de l\'inscription à la compétition.'));
+    		}
+    	
+    }
     /**
      * Delete method
      *
@@ -96,5 +101,41 @@ class InscriptionCompetitionsController extends AppController
         }
 
         return $this->redirect(['action' => 'index']);
+    }
+    
+
+    public function search() {
+    	if ($this->request->is(['ajax'])) {
+    		//competition
+    		$competition_id = $this->request->data['competition'];
+    		$this->loadModel('Competitions');
+    		$competition=$this->Competitions->find()->where(['id'=>$competition_id])->first();
+    		
+    		//Recuperation du club du user connecte
+    		$user = $this->request->session()->read("UserConnected");
+    		
+    		$libelle = $this->request->data['libelle'];
+    		
+    		$this->loadModel('Licencies');
+    		if($user->getProfil()=='admin') {
+    			
+    			$lic = $this->Licencies->find('all')
+    			->contain(['Clubs','Disciplines'])
+    			->limit(20)
+    			->where(['discipline_id'=>$competition->discipline_id,'prenom like '=>'%'.$libelle.'%'])
+    			->orWhere(['nom like '=>'%'.$libelle.'%']);
+    		} else {
+    			$lic = $this->Licencies->find('all')
+    			->contain(['Clubs','Disciplines'])
+    			->limit(20)
+    			->where(["club_id"=>$club,'discipline_id'=>$competition->discipline_id,'prenom like '=>'%'.$libelle.'%'])
+    			->orWhere(['nom like '=>'%'.$libelle.'%']);
+    			
+    		}
+    		$this->set('competition_id',$competition_id);
+    		$this->set('licencies', $lic);
+    
+    		//% or name like %% or description like %%
+    	}
     }
 }

@@ -9,6 +9,7 @@
 				    <thead>
 				        <tr align='center'>
 			                <th align='center'>Discipline</th>
+			                <th align='center'>Région</th>
 			                <th align='center'>Libellé</th>
 			                <th>Date</th>
 			                <th>Selectionné ?</th>
@@ -18,6 +19,7 @@
 				    <?php foreach ($passages as $passage): ?>
 				        <tr>
 			                <td><?= $passage->discipline->name ?></td>
+			                <td><?= $passage->region->name ?></td>
 			                <td><?= $passage->name ?></td>
 			                <td><?= $passage->date_passage ?></td>
 			                <td><?= $passage->selected == 1 ? '<span class="badge badge-success">Oui</span>' : $this->Html->link('Sélectionner', ['controller'=>'Passages', 'action' => 'choisir/'.$passage->id],['class' => 'btn btn-primary']) ?></td>

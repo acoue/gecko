@@ -12,9 +12,9 @@ use Lib\FonctionUtilitaire;
 			        <thead>
 			            <tr>
 			                <th width='15%'>Discipline</th>
-			                <th width='20%'><?= $this->Paginator->sort('passage_id') ?></th>
+			                <th width='25%'><?= $this->Paginator->sort('passage_id') ?></th>
 			                <th width='20%'><?= $this->Paginator->sort('licencie_id') ?></th>
-			                <th width='20%'><?= $this->Paginator->sort('created','Date') ?></th>
+			                <th width='15%'><?= $this->Paginator->sort('created','Date') ?></th>
 			                <th width='20%'><?= $this->Paginator->sort('user_id','Par') ?></th>
 			                <th class="actions"><?= __('Actions') ?></th>
 			            </tr>

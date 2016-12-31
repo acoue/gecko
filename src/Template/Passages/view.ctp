@@ -44,6 +44,15 @@ use Lib\FonctionUtilitaire;
                     </div>                          
 				</div><br /> 	
 				<div class="row">
+                	<label class="col-lg-8 control-label" for="region_id">Régions</label>
+                	<div class="col-lg-12"><?= $this->Form->input('region_id', ['label' => false,
+                											'type' => 'text','value'=>h($passage->region->name),
+                											'div' => false,
+															'class' => 'form-control', 
+                    										'disabled' =>'disabled']) ?>    
+                	</div>                 
+				</div><br />  
+				<div class="row">
                 	<label class="col-lg-8 control-label" for="archive">Archivé</label>
                 	<div class="col-lg-16"><?= $this->Form->input('archive', ['label' => false,
                 											'options' => [0 => 'Non', 1=>'Oui'],
@@ -55,7 +64,7 @@ use Lib\FonctionUtilitaire;
 				<div class="related">
 			        <h4><?= __('Evalués') ?></h4>
 			        <?php if (!empty($passage->evalues)): ?>
-			        <table cellpadding="0" cellspacing="0">
+			        <table cellpadding="0" cellspacing="0" class="table table-striped">
 			            <tr>
 			                <th scope="col"><?= __('Licencié') ?></th>
 			                <th scope="col"><?= __('Grade Actuel') ?></th>
@@ -80,13 +89,15 @@ use Lib\FonctionUtilitaire;
 			    <div class="related">
 			        <h4><?= __('Jury') ?></h4>
 			        <?php if (!empty($passage->juges)): ?>
-			        <table cellpadding="0" cellspacing="0">
+			        <table cellpadding="0" cellspacing="0" class="table table-striped">
 			            <tr>
-			                <th scope="col">Nom</th>
+			                <th width='60%' scope="col">Nom</th>
+			                <th scope="col">Grade</th>
 			            </tr>
 			            <?php foreach ($passage->juges as $juges): ?>
 			            <tr>
 			                <td><?= $juges->jury->prenom ." ".$juges->jury->nom ?></td>
+			                <td><?= $juges->jury->grade->name ?></td>
 			            </tr>
 			            <?php endforeach; ?>
 			        </table>

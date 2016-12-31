@@ -225,8 +225,8 @@ return [
              * the following line and set the port accordingly
              */
             //'port' => 'non_standard_port_number',
-            'username' => 'cnk', //Prod : acouefrerngecko
-            'password' => 'cnk2014', //Prod : 123Soleil
+            'username' => 'root', //Prod : acouefrerngecko
+            'password' => 'Petosse@85', //Prod : 123Soleil
             'database' => 'gecko', //prod : acouefrerngecko
             'encoding' => 'utf8',
             'timezone' => 'UTC',
@@ -252,7 +252,7 @@ return [
              * which is the recommended value in production environments
              */
             //'init' => ['SET GLOBAL innodb_stats_on_metadata = 0'],
-            
+
             'url' => env('DATABASE_URL', null),
         ],
 

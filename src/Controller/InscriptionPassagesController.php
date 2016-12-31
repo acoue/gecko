@@ -50,26 +50,11 @@ class InscriptionPassagesController extends AppController
     	$region[0] = $query->region_id;
     	$region[1] = -1;
     	
-        $inscriptionPassage = $this->InscriptionPassages->newEntity();
-        if ($this->request->is('post')) {
-            $inscriptionPassage = $this->InscriptionPassages->patchEntity($inscriptionPassage, $this->request->data);
-            if ($this->InscriptionPassages->save($inscriptionPassage)) {
-                $this->Flash->success(__('L\'inscription au passage de grade a bien été enregistrée.'));
-                $this->Utilitaire->logInBdd("Inscription de ".$inscriptionPassage->licencie_id." au ppassage de grade ".$inscriptionPassage->passage_id);
-                
-                return $this->redirect(['action' => 'index']);
-            } else {
-                $this->Flash->error(__('Erreur lors de l\'inscription au passage de grade.'));
-            }
-        }
-        if($user->getProfil()=='admin') $licencies = $this->InscriptionPassages->Licencies->find('list');
-        else $licencies = $this->InscriptionPassages->Licencies->find('list')->where(["club_id"=>$club]);
-
-        //Si admin on recupere toutes les competitions sinon juste celles de la region du user
+        //Si admin on recupere tous les passages sinon juste ceux de la region du user
         if($this->Securite->isAdmin()) $passages = $this->InscriptionPassages->Passages->find('list')->where(['archive'=>0]);
         else $passages = $this->InscriptionPassages->Passages->find('list')->where(['archive'=>0,'region_id in '=> $region]);
         
-        $this->set(compact('inscriptionPassage', 'passages', 'licencies', 'user'));
+        $this->set(compact('inscriptionPassage', 'passages'));
         $this->set('_serialize', ['inscriptionPassage']);
     }
 
@@ -95,5 +80,63 @@ class InscriptionPassagesController extends AppController
         }
 
         return $this->redirect(['action' => 'index']);
+    }
+    
+
+    public function search() {
+    	if ($this->request->is(['ajax'])) {
+    		//competition
+    		$passage_id = $this->request->data['passage'];
+    		$this->loadModel('Passages');
+    		$passage=$this->Passages->find()->where(['id'=>$passage_id])->first();
+    
+    		//Recuperation du club du user connecte
+    		$user = $this->request->session()->read("UserConnected");
+    
+    		$libelle = $this->request->data['libelle'];
+    
+    		$this->loadModel('Licencies');
+    		if($user->getProfil()=='admin') {
+    			 
+    			$lic = $this->Licencies->find('all')
+    			->contain(['Clubs','Disciplines'])
+    			->limit(20)
+    			->where(['discipline_id'=>$passage->discipline_id,'prenom like '=>'%'.$libelle.'%'])
+    			->orWhere(['nom like '=>'%'.$libelle.'%']);
+    		} else {
+    			$lic = $this->Licencies->find('all')
+    			->contain(['Clubs','Disciplines'])
+    			->limit(20)
+    			->where(["club_id"=>$club,'discipline_id'=>$passage->discipline_id,'prenom like '=>'%'.$libelle.'%'])
+    			->orWhere(['nom like '=>'%'.$libelle.'%']);
+    			 
+    		}
+    		$this->set('passage_id',$passage_id);
+    		$this->set('licencies', $lic);
+    
+    		//% or name like %% or description like %%
+    	}
+    }
+    
+    public function ajoutInscription($passage,$licencie) {
+    	 
+    
+    	$user = $this->request->session()->read("UserConnected");
+    
+    	$inscriptionPassage = $this->InscriptionPassages->newEntity();
+    	$inscriptionPassage->passage_id=$passage;
+    	$inscriptionPassage->licencie_id=$licencie;
+    	$inscriptionPassage->user_id=$user->getId();
+    
+    	//debug($this->request->data);die();
+    	if ($this->InscriptionPassages->save($inscriptionPassage)) {
+    		$this->Flash->success(__('L\'inscription au passage a bien été enregistrée.'));
+    		$this->Utilitaire->logInBdd("Inscription de ".$inscriptionPassage->licencie_id." pour le passage ".$inscriptionPassage->passage_id);
+    		 
+    		return $this->redirect(['action' => 'index']);
+    	} else {
+    		$this->Flash->error(__('Erreur lors de l\'inscription au passage.'));
+    	}
+    	 
     }
 }
