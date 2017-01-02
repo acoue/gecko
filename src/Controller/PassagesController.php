@@ -54,10 +54,10 @@ class PassagesController extends AppController
 		$this->loadModel('Notes');
 		$notes=$this->Notes->find()->contain(['Juges'=>['Jurys'],'Licencies'])->where(['Notes.passage_id'=>$passage->id]);
     	
+		//creation des notes si non existante en base
 		if($notes->count() < ($juges->count()*$evalues->count())) {
 			
 			//Suppression des lignes eventuelles 
-			//Mise à blanc des combats de la table combat_poule
 			$this->loadModel('Notes');
 			$noteDelete = $this->Notes->query();
 			$noteDelete->delete()
@@ -65,9 +65,6 @@ class PassagesController extends AppController
 			->execute();
 			
 			
-			//creation des notes si non existante en base
-		//if ($notes->count() == 0){
-
 			//$this->loadModel('Notes');
 			$noteInsert = TableRegistry::get('Notes');
 			$tabNotes=[];
@@ -137,6 +134,7 @@ class PassagesController extends AppController
             $passage->date_passage = $date_passage;
             
             if ($this->Passages->save($passage)) {
+            	$this->Utilitaire->logInBdd("Ajout du passage : ".$passage->id." -> ".$passage->name." - ".$passage->date_passage);
                 $this->Flash->success(__('Le passage a été créé.'));
 
                 return $this->redirect(['action' => 'index']);
@@ -177,7 +175,8 @@ class PassagesController extends AppController
             $passage->date_passage = $date_passage;
             if ($this->Passages->save($passage)) {
                 $this->Flash->success(__('Le passage a été sauvegardé.'));
-
+                $this->Utilitaire->logInBdd("Modification du passage : ".$passage->id." -> ".$passage->name." - ".$passage->date_passage);
+                
                 return $this->redirect(['action' => 'index']);
             } else {
                 $this->Flash->error(__('Erreur dans la sauvegarde du passage.'));
@@ -202,7 +201,9 @@ class PassagesController extends AppController
     	if(! $this->Securite->isAdmin()) return $this->redirect(['controller'=>'pages', 'action'=>'permission']);
         $this->request->allowMethod(['post', 'delete']);
         $passage = $this->Passages->get($id);
+        $message="Suppression du passage : ".$passage->id." -> ".$passage->name." - ".$passage->date_competition;
         if ($this->Passages->delete($passage)) {
+            $this->Utilitaire->logInBdd($message);
             $this->Flash->success(__('Le passage a été supprimé.'));
         } else {
             $this->Flash->error(__('Erreur dans la suppression du passage.'));

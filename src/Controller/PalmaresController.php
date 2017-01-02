@@ -65,6 +65,7 @@ class PalmaresController extends AppController
             
             if ($this->Palmares->save($palmare)) {
                 $this->Flash->success(__('Le palmarès a été créé.'));
+            	$this->Utilitaire->logInBdd("Ajout du palmarès : ".$palmare->id." -> licencié :".$palmare->id);
                 return $this->redirect(['action' => 'palmares',$licencie_id]);
             } else {
                 $this->Flash->error(__('Erreur dans la création du palmarès.'));
@@ -93,11 +94,12 @@ class PalmaresController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $palmare = $this->Palmares->patchEntity($palmare, $this->request->data);
             if ($this->Palmares->save($palmare)) {
-                $this->Flash->success(__('The palmare has been saved.'));
+                $this->Flash->success(__('Le palmarès a été sauvegardé.'));
 
+                $this->Utilitaire->logInBdd("Modification du palmarès : ".$palmare->id." -> licencié :".$palmare->id);
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error(__('The palmare could not be saved. Please, try again.'));
+                $this->Flash->error(__('Erreur dans la sauvegarde du palmarès.'));
             }
         }
         //Licencie
@@ -120,10 +122,12 @@ class PalmaresController extends AppController
     {
         $this->request->allowMethod(['post', 'delete']);
         $palmare = $this->Palmares->get($id);
+        $message = "Suppression du palmarès : ".$palmare->id." -> licencié :".$palmare->id;
         if ($this->Palmares->delete($palmare)) {
-            $this->Flash->success(__('The palmare has been deleted.'));
+            $this->Flash->success(__('Le palmarès a été supprimé.'));
+            $this->Utilitaire->logInBdd($message);
         } else {
-            $this->Flash->error(__('The palmare could not be deleted. Please, try again.'));
+            $this->Flash->error(__('Erreur dans la suppression du palmarès.'));
         }
 
         return $this->redirect(['action' => 'index']);

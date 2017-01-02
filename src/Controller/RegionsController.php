@@ -55,6 +55,7 @@ class RegionsController extends AppController
         if ($this->request->is('post')) {
             $region = $this->Regions->patchEntity($region, $this->request->data);
             if ($this->Regions->save($region)) {
+            	$this->Utilitaire->logInBdd("Ajout de la région : ".$region->id." -> ".$region->name);
                 $this->Flash->success(__('La région a été sauvegardée'));
                 return $this->redirect(['action' => 'index']);
             } else {
@@ -81,6 +82,7 @@ class RegionsController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $region = $this->Regions->patchEntity($region, $this->request->data);
             if ($this->Regions->save($region)) {
+            	$this->Utilitaire->logInBdd("Modification de la région : ".$region->id." -> ".$region->name);
                 $this->Flash->success(__('La région a été sauvegardée.'));
                 return $this->redirect(['action' => 'index']);
             } else {
@@ -103,8 +105,10 @@ class RegionsController extends AppController
     	if(! $this->Securite->isAdmin()) return $this->redirect(['controller'=>'pages', 'action'=>'permission']);
         $this->request->allowMethod(['post', 'delete']);
         $region = $this->Regions->get($id);
+        $message ="Suppression de la région : ".$region->id." -> ".$region->name;
         if ($this->Regions->delete($region)) {
             $this->Flash->success(__('La région a été supprimée.'));
+            $this->Utilitaire->logInBdd($message);
         } else {
             $this->Flash->error(__('La région ne peut pas être supprimée.'));
         }

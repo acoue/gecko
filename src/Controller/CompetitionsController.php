@@ -77,7 +77,7 @@ class CompetitionsController extends AppController
         	//Enregistrement
             //$competition = $this->Competitions->patchEntity($competition);
             if ($this->Competitions->save($competition)) {
-            	$this->Utilitaire->logInBdd("Ajout de la compétition : ".$competition->id." -> ".$competition->name);
+            	$this->Utilitaire->logInBdd("Ajout de la compétition : ".$competition->id." -> ".$competition->name." - ".$competition->date_competition);
                 $this->Flash->success(__('La competition a bien été sauvegardée.'));
                 return $this->redirect(['action' => 'index']);
             } else {
@@ -115,7 +115,7 @@ class CompetitionsController extends AppController
         	//debug($d);die();
             $competition = $this->Competitions->patchEntity($competition, $d);
             if ($this->Competitions->save($competition)) {
-            	$this->Utilitaire->logInBdd("Modification de la compétition : ".$competition->id." -> ".$competition->name);
+            	$this->Utilitaire->logInBdd("Modification de la compétition : ".$competition->id." -> ".$competition->name." - ".$competition->date_competition);
                 $this->Flash->success(__('La competition a bien été sauvegardée.'));
                 return $this->redirect(['action' => 'index']);
             } else {
@@ -141,7 +141,7 @@ class CompetitionsController extends AppController
     	if(! $this->Securite->isAdmin()) return $this->redirect(['controller'=>'pages', 'action'=>'permission']);
         $this->request->allowMethod(['post', 'delete']);
         $competition = $this->Competitions->get($id);
-        $message="Suppression de la compétition : ".$competition->id." -> ".$competition->name;
+        $message="Suppression de la compétition : ".$competition->id." -> ".$competition->name." - ".$competition->date_competition;
         if ($this->Competitions->delete($competition)) {
             $this->Utilitaire->logInBdd($message);
             $this->Flash->success(__('La competition a bien été supprimée.'));

@@ -148,8 +148,11 @@ class LicenciesController extends AppController
     	if(! $this->Securite->isAdmin()) return $this->redirect(['controller'=>'pages', 'action'=>'permission']);
         $this->request->allowMethod(['post', 'delete']);
         $licency = $this->Licencies->get($id);
+        $message = "Suppression du licencié : ".$licency->id." -> ".$licency->display_name." - Club : ".$licency->club_id." - Discipline : ".$licency->discipline_id;
+                
         if ($this->Licencies->delete($licency)) {
             $this->Flash->success(__('Le licencié a été supprimé.'));
+            $this->Utilitaire->logInBdd($message);
         } else {
             $this->Flash->error(__('Le licencié n\'a pas été sauvegardé.'));
         }

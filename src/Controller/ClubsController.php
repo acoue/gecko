@@ -86,7 +86,7 @@ class ClubsController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $club = $this->Clubs->patchEntity($club, $this->request->data);
             if ($this->Clubs->save($club)) {
-            	$this->Utilitaire->logInBdd("Ajout du club : ".$club->id." -> ".$club->name);
+            	$this->Utilitaire->logInBdd("Modification du club : ".$club->id." -> ".$club->name);
                 $this->Flash->success(__('Le club a été sauvegardé.'));
                 return $this->redirect(['action' => 'index']);
             } else {

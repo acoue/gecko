@@ -62,6 +62,7 @@ class UsersController extends AppController
 				
 				$session->write('UserConnected',$userConnected);
 				$session->write('Module',"-1");
+            	$this->Utilitaire->logInBdd("Connexion");
 				return $this->redirect($this->Auth->redirectUrl());
 								
 			} else $this->Flash->error(__("Nom d'utilisateur ou mot de passe incorrect, essayez à nouveau."));
@@ -75,6 +76,7 @@ class UsersController extends AppController
 		$session = $this->request->session();
 		$session->destroy();
 		$this->Flash->success('Vous êtes maintenant déconnecté.');
+        $this->Utilitaire->logInBdd("Deconnexion");
 		return $this->redirect($this->Auth->logout());
 	}
 	
@@ -112,6 +114,8 @@ class UsersController extends AppController
  			$user = $this->Users->patchEntity($user, $this->request->data);
  			if ($this->Users->save($user)) {
  				$this->Flash->success('L\'utilisateur a bien été sauvegardé.');
+
+ 				$this->Utilitaire->logInBdd("Modification de l'utilisateur : ".$user->id." > ".$user->prenom." ".$user->nom);
  				return $this->redirect(['action' => 'index']);
  			} else {
  				$this->Flash->error('Erreur lors de la sauvegarde de l\'utilisateur.');
@@ -134,6 +138,7 @@ class UsersController extends AppController
  			$user = $this->Users->patchEntity($user, $this->request->data);
  			if ($this->Users->save($user)) {
  				$this->Flash->success(__("L'utilisateur a été sauvegardé."));
+ 				$this->Utilitaire->logInBdd("Modification de l'utilisateur : ".$user->id." > ".$user->prenom." ".$user->nom);
  				return $this->redirect(['action' => 'index']);
  			}
  			$this->Flash->error(__("Impossible d'ajouter l'utilisateur."));
@@ -230,7 +235,9 @@ class UsersController extends AppController
     	if(! $this->Securite->isAdmin()) return $this->redirect(['controller'=>'pages', 'action'=>'permission']);
 		$this->request->allowMethod(['post', 'delete']);
 		$user = $this->Users->get($id);
+		$message = "Suppression de l'utilisateur : ".$user->id." > ".$user->prenom." ".$user->nom;
 		if ($this->Users->delete($user)) {
+			$this->Utilitaire->logInBdd($message);	
 			$this->Flash->success('Suppression l\'utilisateur.');
 		} else {
 			$this->Flash->error('Erreur dans la suppression de l\'utilisateur.');

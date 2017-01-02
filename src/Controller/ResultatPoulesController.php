@@ -60,6 +60,7 @@ class ResultatPoulesController extends AppController
     					->where(['competition_id'=>$competitionSelected->id,'id'=>$key])->execute();
     			
 			}
+            $this->Utilitaire->logInBdd("Mise à jour des résultats des poules pour la compétition ".$competitionSelected->id);
 			$this->Flash->success(__('Sauvegarde effectuée'));
 			return $this->redirect(['action' => 'index']);
     	}

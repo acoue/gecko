@@ -45,6 +45,7 @@ class RepartitionsController extends AppController
         
             if ($this->Repartitions->save($repartition)) {
                 $this->Flash->success(__('Licencié séléctionné.'));
+            	$this->Utilitaire->logInBdd("Ajout du licencié : ".$repartition->licencie_id." pour la compétition ".$repartition->competition_id);
             } else {
                 $this->Flash->error(__('Erreur dans la sélection du licencié.'));
             }
@@ -62,7 +63,9 @@ class RepartitionsController extends AppController
     {
         $this->request->allowMethod(['post', 'delete']);
         $repartition = $this->Repartitions->get($id);
+        $message = "Ajout du licencié : ".$repartition->licencie_id." pour la compétition ".$repartition->competition_id;
         if ($this->Repartitions->delete($repartition)) {
+        	$this->Utilitaire->logInBdd($message);
             $this->Flash->success(__('Suppresion du licencié dans la répartition.'));
         } else {
             $this->Flash->error(__('Erreur lors de la suppression du licencié de la répartition.'));

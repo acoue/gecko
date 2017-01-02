@@ -47,6 +47,7 @@ class ResultatCompetitionsController extends AppController
         if ($this->request->is('post')) {
             $resultatCompetition = $this->ResultatCompetitions->patchEntity($resultatCompetition, $this->request->data);
             if ($this->ResultatCompetitions->save($resultatCompetition)) {
+            	$this->Utilitaire->logInBdd("Ajout du résultat de la compétition : ".$resultatCompetition->id." pour le licencié ".$resultatCompetition->licencie_id);
                 $this->Flash->success(__('Le résultat de la compétition a été créé.'));
 
                 return $this->redirect(['action' => 'index']);
@@ -88,7 +89,8 @@ class ResultatCompetitionsController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $resultatCompetition = $this->ResultatCompetitions->patchEntity($resultatCompetition, $this->request->data);
             if ($this->ResultatCompetitions->save($resultatCompetition)) {
-                $this->Flash->success(__('Le résultat a été sauvegardé.'));
+            	$this->Utilitaire->logInBdd("Modification du résultat de la compétition : ".$resultatCompetition->id." pour le licencié ".$resultatCompetition->licencie_id);
+            	$this->Flash->success(__('Le résultat a été sauvegardé.'));
 
                 return $this->redirect(['action' => 'index']);
             } else {
@@ -126,8 +128,11 @@ class ResultatCompetitionsController extends AppController
     {
         $this->request->allowMethod(['post', 'delete']);
         $resultatCompetition = $this->ResultatCompetitions->get($id);
+        $message = "Suppression du résultat de la compétition : ".$resultatCompetition->id." pour le licencié ".$resultatCompetition->licencie_id;
+                
         if ($this->ResultatCompetitions->delete($resultatCompetition)) {
             $this->Flash->success(__('Le résultat a été supprimé.'));
+            $this->Utilitaire->logInBdd($message);
         } else {
             $this->Flash->error(__('Erreur dans la suppression du résultat.'));
         }
