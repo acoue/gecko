@@ -113,7 +113,7 @@ class ClubsController extends AppController
         $message ="Suppression du club : ".$club->id." -> ".$club->name;
         if ($this->Clubs->delete($club)) {
             $this->Flash->success(__('Le club a été supprimé.'));
-            	$this->Utilitaire->logInBdd($message);
+            $this->Utilitaire->logInBdd($message);
         } else {
             $this->Flash->error(__('Le club n\'a pas été supprimé.'));
         }

@@ -71,8 +71,19 @@ class LicenciesController extends AppController
         	
             $licency = $this->Licencies->patchEntity($licency, $data);
             $licency->display_name = $data['prenom']." ".$data['nom'];
+            
+            $dateNaissance=$data['ddn'];
+            //Transformation de la date : dd/mm/yyyy vers yyyy-mm-dd
+            if(isset($dateNaissance)) {
+            	$tmp_date = $dateNaissance;
+            	$dateNaissance = substr($tmp_date, 6,4)."-".substr($tmp_date, 3,2)."-".substr($tmp_date, 0,2);
+            }
+            $licency->ddn = $dateNaissance;
+            
+            
             if ($this->Licencies->save($licency)) {
                 $this->Flash->success(__('Le licencié a été sauvegardé.'));
+            	$this->Utilitaire->logInBdd("Ajout du licencié : ".$licency->id." -> ".$licency->display_name." - Club : ".$licency->club_id." - Discipline : ".$licency->discipline_id);
                 return $this->redirect(['action' => 'liste']);
             } else {
                 $this->Flash->error(__('Le licencié n\'a pas été sauvegardé.'));
@@ -102,11 +113,19 @@ class LicenciesController extends AppController
         	
             $licency = $this->Licencies->patchEntity($licency, $data);
             $licency->display_name = $data['prenom']." ".$data['nom'];
-            
-            debug($licency);
+
+            $dateNaissance=$data['ddn'];
+            //Transformation de la date : dd/mm/yyyy vers yyyy-mm-dd
+            if(isset($dateNaissance)) {
+            	$tmp_date = $dateNaissance;
+            	$dateNaissance = substr($tmp_date, 6,4)."-".substr($tmp_date, 3,2)."-".substr($tmp_date, 0,2);
+            }
+            $licency->ddn = $dateNaissance;
+            //debug($licency);
             if ($this->Licencies->save($licency)) {
                 $this->Flash->success(__('Le licencié a été sauvegardé.'));
-                return $this->redirect(['action' => 'liste']);
+            	$this->Utilitaire->logInBdd("Modification du licencié : ".$licency->id." -> ".$licency->display_name." - Club : ".$licency->club_id." - Discipline : ".$licency->discipline_id);
+                return $this->redirect(['action' => 'index']);
             } else {
                 $this->Flash->error(__('Le licencié n\'a pas été sauvegardé.'));
             }

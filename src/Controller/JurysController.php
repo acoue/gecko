@@ -60,6 +60,7 @@ class JurysController extends AppController
             $jury = $this->Jurys->patchEntity($jury, $this->request->data);
             if ($this->Jurys->save($jury)) {
                 $this->Flash->success(__('Le Jury a été créé.'));
+            	$this->Utilitaire->logInBdd("Ajout du jury : ".$jury->id." -> ".$jury->prenom." ".$jury->nom);
 
                 return $this->redirect(['action' => 'index']);
             } else {
@@ -89,6 +90,7 @@ class JurysController extends AppController
             $jury = $this->Jurys->patchEntity($jury, $this->request->data);
             if ($this->Jurys->save($jury)) {
                 $this->Flash->success(__('Le jury a été sauvegardé.'));
+            	$this->Utilitaire->logInBdd("Modification du jury : ".$jury->id." -> ".$jury->prenom." ".$jury->nom);
 
                 return $this->redirect(['action' => 'index']);
             } else {
@@ -113,8 +115,10 @@ class JurysController extends AppController
     	if(! $this->Securite->isAdmin()) return $this->redirect(['controller'=>'pages', 'action'=>'permission']);
         $this->request->allowMethod(['post', 'delete']);
         $jury = $this->Jurys->get($id);
+        $message ="Suppression du jury : ".$jury->id." -> ".$jury->prenom." ".$jury->nom;
         if ($this->Jurys->delete($jury)) {
             $this->Flash->success(__('Le jury a été supprimé.'));
+            $this->Utilitaire->logInBdd($message);
         } else {
             $this->Flash->error(__('Erreur dans la suppresion du jury.'));
         }

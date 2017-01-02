@@ -38,7 +38,8 @@ class PassagesController extends AppController
     	$juges = $this->Juges->find()->contain(['Jurys'=>['Grades']])->where(['passage_id'=>$passage->id]);
     	//Liste des inscris
     	$this->loadModel('Evalues');
-		$evalues = $this->Evalues->find()->contain(['Licencies','Grades'])->where(['passage_id'=>$passage->id]);
+		$evalues = $this->Evalues->find()->contain(['Licencies','Grades'])
+		->where(['passage_id'=>$passage->id])->order('grade_presente_id desc, Licencies.ddn desc');;
     	//Liste des notes
     	//$this->loadModel('Notes');
 		//$notes = $this->Notes->find()->contain(['Licencies','Juges'])->where(['passage_id'=>$passage->id]);
@@ -53,8 +54,19 @@ class PassagesController extends AppController
 		$this->loadModel('Notes');
 		$notes=$this->Notes->find()->contain(['Juges'=>['Jurys'],'Licencies'])->where(['Notes.passage_id'=>$passage->id]);
     	
-		//creation des notes si non existante en base
-		if ($notes->count() == 0){
+		if($notes->count() < ($juges->count()*$evalues->count())) {
+			
+			//Suppression des lignes eventuelles 
+			//Mise à blanc des combats de la table combat_poule
+			$this->loadModel('Notes');
+			$noteDelete = $this->Notes->query();
+			$noteDelete->delete()
+			->where(['passage_id'=>$passage->id])
+			->execute();
+			
+			
+			//creation des notes si non existante en base
+		//if ($notes->count() == 0){
 
 			//$this->loadModel('Notes');
 			$noteInsert = TableRegistry::get('Notes');
@@ -218,6 +230,7 @@ class PassagesController extends AppController
     	} else {
     		$this->Flash->error(__('Erreur dans la sélection du passage de grade.'));
     	}
-    	return $this->redirect(['controller'=>'passages','action' => 'index']);
+    	return $this->redirect(['controller'=>'Passages','action' => 'index']);
     }
+
 }

@@ -3,6 +3,7 @@ namespace App\Controller;
 
 use App\Controller\AppController;
 use Cake\ORM\TableRegistry;
+use PhpParser\Node\Stmt\Switch_;
 
 /**
  * Evalues Controller
@@ -46,17 +47,17 @@ class EvaluesController extends AppController
     {
     	//Passages selectionne
     	$passage = $this->Passages->find('all')->where(['selected'=>1])->first();
-    	 
-        $evalue = $this->Evalues->newEntity();
+    	
+   		$evalue = $this->Evalues->newEntity();
         if ($this->request->is('post')) {
-        	
             $evalue = $this->Evalues->patchEntity($evalue, $this->request->data);
+        	
             if ($this->Evalues->save($evalue)) {
-                $this->Flash->success(__('The evalue has been saved.'));
-
-                
+                $this->Flash->success(__('L\évalué a été créé.'));
+            	$this->Utilitaire->logInBdd("Ajout de l\'évalué : ".$evalue->id." : licencié ".$evalue->livencie_id." pour le passage ".$evalue->passage_id);
+             
             } else {
-                $this->Flash->error(__('The evalue could not be saved. Please, try again.'));
+                $this->Flash->error(__('Erreur dans la création de l\'évalué'));
             }
             return $this->redirect(['controller'=>'Passages','action' => 'gestion']);
         }
@@ -79,10 +80,13 @@ class EvaluesController extends AppController
     {
         $this->request->allowMethod(['post', 'delete']);
         $evalue = $this->Evalues->get($id);
+        $message = "Suppression de l\'évalué : ".$evalue->id." : licencié ".$evalue->livencie_id." pour le passage ".$evalue->passage_id;
+         
         if ($this->Evalues->delete($evalue)) {
-            $this->Flash->success(__('The evalue has been deleted.'));
+            $this->Flash->success(__('L\'évalué a été supprimé'));
+            $this->Utilitaire->logInBdd($message);
         } else {
-            $this->Flash->error(__('The evalue could not be deleted. Please, try again.'));
+            $this->Flash->error(__('Erreur dans la suppression de l\'évalué.'));
         }
 
         return $this->redirect(['action' => 'index']);
@@ -121,5 +125,66 @@ class EvaluesController extends AppController
     		
     		return $this->redirect(['controller'=>'Passages','action' => 'gestion']);
     	}
+    }
+
+    public function numero() {
+    
+    	//Passages selectionne
+    	$this->loadModel('Passages');
+    	$passage = $this->Passages->find('all')->where(['selected'=>1])->first();
+    		
+    	//Liste des inscris
+    	$evalues = $this->Evalues->find()
+    							 ->contain(['Licencies','Grades'])
+    							 ->where(['passage_id'=>$passage->id,'Licencies.ddn is not null'])
+    							 ->order('grade_presente_id desc, Licencies.ddn desc');
+    	
+    	
+    	$update = $this->Evalues->query();
+    	$iCpt=0;
+    	$gradeTmp=$grade=0;
+    	$numero=0;
+    	foreach ($evalues as $evalue) {
+    		$grade=$evalue->grade_presente_id;
+    		switch ($grade) {
+    			case 12 :
+    				$numero = 700;
+    				break;
+    			case 13 :
+    				$numero = 600;
+    				break;
+    			case 14 :
+    				$numero = 500;
+    				break;
+    			case 15 :
+    				$numero = 400;
+    				break;
+    			case 16 :
+    				$numero = 300;
+    				break;
+    			case 17 :
+    				$numero = 200;
+    				break;
+    			case 18 :
+    				$numero = 100;
+    				break;
+    		}
+    		
+    		if($gradeTmp==0){
+    			$iCpt++;
+    		} else {
+    			if($grade == $gradeTmp) $iCpt++;
+	    		else $iCpt=1;
+    		}
+    		$numero=$numero+$iCpt;
+    		$gradeTmp=$grade;
+    		//Update
+    		$update->update()
+    		->set(['numero' => $numero])
+    		->where(['id' => $evalue->id])->execute();
+    		$update = $this->Evalues->query();
+    	}
+    	
+    	return $this->redirect(['controller'=>'Passages','action' => 'gestion']);
     }
 }

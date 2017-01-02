@@ -1,4 +1,6 @@
 <?php 
+use Lib\FonctionUtilitaire;
+
 //debug($notes->toArray());die();
 $listeDebut = "<select id='@' name='@' class='form-control'>";
 
@@ -76,7 +78,7 @@ $listeFin = "</select>";
 						    <?php foreach ($evalues as $evalue): ?>
 						        <tr>
 					                <td><?= $evalue->licency->display_name ?></td>
-					                <td><?= $evalue->licency->ddn ?></td>
+					                <td><?= (strlen($evalue->licency->ddn) > 0) ? FonctionUtilitaire::dateFromMySQL($evalue->licency->ddn) : "<span class='alert-danger'>Erreur</span>" ?></td>
 					                <td><?= $evalue->numero ?></td>
 					                <td><?= $tabGrades[$evalue->grade_actuel_id] ?></td>
 					                <td><?= $tabGrades[$evalue->grade_presente_id] ?></td>
