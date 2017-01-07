@@ -121,6 +121,7 @@ class PassagesController extends AppController
     public function add()
     {
     	if(! $this->Securite->isAdmin()) return $this->redirect(['controller'=>'pages', 'action'=>'permission']);
+    	
         $passage = $this->Passages->newEntity();
         if ($this->request->is('post')) {
         	$data = $this->request->data;
@@ -132,7 +133,8 @@ class PassagesController extends AppController
             	$date_passage = substr($tmp_date, 6,4)."-".substr($tmp_date, 3,2)."-".substr($tmp_date, 0,2);
             }
             $passage->date_passage = $date_passage;
-            
+            $passage->selected=0;
+            //debug($passage);die();
             if ($this->Passages->save($passage)) {
             	$this->Utilitaire->logInBdd("Ajout du passage : ".$passage->id." -> ".$passage->name." - ".$passage->date_passage);
                 $this->Flash->success(__('Le passage a été créé.'));
@@ -215,9 +217,10 @@ class PassagesController extends AppController
 
     public function select()
     {
-    	$passages = $this->Passages->find('all')->contain('Disciplines')->where(['archive'=>0]);
+    	$passages = $this->Passages->find('all')->contain(['Disciplines','Regions'])->where(['archive'=>0]);
     	$this->set(compact('passages'));
     	$this->set('_serialize', ['passages']);
+    	
     }
      
     public function choisir($id)
@@ -231,7 +234,7 @@ class PassagesController extends AppController
     	} else {
     		$this->Flash->error(__('Erreur dans la sélection du passage de grade.'));
     	}
-    	return $this->redirect(['controller'=>'Passages','action' => 'index']);
+    	return $this->redirect(['controller'=>'Passages','action' => 'gestion']);
     }
 
 }

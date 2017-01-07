@@ -1,3 +1,6 @@
+<?php
+use Lib\FonctionUtilitaire;
+?>
 <div class="blocblanc">
 	<h2>Sélection</h2>
     <h3>Passage de grade</h3>
@@ -21,7 +24,7 @@
 			                <td><?= $passage->discipline->name ?></td>
 			                <td><?= $passage->region->name ?></td>
 			                <td><?= $passage->name ?></td>
-			                <td><?= $passage->date_passage ?></td>
+			                <td><?= FonctionUtilitaire::dateFromMySQL($passage->date_passage) ?></td>
 			                <td><?= $passage->selected == 1 ? '<span class="badge badge-success">Oui</span>' : $this->Html->link('Sélectionner', ['controller'=>'Passages', 'action' => 'choisir/'.$passage->id],['class' => 'btn btn-primary']) ?></td>
 				        
 				        </tr>

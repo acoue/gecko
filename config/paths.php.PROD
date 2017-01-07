@@ -88,4 +88,4 @@ define('MODULE_INSCRIPTION',true);
 define('MODULE_COMPETITION',true);
 define('MODULE_GRADE',true);
 
-define('ENV_PROD',false);
+define('ENV_PROD',true);

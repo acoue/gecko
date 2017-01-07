@@ -11,6 +11,7 @@ use Cake\Validation\Validator;
  *
  * @property \Cake\ORM\Association\BelongsTo $Passages
  * @property \Cake\ORM\Association\BelongsTo $Licencies
+ * @property \Cake\ORM\Association\BelongsTo $Grades
  * @property \Cake\ORM\Association\BelongsTo $Users
  *
  * @method \App\Model\Entity\InscriptionPassage get($primaryKey, $options = [])
@@ -50,6 +51,10 @@ class InscriptionPassagesTable extends Table
             'foreignKey' => 'licencie_id',
             'joinType' => 'INNER'
         ]);
+        $this->belongsTo('Grades', [
+            'foreignKey' => 'grade_presente_id',
+            'joinType' => 'INNER'
+        ]);
         $this->belongsTo('Users', [
             'foreignKey' => 'user_id',
             'joinType' => 'INNER'
@@ -85,6 +90,7 @@ class InscriptionPassagesTable extends Table
     {
         $rules->add($rules->existsIn(['passage_id'], 'Passages'));
         $rules->add($rules->existsIn(['licencie_id'], 'Licencies'));
+        $rules->add($rules->existsIn(['grade_presente_id'], 'Grades'));
         $rules->add($rules->existsIn(['user_id'], 'Users'));
 
         return $rules;

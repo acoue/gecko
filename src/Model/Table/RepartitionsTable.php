@@ -1,7 +1,6 @@
 <?php
 namespace App\Model\Table;
 
-use App\Model\Entity\Repartition;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
@@ -12,6 +11,16 @@ use Cake\Validation\Validator;
  *
  * @property \Cake\ORM\Association\BelongsTo $Competitions
  * @property \Cake\ORM\Association\BelongsTo $Licencies
+ *
+ * @method \App\Model\Entity\Repartition get($primaryKey, $options = [])
+ * @method \App\Model\Entity\Repartition newEntity($data = null, array $options = [])
+ * @method \App\Model\Entity\Repartition[] newEntities(array $data, array $options = [])
+ * @method \App\Model\Entity\Repartition|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\Repartition patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\Repartition[] patchEntities($entities, array $data, array $options = [])
+ * @method \App\Model\Entity\Repartition findOrCreate($search, callable $callback = null)
+ *
+ * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */
 class RepartitionsTable extends Table
 {
@@ -29,6 +38,8 @@ class RepartitionsTable extends Table
         $this->table('repartitions');
         $this->displayField('id');
         $this->primaryKey('id');
+
+        $this->addBehavior('Timestamp');
 
         $this->belongsTo('Competitions', [
             'foreignKey' => 'competition_id',
@@ -86,6 +97,7 @@ class RepartitionsTable extends Table
     {
         $rules->add($rules->existsIn(['competition_id'], 'Competitions'));
         $rules->add($rules->existsIn(['licencie_id'], 'Licencies'));
+
         return $rules;
     }
 }

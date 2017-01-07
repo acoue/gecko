@@ -16,7 +16,7 @@ use \Lib\FonctionUtilitaire;
                     <div class="col-lg-14"><?= $this->Form->input('name', ['label' => false,'id'=>'name',
 														   	'div' => false,
 															'class' => 'form-control', 
-                    										'type' => 'text', 'value'=>FonctionUtilitaire::dateTimeFromMySQL($historique->created),
+                    										'type' => 'text', 'value'=> FonctionUtilitaire::dateTimeFromMySQL($historique->created),
 															'disabled' =>'disabled']); ?>
                     </div>                          
 				</div><br />

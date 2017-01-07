@@ -3,6 +3,7 @@ namespace App\Controller;
 
 use App\Controller\AppController;
 use \Lib\FonctionTirage;
+use \Lib\FonctionUtilitaire;
 
 /**
  * Tirages Controller
@@ -508,7 +509,7 @@ class TiragesController extends AppController
     	<table cellpadding='0' cellspacing='0' width='100%' >
     		<tr>
 		    	<td align='left'>Comité National de Kendo F.F.J.D.A.</td>
-		    	<td align='right'>Date : ".$competitionSelected->date_competition."</td>
+		    	<td align='right'>Date : ".FonctionUtilitaire::dateFromMySQL($competitionSelected->date_competition)."</td>
 	    	</tr>
 	    	<tr>
 	    		<td align='left'>Commission sportive</td>

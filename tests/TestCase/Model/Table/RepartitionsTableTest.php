@@ -27,9 +27,26 @@ class RepartitionsTableTest extends TestCase
         'app.repartitions',
         'app.competitions',
         'app.categories',
-        'app.licencies',
+        'app.regions',
         'app.clubs',
-        'app.regions'
+        'app.licencies',
+        'app.grades',
+        'app.disciplines',
+        'app.combat_poules',
+        'app.inscription_competitions',
+        'app.users',
+        'app.profils',
+        'app.historiques',
+        'app.inscription_passages',
+        'app.passages',
+        'app.evalues',
+        'app.juges',
+        'app.jurys',
+        'app.notes',
+        'app.resultat_competitions',
+        'app.resultats',
+        'app.resultat_poules',
+        'app.tirages'
     ];
 
     /**

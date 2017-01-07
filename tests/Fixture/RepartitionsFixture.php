@@ -24,6 +24,8 @@ class RepartitionsFixture extends TestFixture
         'point_combat' => ['type' => 'integer', 'length' => 2, 'unsigned' => false, 'null' => false, 'default' => '0', 'comment' => '', 'precision' => null, 'autoIncrement' => null],
         'competition_id' => ['type' => 'integer', 'length' => 10, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
         'licencie_id' => ['type' => 'integer', 'length' => 10, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
+        'created' => ['type' => 'datetime', 'length' => null, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null],
+        'modified' => ['type' => 'datetime', 'length' => null, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null],
         '_indexes' => [
             'licencie_repartition_fk' => ['type' => 'index', 'columns' => ['licencie_id'], 'length' => []],
         ],
@@ -53,7 +55,9 @@ class RepartitionsFixture extends TestFixture
             'resultat_combat' => 1,
             'point_combat' => 1,
             'competition_id' => 1,
-            'licencie_id' => 1
+            'licencie_id' => 1,
+            'created' => '2017-01-07 14:30:51',
+            'modified' => '2017-01-07 14:30:51'
         ],
     ];
 }

@@ -78,7 +78,7 @@ class EvaluesController extends AppController
      */
     public function delete($id = null)
     {
-        $this->request->allowMethod(['post', 'delete']);
+        //$this->request->allowMethod(['post', 'delete']);
         $evalue = $this->Evalues->get($id);
         $message = "Suppression de l\'évalué : ".$evalue->id." : licencié ".$evalue->livencie_id." pour le passage ".$evalue->passage_id;
          
@@ -89,7 +89,7 @@ class EvaluesController extends AppController
             $this->Flash->error(__('Erreur dans la suppression de l\'évalué.'));
         }
 
-        return $this->redirect(['action' => 'index']);
+        return $this->redirect(['controller'=>'Passages','action' => 'gestion']);
     }
     
     public function note() {

@@ -4,7 +4,7 @@ namespace App\Model\Entity;
 use Cake\ORM\Entity;
 
 /**
- * Repartition Entity.
+ * Repartition Entity
  *
  * @property int $id
  * @property int $numero_poule
@@ -12,8 +12,11 @@ use Cake\ORM\Entity;
  * @property int $resultat_combat
  * @property int $point_combat
  * @property int $competition_id
- * @property \App\Model\Entity\Competition $competition
  * @property int $licencie_id
+ * @property \Cake\I18n\Time $created
+ * @property \Cake\I18n\Time $modified
+ *
+ * @property \App\Model\Entity\Competition $competition
  * @property \App\Model\Entity\Licency $licency
  */
 class Repartition extends Entity
@@ -30,6 +33,6 @@ class Repartition extends Entity
      */
     protected $_accessible = [
         '*' => true,
-        'id' => false,
+        'id' => false
     ];
 }

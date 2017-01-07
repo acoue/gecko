@@ -78,15 +78,14 @@ $listeFin = "</select>";
 						    <?php foreach ($evalues as $evalue): ?>
 						        <tr>
 					                <td><?= $evalue->licency->display_name ?></td>
-					                <td><?= (strlen($evalue->licency->ddn) > 0) ? FonctionUtilitaire::dateFromMySQL($evalue->licency->ddn) : "<span class='alert-danger'>Erreur</span>" ?></td>
+					        		<td><?= (strlen($evalue->licency->ddn) > 0) ? FonctionUtilitaire::dateFromMySQL($evalue->licency->ddn) : "<span class='alert-danger'>Erreur</span>" ?></td>
 					                <td><?= $evalue->numero ?></td>
 					                <td><?= $tabGrades[$evalue->grade_actuel_id] ?></td>
 					                <td><?= $tabGrades[$evalue->grade_presente_id] ?></td>
 					                <td class="actions">
-										<?= $this->Form->postLink(__('Supprimer'), ['action' => 'delete', $evalue->id], ['confirm' => __('Etes-vous sûr de vouloir supprimer le passage {0}?', $passage->name)]) ?>
+										<?= $this->Form->postLink(__('Supprimer'), ['controller'=>'Evalues','action' => 'delete', $evalue->id], ['confirm' => __('Etes-vous sûr de vouloir supprimer le passage {0}?', $passage->name)]) ?>
 			                		</td>
 						        </tr>
-						
 						    <?php endforeach; ?>
 						    </tbody>
 						</table>

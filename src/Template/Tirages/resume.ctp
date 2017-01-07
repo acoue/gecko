@@ -1,3 +1,6 @@
+<?php
+
+?>
 <div class="blocblanc">
 	<h2>Poules</h2>
 	

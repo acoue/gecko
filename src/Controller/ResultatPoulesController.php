@@ -12,6 +12,7 @@ use Lib\Tableau32;
 use Lib\Tableau36;
 use Lib\Tableau48;
 use Lib\Tableau64;
+use Lib\Tableau96;
 /**
  * ResultatPoules Controller
  *
@@ -117,7 +118,7 @@ class ResultatPoulesController extends AppController
     	</table>";
     	$resultat.="<br /><br /><table cellpadding='0' cellspacing='0' width='100%' style='font-size: 80%;'>";
     	
-    	//$tailleTableau=12;
+    	$tailleTableau=64;
     	switch ($tailleTableau) {
     		case 4:
     			$resultat.=Tableau4::dessineTableau('30','50');
@@ -148,6 +149,9 @@ class ResultatPoulesController extends AppController
     			break;
     		case 64:
     			$resultat.=Tableau64::dessineTableau('6','10');
+    			break;
+    		case 96:
+    			$resultat.=Tableau96::dessineTableau('6','10');
     			break;
     	}
     	

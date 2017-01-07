@@ -1,6 +1,6 @@
 <div class="blocblanc">
 	<h2>Inscription</h2>
-    <h3>Compétition</h3>
+    <h3>Passage de grades</h3>
 	<div class="blocblancContent large-9 medium-8 columns content">
 		<div class="row">
 			<div class="col-lg-2"></div>
@@ -8,6 +8,7 @@
 				<?= $this->Html->link(__('Retour'), ['action' => 'index'],['class' => 'btn btn-info']) ?> 
 			</div>
 			<div class="col-lg-15"> 
+			<h4>Merci de remplir le formulaire du haut vers le bas</h4>
     			<?= $this->Form->create(null) ?>
 			    <div class="row">
                 	<label class="col-lg-8 control-label" for="passage_id">Passage de grades</label>
@@ -17,7 +18,16 @@
                     										'options' => $passages, 
 															'required' =>'required']); ?>
                     </div>                          
-				</div><br /> 				
+				</div><br /> 	    
+			    <div class="row">
+                	<label class="col-lg-8 control-label" for="grade_presente_id">Grade présenté</label>
+                    <div class="col-lg-16"><?= $this->Form->input('grade_presente_id', ['label' => false,'id'=>'grade_presente_id',
+														   	'div' => false,
+															'class' => 'form-control', 
+                    										'options' => $grades,
+															'required' =>'required']); ?>
+                    </div>                          
+				</div><br />			
 				<div class="row">
                 	<label class="col-lg-8 control-label" for="libelle">Licencié : </label>
                     <div class="col-lg-16"><?= $this->Form->input('libelle', ['label' => false,'id'=>'libelle',
@@ -25,7 +35,7 @@
 															'class' => 'form-control', 
                     										'type' => 'text']); ?>
                     </div>                          
-				</div><br />  
+				</div><br />
 				<div id="listeDiv"></div>
 			    <?= $this->Form->end() ?>
 			</div>						
@@ -43,7 +53,8 @@
                 url: "<?= $this->Url->build(['controller'=>'InscriptionPassages','action'=>'search'])?>",
                 data: {
                     libelle: $("#libelle").val(),
-                    passage: $("#passage_id").val()
+                    passage: $("#passage_id").val(),
+                    grade: $("#grade_presente_id").val()
                 },
                 length: 3,
                 dataType: 'html',

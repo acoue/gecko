@@ -26,12 +26,14 @@ class InscriptionPassagesTableTest extends TestCase
     public $fixtures = [
         'app.inscription_passages',
         'app.passages',
-        'app.evalues',
-        'app.licencies',
-        'app.clubs',
         'app.regions',
+        'app.clubs',
+        'app.licencies',
+        'app.grades',
+        'app.disciplines',
+        'app.evalues',
         'app.juges',
-        'app.jures',
+        'app.jurys',
         'app.notes',
         'app.users',
         'app.profils',
@@ -41,6 +43,8 @@ class InscriptionPassagesTableTest extends TestCase
         'app.categories',
         'app.combat_poules',
         'app.repartitions',
+        'app.resultat_competitions',
+        'app.resultats',
         'app.resultat_poules',
         'app.tirages'
     ];

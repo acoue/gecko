@@ -23,16 +23,49 @@ class InscriptionCompetitionsController extends AppController
     	
     	if($user->getProfil() == 'admin') {
     		$inscriptionCompetitions= $this->InscriptionCompetitions->find('all')
-    		->contain(['Competitions'=>['Disciplines','Categories'], 'Licencies','Users']);
+    		->contain(['Competitions'=>['Disciplines','Categories'], 'Licencies'=>['Clubs','Grades'],'Users']);
     	}else {
     		$inscriptionCompetitions= $this->InscriptionCompetitions->find('all')
-    		->contain(['Competitions'=>['Disciplines','Categories'], 'Licencies','Users'])->where(['user_id'=>$user->getId()]);
+    		->contain(['Competitions'=>['Disciplines','Categories'], 'Licencies'=>['Clubs','Grades'],'Users'])->where(['user_id'=>$user->getId()]);
     	}
     	
     	$this->set(compact('inscriptionCompetitions'));
         $this->set('_serialize', ['inscriptionCompetitions']);
     }
 
+    public function validate($id){
+    	
+    	if(! $this->Securite->isAdmin()) return $this->redirect(['controller'=>'pages', 'action'=>'permission']);
+    	//Recuperation de l'inscription
+    	$inscriptionCompetition = $this->InscriptionCompetitions->get($id, [
+            'contain' => ['Competitions', 'Licencies']
+        ]);
+    			
+    	//Bascule vers la table repartition
+    	$this->loadModel('Repartitions');
+    	$repartition = $this->Repartitions->newEntity();
+    	$repartition->id=null;
+    	$repartition->competition_id=$inscriptionCompetition->competition_id;
+    	$repartition->licencie_id=$inscriptionCompetition->licencie_id;
+    	
+    	if ($this->Repartitions->save($repartition)) {
+    		$this->Flash->success(__('Répartition effectuée.'));
+    		$this->Utilitaire->logInBdd("Creation de la répartition du licencié : ".$inscriptionCompetition->licency->display_name." pour la compétition : ".$inscriptionCompetition->competition->name); 
+    	} else {
+    		$this->Flash->error(__('Erreur lors de la répartition.'));
+    	}
+    	
+    	//Suppression
+    	$message = "Suppression de l'inscription du licencié : ".$inscriptionCompetition->licency->display_name." pour la compétition : ".$inscriptionCompetition->competition->name;
+    	if($this->InscriptionCompetitions->delete($inscriptionCompetition)) {
+    		$this->Flash->success(__('Suppression de l\'inscription à la compétition effectuée.'));
+    		$this->Utilitaire->logInBdd($message);
+    	} else {
+    		$this->Flash->error(__('Erreur lors de la suppression de l\'inscription à la compétition.'));
+    	}
+    	return $this->redirect(['action' => 'index']);
+    }
+    
     /**
      * Add method
      *

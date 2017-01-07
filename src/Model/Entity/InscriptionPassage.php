@@ -10,6 +10,7 @@ use Cake\ORM\Entity;
  * @property string $commentaire
  * @property int $passage_id
  * @property int $licencie_id
+ * @property int $grade_presente_id
  * @property int $user_id
  * @property \Cake\I18n\Time $created
  * @property \Cake\I18n\Time $modified
