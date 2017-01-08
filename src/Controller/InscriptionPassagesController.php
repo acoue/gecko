@@ -77,10 +77,10 @@ class InscriptionPassagesController extends AppController
     {
     	//Recuperation du club du user connecte
     	$user = $this->request->session()->read("UserConnected");
-    	$club=$user->getClub();
+    	$club=$user->getIdClub();
     	
     	$this->loadModel('Clubs');
-    	$query = $this->Clubs->find('all')->where(['name'=>$club])->first();
+    	$query = $this->Clubs->find('all')->where(['id'=>$club])->first();
     	$region[0] = $query->region_id;
     	$region[1] = -1;
     	
@@ -132,21 +132,19 @@ class InscriptionPassagesController extends AppController
     		$libelle = $this->request->data['libelle'];
     
     		$this->loadModel('Licencies');
+    		$lic = $this->Licencies->find('all')
+    		->contain(['Clubs','Disciplines','Grades'])
+    		->limit(20)
+    		->where(['prenom like '=>'%'.$libelle.'%'])
+    		->orWhere(['nom like '=>'%'.$libelle.'%']);
+    		
+
     		if($user->getProfil()=='admin') {
-    			 
-    			$lic = $this->Licencies->find('all')
-    			->contain(['Clubs','Disciplines','Grades'])
-    			->limit(20)
-    			->where(['discipline_id'=>$passage->discipline_id,'prenom like '=>'%'.$libelle.'%'])
-    			->orWhere(['nom like '=>'%'.$libelle.'%']);
+    			$lic->where(['discipline_id'=>$competition->discipline_id]);
     		} else {
-    			$lic = $this->Licencies->find('all')
-    			->contain(['Clubs','Disciplines','Grades'])
-    			->limit(20)
-    			->where(["club_id"=>$club,'discipline_id'=>$passage->discipline_id,'prenom like '=>'%'.$libelle.'%'])
-    			->orWhere(['nom like '=>'%'.$libelle.'%']);
-    			 
+    			$lic->where(["club_id"=>$club,'discipline_id'=>$competition->discipline_id]);
     		}
+    		
     		$this->set('passage_id',$passage_id);
     		$this->set('licencies', $lic);
     		$this->set('grade', $grade);

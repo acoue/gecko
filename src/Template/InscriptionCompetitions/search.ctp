@@ -1,4 +1,3 @@
-
 <table cellpadding="0" cellspacing="0" class="table table-striped">
     <thead>
         <tr align='center'>

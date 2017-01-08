@@ -46,6 +46,7 @@ class UsersController extends AppController
 				//debug($modif_user); die();
 				
 				$modif_user->lastlogin = date('Y-m-d H:i:s');
+				
 				$this->Users->save($modif_user);	
 				$this->Auth->setUser($user);
 				
@@ -59,7 +60,8 @@ class UsersController extends AppController
 				$userConnected->setLogin($dataForm['username']);
 				$userConnected->setProfil($modif_user->profil->name);
 				$userConnected->setClub($modif_user->club->name);
-				
+				$userConnected->setIdClub($modif_user->club->id);
+				//debug($userConnected);die();
 				$session->write('UserConnected',$userConnected);
 				$session->write('Module',"-1");
             	$this->Utilitaire->logInBdd("Connexion");

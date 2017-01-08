@@ -13,6 +13,7 @@ class UserConnected {
 	private $login;
 	private $profil;
 	private $club;
+	private $clubId;
 	
 	public function __construct() {
     }
@@ -64,5 +65,11 @@ class UserConnected {
 	}
 	public function setClub($club) {
 		$this->club = $club;
+	}
+	public function getIdClub() {
+		return $this->clubId;
+	}
+	public function setIdClub($clubId) {
+		$this->clubId = $clubId;
 	}
 }

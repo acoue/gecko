@@ -75,10 +75,11 @@ class InscriptionCompetitionsController extends AppController
     {
     	//Recuperation du club du user connecte
     	$user = $this->request->session()->read("UserConnected");
-    	$club=$user->getClub();
+    	$club=$user->getIdClub();	
     	//Region du user connecté
     	$this->loadModel('Clubs');
-    	$query = $this->Clubs->find('all')->where(['name'=>$club])->first();
+    	$query = $this->Clubs->find('all')->where(['id'=>$club])->first();
+    	
     	$region[0] = $query->region_id;
     	$region[1] = -1;
         
@@ -86,7 +87,7 @@ class InscriptionCompetitionsController extends AppController
         if($this->Securite->isAdmin()) $competitions = $this->InscriptionCompetitions->Competitions->find('list', ['limit' => 200])->where(['archive'=>0]);
         else $competitions = $this->InscriptionCompetitions->Competitions->find('list', ['limit' => 200])->where(['archive'=>0,'region_id in '=> $region]);
         
-        
+        //debug($competitions->toArray());die();
         $this->set(compact('inscriptionCompetition', 'competitions'));
         $this->set('_serialize', ['inscriptionCompetition']);
     }
@@ -146,29 +147,25 @@ class InscriptionCompetitionsController extends AppController
     		
     		//Recuperation du club du user connecte
     		$user = $this->request->session()->read("UserConnected");
-    		
+    		$club = $user->getIdClub();
     		$libelle = $this->request->data['libelle'];
     		
+    		
     		$this->loadModel('Licencies');
-    		if($user->getProfil()=='admin') {
-    			
-    			$lic = $this->Licencies->find('all')
-    			->contain(['Clubs','Disciplines'])
-    			->limit(20)
-    			->where(['discipline_id'=>$competition->discipline_id,'prenom like '=>'%'.$libelle.'%'])
-    			->orWhere(['nom like '=>'%'.$libelle.'%']);
+    		$lic = $this->Licencies->find('all')
+    		->contain(['Clubs','Disciplines'])
+    		->limit(20)
+    		->where(['prenom like '=>'%'.$libelle.'%'])
+    		->orWhere(['nom like '=>'%'.$libelle.'%']);
+    		
+    		if($user->getProfil()=='admin') {    			
+    			$lic->where(['discipline_id'=>$competition->discipline_id]);    			
     		} else {
-    			$lic = $this->Licencies->find('all')
-    			->contain(['Clubs','Disciplines'])
-    			->limit(20)
-    			->where(["club_id"=>$club,'discipline_id'=>$competition->discipline_id,'prenom like '=>'%'.$libelle.'%'])
-    			->orWhere(['nom like '=>'%'.$libelle.'%']);
-    			
+    			$lic->where(["club_id"=>$club,'discipline_id'=>$competition->discipline_id]);    			
     		}
     		$this->set('competition_id',$competition_id);
     		$this->set('licencies', $lic);
-    
-    		//% or name like %% or description like %%
+    		//$this->set(compact('user', 'club','competition'));
     	}
     }
 }
