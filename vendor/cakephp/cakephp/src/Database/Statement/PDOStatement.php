@@ -32,8 +32,7 @@ class PDOStatement extends StatementDecorator
      */
     public function __construct(Statement $statement = null, $driver = null)
     {
-        $this->_statement = $statement;
-        $this->_driver = $driver;
+        parent::__construct($statement, $driver);
     }
 
     /**
@@ -86,7 +85,7 @@ class PDOStatement extends StatementDecorator
      * ```
      *
      * @param string $type 'num' for positional columns, assoc for named columns
-     * @return mixed Result array containing columns and values or false if no results
+     * @return array|false Result array containing columns and values or false if no results
      * are left
      */
     public function fetch($type = 'num')

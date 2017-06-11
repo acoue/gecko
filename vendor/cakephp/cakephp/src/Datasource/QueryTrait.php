@@ -37,7 +37,7 @@ trait QueryTrait
      *
      * When set, query execution will be bypassed.
      *
-     * @var \Cake\Datasource\ResultSetInterface
+     * @var \Cake\Datasource\ResultSetInterface|null
      * @see \Cake\Datasource\QueryTrait::setResult()
      */
     protected $_results;
@@ -54,7 +54,7 @@ trait QueryTrait
      * List of formatter classes or callbacks that will post-process the
      * results when fetched
      *
-     * @var array
+     * @var callable[]
      */
     protected $_formatters = [];
 
@@ -110,7 +110,7 @@ trait QueryTrait
      * This method is most useful when combined with results stored in a persistent cache.
      *
      * @param \Cake\Datasource\ResultSetInterface $results The results this query should return.
-     * @return $this The query instance.
+     * @return $this
      */
     public function setResult($results)
     {
@@ -166,7 +166,7 @@ trait QueryTrait
      *   When using a function, this query instance will be supplied as an argument.
      * @param string|\Cake\Cache\CacheEngine $config Either the name of the cache config to use, or
      *   a cache config instance.
-     * @return $this This instance
+     * @return $this
      */
     public function cache($key, $config = 'default')
     {
@@ -265,7 +265,7 @@ trait QueryTrait
      */
     public function all()
     {
-        if (isset($this->_results)) {
+        if ($this->_results !== null) {
             return $this->_results;
         }
 
@@ -393,7 +393,7 @@ trait QueryTrait
      * $singleUser = $query->select(['id', 'username'])->first();
      * ```
      *
-     * @return mixed the first result from the ResultSet
+     * @return \Cake\Datasource\EntityInterface|array|null The first result from the ResultSet.
      */
     public function first()
     {
@@ -408,18 +408,19 @@ trait QueryTrait
      * Get the first result from the executing query or raise an exception.
      *
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When there is no first record.
-     * @return mixed The first result from the ResultSet.
+     * @return \Cake\Datasource\EntityInterface|array The first result from the ResultSet.
      */
     public function firstOrFail()
     {
         $entity = $this->first();
-        if ($entity) {
-            return $entity;
+        if (!$entity) {
+            throw new RecordNotFoundException(sprintf(
+                'Record not found in table "%s"',
+                $this->repository()->table()
+            ));
         }
-        throw new RecordNotFoundException(sprintf(
-            'Record not found in table "%s"',
-            $this->repository()->table()
-        ));
+
+        return $entity;
     }
 
     /**
@@ -456,7 +457,7 @@ trait QueryTrait
         if (in_array($method, get_class_methods($resultSetClass))) {
             $results = $this->all();
 
-            return call_user_func_array([$results, $method], $arguments);
+            return $results->$method(...$arguments);
         }
         throw new BadMethodCallException(
             sprintf('Unknown method "%s"', $method)
@@ -468,7 +469,7 @@ trait QueryTrait
      * This is handy for passing all query clauses at once.
      *
      * @param array $options the options to be applied
-     * @return $this This object
+     * @return $this
      */
     abstract public function applyOptions(array $options);
 

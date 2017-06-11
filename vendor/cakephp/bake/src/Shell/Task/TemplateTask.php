@@ -266,6 +266,7 @@ class TemplateTask extends BakeTask
      *
      * - 'modelObject'
      * - 'modelClass'
+     * - 'entityClass'
      * - 'primaryKey'
      * - 'displayField'
      * - 'singularVar'
@@ -288,13 +289,14 @@ class TemplateTask extends BakeTask
             ]);
         }
 
-        $primaryKey = (array)$modelObject->primaryKey();
-        $displayField = $modelObject->displayField();
+        $primaryKey = (array)$modelObject->getPrimaryKey();
+        $displayField = $modelObject->getDisplayField();
         $singularVar = $this->_singularName($this->controllerName);
         $singularHumanName = $this->_singularHumanName($this->controllerName);
-        $schema = $modelObject->schema();
+        $schema = $modelObject->getSchema();
         $fields = $schema->columns();
         $modelClass = $this->modelName;
+        list(, $entityClass) = namespaceSplit($this->_entityName($this->modelName));
         $associations = $this->_filteredAssociations($modelObject);
         $keyFields = [];
         if (!empty($associations['BelongsTo'])) {
@@ -306,9 +308,12 @@ class TemplateTask extends BakeTask
         $pluralVar = Inflector::variable($this->controllerName);
         $pluralHumanName = $this->_pluralHumanName($this->controllerName);
 
+        $namespace = Configure::read('App.namespace');
+
         return compact(
             'modelObject',
             'modelClass',
+            'entityClass',
             'schema',
             'primaryKey',
             'displayField',
@@ -318,7 +323,8 @@ class TemplateTask extends BakeTask
             'pluralHumanName',
             'fields',
             'associations',
-            'keyFields'
+            'keyFields',
+            'namespace'
         );
     }
 
@@ -340,7 +346,7 @@ class TemplateTask extends BakeTask
     /**
      * handle creation of baking a custom action view file
      *
-     * @return void|null
+     * @return void
      */
     public function customAction()
     {
@@ -365,8 +371,9 @@ class TemplateTask extends BakeTask
         $looksGood = $this->in('Look okay?', ['y', 'n'], 'y');
         if (strtolower($looksGood) === 'y') {
             $this->bake($action, ' ');
+            $this->_stop();
 
-            return $this->_stop();
+            return;
         }
         $this->out('Bake Aborted.');
     }
@@ -376,7 +383,7 @@ class TemplateTask extends BakeTask
      *
      * @param string $action Action to bake.
      * @param string $content Content to write.
-     * @return string Generated file content.
+     * @return string|false Generated file content.
      */
     public function bake($action, $content = '')
     {
@@ -401,7 +408,7 @@ class TemplateTask extends BakeTask
      *
      * @param string $action name to generate content to
      * @param array|null $vars passed for use in templates
-     * @return string content from template
+     * @return string|false Content from template
      */
     public function getContent($action, $vars = null)
     {
@@ -435,10 +442,10 @@ class TemplateTask extends BakeTask
     {
         $parser = parent::getOptionParser();
 
-        $parser->description(
+        $parser->setDescription(
             'Bake views for a controller, using built-in or custom templates. '
         )->addArgument('controller', [
-            'help' => 'Name of the controller views to bake. Can be Plugin.name as a shortcut for plugin baking.'
+            'help' => 'Name of the controller views to bake. You can use Plugin.name as a shortcut for plugin baking.'
         ])->addArgument('action', [
             'help' => "Will bake a single action's file. core templates are (index, add, edit, view)"
         ])->addArgument('alias', [
