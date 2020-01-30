@@ -1,3 +1,3 @@
 # GEstion Compétition KendO - Gecko
 
-Application basé sur le Framework CakePHP 
+Application basée sur le Framework CakePHP 
