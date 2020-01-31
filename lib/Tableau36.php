@@ -6,8 +6,8 @@ class Tableau36 {
 	function dessineTableau($width,$height) {
 		$sortie="";
 		$sortie.="<tr>
-					<td width='".($width/3)."%'>1</td>
-					<td width='".$width."%' class='cellule".$height." cellule0001'>@1@</td>
+					<td width='".($width/3)."%'>1.1</td>
+					<td width='".$width."%' class='cellule".$height." cellule0001'>@1.1@</td>
 					<td width='".$width."%' class='cellule".$height." '></td>
 					<td width='".$width."%' class='cellule".$height." '></td>
 					<td width='".$width."%' class='cellule".$height." '></td>
@@ -18,11 +18,11 @@ class Tableau36 {
 					<td width='".$width."%' class='cellule".$height." '></td>
 					<td width='".$width."%' class='cellule".$height." '></td>
 					<td width='".$width."%' class='cellule".$height." '></td>
-					<td width='".$width."%' class='cellule".$height." cellule0001'></td>	
-					<td width='".($width/3)."%'>1</td>
+					<td width='".$width."%' class='cellule".$height." cellule0001'>@2.1@</td>	
+					<td width='".($width/3)."%'>2.1</td>
 				</tr>
 				<tr>
-					<td>2</td>
+					<td></td>
 					<td class='cellule".$height." cellule0010'></td>
 					<td class='cellule".$height." cellule0001'></td>
 					<td class='cellule".$height." '></td>
@@ -35,11 +35,11 @@ class Tableau36 {
 					<td class='cellule".$height." '></td>
 					<td class='cellule".$height." cellule0001'></td>
 					<td class='cellule".$height." cellule1000'></td>
-					<td>2</td>
+					<td></td>
 				</tr>
 				<tr>
-					<td>3</td>
-					<td class='cellule".$height." cellule0011'></td>
+					<td width='".($width/3)."%'>18.2</td>
+					<td class='cellule".$height." cellule0011'>@18.2@</td>
 					<td class='cellule".$height." cellule0010'></td>
 					<td class='cellule".$height." '></td>
 					<td class='cellule".$height." '></td>
@@ -50,8 +50,8 @@ class Tableau36 {
 					<td class='cellule".$height." '></td>
 					<td class='cellule".$height." '></td>
 					<td class='cellule".$height." cellule1000'></td>
-					<td class='cellule".$height." cellule1001'></td>
-					<td>3</td>
+					<td class='cellule".$height." cellule1001'>@17.2@</td>
+					<td width='".($width/3)."%'>17.2</td>
 				</tr>
 				<tr>
 					<td>4</td>

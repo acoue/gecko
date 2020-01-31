@@ -226,8 +226,8 @@ return [
              */
             //'port' => 'non_standard_port_number',
             'username' => 'root', //Prod : acouefrerngecko
-            'password' => 'Petosse@85', //Prod : 123Soleil
-            'database' => 'gecko', //prod : acouefrerngecko
+            'password' => '', //Prod : 123Soleil
+            'database' => 'gecko_2', //prod : acouefrerngecko
             'encoding' => 'utf8',
             'timezone' => 'UTC',
             'flags' => [],

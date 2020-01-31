@@ -30,7 +30,7 @@ class ResultatPoulesController extends AppController
     {
     	
     	$this->loadModel('Competitions');
-    	$competitionSelected = $this->Competitions->find('all')->contain(['Categories'])->where(['selected' => '1'])->first();
+    	$competitionSelected = $this->Competitions->find('all')->contain(['Categories',"Disciplines"])->where(['selected' => '1'])->first();
     	  
     	$resultatPoules = $this->ResultatPoules->find('all')->contain(['Licencies'])
     	->where(['competition_id'=>$competitionSelected->id])
@@ -118,7 +118,7 @@ class ResultatPoulesController extends AppController
     	</table>";
     	$resultat.="<br /><br /><table cellpadding='0' cellspacing='0' width='100%' style='font-size: 80%;'>";
     	
-    	$tailleTableau=64;
+    	$tailleTableau=36;
     	switch ($tailleTableau) {
     		case 4:
     			$resultat.=Tableau4::dessineTableau('30','50');
@@ -156,7 +156,7 @@ class ResultatPoulesController extends AppController
     	}
     	
     	$resultat.="</table>";
-    	
+    	//debug($resultat);
     	$resultatPoules = $this->ResultatPoules->find('all')->contain(['Licencies'])
     	->select(['prenom'=>'prenom', 'nom'=>'nom' , 'res'=> 'concat(numero_poule,".",classement)'])
     	->where(['competition_id'=>$competitionSelected->id,'classement < '=>3])

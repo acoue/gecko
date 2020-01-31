@@ -80,7 +80,7 @@ class AppController extends Controller
         } 
         //debug($competition->category->name);die();
     	//Envoi des objet retuor à la page
-    	$this->set('_serialize', ['competitionSelected']);
+    	//$this->set('_serialize', ['competitionSelected']);
     }
 
     /**

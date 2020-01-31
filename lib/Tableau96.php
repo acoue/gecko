@@ -8,7 +8,7 @@ class Tableau96 {
 		$sortie.="
 				<tr>
 					<td width='".($width/3)."%'>1.1</td>
-					<td width='".$width."%' class='cellule".$height." cellule0001'>@1@</td>
+					<td width='".$width."%' class='cellule".$height." cellule0001'>@1.1@</td>
 					<td width='".$width."%' class='cellule".$height." cellule0001'></td>
 					<td width='".$width."%' class='cellule".$height."'></td>
 					<td width='".$width."%' class='cellule".$height."'></td>
@@ -19,8 +19,8 @@ class Tableau96 {
 					<td width='".$width."%' class='cellule".$height."'></td>
 					<td width='".$width."%' class='cellule".$height."'></td>
 					<td width='".$width."%' class='cellule".$height." cellule0001'></td>
-					<td width='".$width."%' class='cellule".$height." cellule0001'>@1@</td>
-					<td width='".($width/3)."%'>1.1</td>
+					<td width='".$width."%' class='cellule".$height." cellule0001'>@2.1@</td>
+					<td width='".($width/3)."%'>2.1</td>
 				</tr>
 				<tr>
 					<td></td>
@@ -67,7 +67,7 @@ class Tableau96 {
 					<td class='cellule".$height."'></td>
 					<td class='cellule".$height." cellule1010'></td>
 					<td class='cellule".$height."'></td>
-					<td class='cellule".$height." cellule0001'>@2@</td>
+					<td class='cellule".$height." cellule0001'>@12.2@</td>
 					<td>12.2</td>
 				</tr>
 				<tr>

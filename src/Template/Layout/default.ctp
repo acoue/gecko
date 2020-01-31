@@ -11,6 +11,8 @@ $cakeDescription = 'GeCKo';
 $session = $this->request->session();
 if($session->check("UserConnected")) $uc=$session->read("UserConnected");
 else $uc =null;
+
+//debug($competitionSelected);
 ?>
 <!DOCTYPE html>
 <html>
@@ -50,7 +52,9 @@ else $uc =null;
 	            	if($module==1) {
 	            		echo "Module licenciés";
 	            	} else if($module==2) {
-	            		echo $competitionSelected-> name ." ".$competitionSelected->category->name." (".$competitionSelected->discipline->name.")"."&nbsp;&nbsp;";
+	            		echo $competitionSelected-> name ." ".
+	            		$competitionSelected->category->name." (".
+	            		$competitionSelected->discipline->name.")"."&nbsp;&nbsp;";
 						echo $this->Html->link('Sélectioner', ['controller'=>'Competitions', 'action' => 'select'],['class' => 'btn btn-info']);
 	            	} else if($module==3) {
 	            		echo $passageSelected-> name ." (".$passageSelected->discipline->name.")"."&nbsp;&nbsp;";

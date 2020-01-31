@@ -18,7 +18,7 @@
 					echo "<div class='pouleTab'><table cellpadding='0' cellspacing='0' class='table table-bordered'>";
 					echo "<tr><td align='center'>Résultats : <b>Poule ".$poule."</b></td><td>Classement</td></tr>";
 				} 
-				echo "<tr><td align='center'>".$value['licency']['nom']."</td>";
+				echo "<tr><td align='center'>".$value['licency']['nom']."<br />".$value['licency']['prenom']."</td>";
 				
 				if($value['classement'] == 0) echo "<td><span class='badge'>".$value['classement']."</span></td></tr>";
 				else if($value['classement'] > 2) echo "<td><span class='badge badge-warning'>".$value['classement']."</span></td></tr>";

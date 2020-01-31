@@ -57,6 +57,10 @@ class CompetitionsController extends AppController
         $competition = $this->Competitions->newEntity();
         if ($this->request->is('post')) {
         	$data = $this->request->data;
+        	//on retrouve la discipline
+        	$this->loadModel("Disciplines");
+        	$discipline = $this->Disciplines->find()->where(['id' => $data['discipline_id']])->first();
+        	
         	//debug($data);die();
         	if($data['description'])$desc=$data['description'];
         	else $desc="";
@@ -75,6 +79,7 @@ class CompetitionsController extends AppController
         	$competition->categorie_id=$data['categorie_id'];
         	$competition->discipline_id=$data['discipline_id'];
         	$competition->region_id=$data['region_id'];
+        	$competition->display_name = $competition->name." - ".$discipline->name;
         	//Enregistrement
             //$competition = $this->Competitions->patchEntity($competition);
             if ($this->Competitions->save($competition)) {
